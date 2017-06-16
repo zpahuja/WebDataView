@@ -1,0 +1,54 @@
+body {
+    width : 750px;
+    height:auto;
+    min-height: 256px;
+}
+table{
+    position: relative;
+    margin-top: 150px;
+    border-collapse: collapse;
+}
+td{ 
+    width: auto;
+    min-width: 60px;
+    height:auto;
+    border: 1px #ccc solid;
+}
+
+h2{
+    position: absolute;
+    left:0px;
+    margin-bottom: 10px;
+}
+
+
+.todo-item .btn-choose {
+    display:none;
+}
+
+.todo-item:hover .btn-choose {
+    display: block;
+}
+
+.todo-item .todo-content {
+    font-weight: bold;
+}
+.todo-item.completed .todo-content {
+    color:darkgray;
+    font-weight: normal;
+    text-decoration: line-through;
+}
+
+#todo-list {
+    margin-bottom: 10px;
+}
+
+#btn-remove-all {
+    margin-bottom: 10px;
+}
+
+#toolbar{
+    position: absolute;
+    left:0px;
+    top:90px;
+}

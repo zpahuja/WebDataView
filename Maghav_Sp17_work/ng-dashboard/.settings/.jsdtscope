@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="lib/angular/|app/|app/controller/|lib/jquery/|app/contentScript/|lib/bootstrap/js/" kind="src" path=""/>
+	<classpathentry excluding="controller/|contentScript/" kind="src" path="app"/>
+	<classpathentry kind="src" path="app/contentScript"/>
+	<classpathentry kind="src" path="app/controller"/>
+	<classpathentry kind="src" path="lib/angular"/>
+	<classpathentry kind="src" path="lib/bootstrap/js"/>
+	<classpathentry kind="src" path="lib/jquery"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
