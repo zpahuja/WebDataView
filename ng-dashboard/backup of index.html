@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<title>Angular Todo Chrome Extension</title>
+<link rel="stylesheet" type="text/css"
+	href="lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<!-- also include the library here -->
+<script src="jquery-2.1.4.min.js"></script>
+
+</head>
+<body ng-init="init()">
+	<div class='container'>
+
+		<div class='row'>
+			<div class='col-md-12'>
+				<div id="prova"></div>
+				<h2>Web Data View</h2>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-12' ng-controller="singleChooseCtrl">
+				<div id='toolbar'>
+					<a id="btn-remove-all" ng-click="singleChoose()"
+						class='btn btn-small btn-default pull-right'> <i
+						class="glyphicon glyphicon-remove" id="Single_choose"></i> DOM
+						Selection
+					</a>
+					<button ng-click="getSelection()">Get Selections</button>
+					{{selections}}
+				</div>
+			</div>
+			<div class='col-md-12' ng-controller="tagClassChooseCtrl">
+				<a id="btn-remove-all" ng-click="tagClassChoose()"
+					class='btn btn-small btn-default pull-right'> <i
+					class="glyphicon glyphicon-remove" id="Classname_choose"></i>
+					VIPS Selection
+				</a>
+				<button ng-click="highlightAllVisualBlocks()">Highlight all Visual Blocks</button>
+			</div>
+
+			<!-- <div class="table" >
+                <table  ng-controller="tableCtrl" ng-init="init()" id = "myTable" border="2">
+                    <tr ng-repeat="r in rowArray">
+                        <td ng-repeat = "c in colArray"><div width = "100" contenteditable='true'>abc def</div></td>
+                    </tr>
+                </table>
+                <button ng-click="addCols()">Add Columns</button>
+                <button ng-click="addRows()">Add Rows</button>
+                <button ng-click="getSelection()">Obtain Selection</button> 
+                <div ng-controller = "tagClassChooseCtrl">
+                    <br>
+                    <a download="content.csv" ng-href="{{ url }}">Download</a>
+                </div>
+            </div> -->
+		</div>
+	</div>
+	
+	<div ng-controller="testCtrl"> This is a test!
+	</div>
+
+	<script type="text/javascript" src="lib/angular/angular.js"></script>
+	<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"> </script> -->
+	<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/controller/tableCtrl.js"></script>
+	<script type="text/javascript" src="app/controller/singleChooseCtrl.js"></script>
+	<!--script type="text/javascript" src="app/contentScript/tageClassChoose.js"></script-->
+	<script type="text/javascript" src="app/controller/VipsParser.js"></script>
+	<script type="text/javascript" src="app/controller/VipsBlock.js"></script>
+	<script type="text/javascript"
+		src="app/controller/TagClassChooseCtrl.js"></script>
+	<script type="text/javascript" src="app/todoStorage.js"></script>
+	<script type="text/javascript" src="app/background.js"></script>
+
+</body>
+</html>

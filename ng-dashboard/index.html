@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<title>Web Data View</title>
+<link rel="stylesheet" type="text/css"
+	href="lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<!-- also include the library here -->
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="lib/angular/angular.js"></script>
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-init="init()">
+	<div style="font-size:300%;"> Web Data View </div>
+	<!--
+	<div id="main_menu">
+    <label for="CAT_Custom_255276">Mode: <span class="req">*</span></label>
+    <select class="cat_dropdown" id="drop_down_selection" name="drop_down_selection">
+        <option value="0">-- Please select --</option>
+        <option value="1">DOM Selection</option>
+        <option value="2">VIPS Selection</option>
+    </select>
+	</div>
+	<div id="dom_selection" style="display: none;">
+		<div ng-controller="domSelectionCtrl">
+			<a ng-click="activateDomSelection()"
+				class='btn btn-small btn-default'>
+				Activate DOM Selector
+			</a>
+			<a ng-click="deactivateDomSelection()"
+				class='btn btn-small btn-default'>
+				Deactivate DOM Selector
+			</a>
+		</div>
+	</div>-->
+	<!-- <div id="vips_selection" style="display: none;"> -->
+	<div id="vips_selection" style="">
+	    <div ng-controller="tagClassChooseCtrl">
+			<a ng-click="vipsHighlightAll()"
+				class='btn btn-small btn-default'>
+				Highlight All
+			</a>
+			<a ng-click="vipsClearAllHighlights()"
+				class='btn btn-small btn-default'>
+				Remove All Highlights
+			</a>
+			<a ng-click="vipsSuggest()"
+				class='btn btn-small btn-default'>
+				Give Me Suggestions
+			</a>
+			<a ng-click="doneWithInput()"
+			   class='btn btn-small btn-default'>
+				Done with Input
+			</a>
+			<a ng-click="vipsExport()"
+				class='btn btn-small btn-default'>
+				Export All Visual Elements
+			</a>
+			<a ng-click="vipsHighlightSiblingBlocks()"
+				class='btn btn-small btn-default'>
+				Get Sibling Blocks!
+			</a>
+			<a ng-click="vipsExportLabeledData()"
+			    class='btn btn-small btn-default'>
+				Export Labeled Data
+			</a>
+			<a ng-click="vipsDoClassification()"
+			   class='btn btn-small btn-default'>
+				Do Classification
+			</a>
+			<a ng-click="DoCorrection()"
+			   class='btn btn-small btn-default'>
+				Do User Correction
+			</a>
+			<a ng-click="NextCluster()"
+			   class='btn btn-small btn-default'>
+				Next Cluster
+			</a>
+		</div>
+	</div>
+
+	<!--
+    Load the published pexe.
+    Note: Since this module does not use any real-estate in the browser, its
+    width and height are set to 0.
+
+    Note: The <embed> element is wrapped inside a <div>, which has both a 'load'
+    and a 'message' event listener attached.  This wrapping method is used
+    instead of attaching the event listeners directly to the <embed> element to
+    ensure that the listeners are active before the NaCl module 'load' event
+    fires.  This also allows you to use PPB_Messaging.PostMessage() (in C) or
+    pp::Instance.PostMessage() (in C++) from within the initialization code in
+    your module.
+    -->
+
+	<div id="cpp_lib_listener">
+
+		<embed id="cpp_lib"
+			   width=0 height=0
+			   src="cpp_lib.nmf"
+			   type="application/x-pnacl" />
+
+		<script type="text/javascript" src="app/controller/cppLibHelper.js"> </script>
+	</div>
+
+	<div>CPP Module Status: <code id="statusField">NO-STATUS</code></div>
+
+	<script type="text/javascript" src="app/main.js"></script>
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/controller/domSelectionCtrl.js"></script>
+	<script type="text/javascript"
+		src="app/controller/vipsCtrl.js"></script>
+	<!--<script type="text/javascript" src="app/todoStorage.js"></script>-->
+	<!--<script type="text/javascript" src="app/background.js"></script>-->
+</body>
+</html>

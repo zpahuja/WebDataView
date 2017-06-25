@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name"            : "VIPS",
+  "description"     : "Structured Data Extraction Framework",
+  "short_name"      : "VIPS",
+  "version"         : "0.1",
+ 
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon" : "images/logo2.png"
+  },
+
+  "background": {
+    "scripts": [
+      "app/background.js"
+    ]
+  },
+
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "activeTab"
+  ],
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+
+  //Please add any library here if need to use in plug-in
+  "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js":["jquery-2.1.4.min.js"]
+      }
+  ]
+
+}
