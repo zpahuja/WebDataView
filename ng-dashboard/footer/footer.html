@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div style="display-inside: inline-block; text-align: center; margin-top: 15px">
+        <i class="fa fa-globe fa-2x" aria-hidden="true" id="web-view" style="margin:  auto 20px"></i>
+        <i class="fa fa-table fa-2x" aria-hidden="true" id="grid-view"></i>
+    </div>
+
+</body>
+
+<script>
+    document.getElementById("grid-view").addEventListener("click", showGridView);
+    document.getElementById("web-view").addEventListener("click", hideGridView);
+
+    function showGridView() {
+        document.getElementById("gridViewDiv").style.display = "unset";
+        document.removeEventListener("click", selectionHandler);
+    }
+
+    function hideGridView() {
+        document.getElementById("gridViewDiv").style.display = "none";
+        document.addEventListener("click", selectionHandler);
+    }
+</script>
+</html>
