@@ -61,15 +61,50 @@ for (var i = 0; i < clusters.length; i++) {
     }
     DATASET.push(tempdata);
 }
+console.log("hi");
 
-console.log(DATASET);
+fieldNames = [];
+numOfInstances = 0;
+for (var i = 0; i < clusters.length; i++) {
+    fieldNames.push({title: "Field " + i});
+    if (numOfInstances < clusters[i].length) {
+        numOfInstances = clusters[i].length;
+    }
+}
 
-var hot = new Handsontable(container, {
-    data: DATASET,
-    minSpareCols: 1,
-    minSpareRows: 1,
-    rowHeaders: true,
-    colHeaders: true,
-    contextMenu: true,
-    autoWrapRow: true
-});
+console.log("hello");
+console.log(fieldNames);
+dataSet = [];
+for (var j = 0; j < numOfInstances; j++) {
+    dataSet[j] = Array.apply(null, Array(clusters.length)).map(function () {return ""});
+}
+
+for (var i = 0; i < clusters.length; i++) {
+    for (var j = 0; j < clusters[i].length; j++) {
+        dataSet[j][i]=globalBlocks[clusters[i][j]]['-att-innerText'];
+    }
+}
+
+console.log(dataSet);
+
+$('head').append('<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.css"/>');
+gridView.innerHTML = '<table id="data-table" class="display" width="100%"></table>'
+
+$(document).ready(function() {
+    $('#data-table').DataTable( {
+        data: dataSet,
+        columns: fieldNames,
+        scrollX: "100%",
+        scrollY: "800px"
+    } );
+} );
+
+// var hot = new Handsontable(container, {
+//     data: DATASET,
+//     minSpareCols: 1,
+//     minSpareRows: 1,
+//     rowHeaders: true,
+//     colHeaders: true,
+//     contextMenu: true,
+//     autoWrapRow: true
+// });

@@ -57,6 +57,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
       chrome.tabs.executeScript(null, {file: "lib/kMeans.js"});
       chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.3.3.7.min.js"});
       chrome.tabs.executeScript(null, {file: 'lib/handsontable/handsontable.full.min.js'});
+      chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
       chrome.tabs.insertCSS(tab.id, {file: "lib/bootstrap/css/bootstrap.min.css"});
       chrome.tabs.insertCSS(tab.id, {file: "assets/css/style.css"});
       chrome.tabs.executeScript(null, {file: "lib/FileSaver.min.js"}, function() {

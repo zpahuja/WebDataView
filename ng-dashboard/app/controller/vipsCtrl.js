@@ -3,13 +3,16 @@
 var app = angular.module('app')
 app.controller('tagClassChooseCtrl', function ($scope, $rootScope, $window) {
 
+	console.log("AAAAA");
 	chrome.tabs.executeScript(null, {file: "lib/TreeModel.js"});
 	chrome.tabs.executeScript(null, {file: "app/contentScript/vips.js"});
 	chrome.tabs.executeScript(null, {file: "lib/kMeans.js"});
     chrome.tabs.executeScript(null, {file: "app/contentScript/webDataViewInit.js"});
-	chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"});
+	//chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"});
 	chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.3.3.7.min.js"});
 	chrome.tabs.executeScript(null, {file: "lib/fontawesome.js"});
+    chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
+
 
 	/* The action of tagClassChoose will be fired here */
 
