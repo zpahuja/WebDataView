@@ -44,7 +44,7 @@ function toggleState(id) {
  * toggle footer and browserAction icon
  */
 chrome.browserAction.onClicked.addListener(function(tab) {
-
+    chrome.storage.local.clear();
   var tabAction = toggleState(tab.id);
 
   // initiate controller
@@ -63,12 +63,24 @@ chrome.browserAction.onClicked.addListener(function(tab) {
       chrome.tabs.executeScript(null, {file: "lib/FileSaver.min.js"}, function() {
         chrome.tabs.executeScript(null, {file: "app/contentScript/wdvKMeans.js"}, function() {
           chrome.tabs.executeScript(null, {file: "app/contentScript/popOver.js"}, function() {
-            chrome.tabs.executeScript(null, {file: 'footer/footer.js'});
+            chrome.tabs.executeScript(null, {file: 'footer/footer.js'}, function() {
+                chrome.storage.local.get(function(result){console.log(result)})
+                chrome.windows.create({
+                    type: 'popup',
+                    url: chrome.extension.getURL('footer/gridview.html')
+                }, function (newWindow) {
+                    console.log(newWindow);
+                });
+            });
           });
         });
       });
     });
   }
+
+    // chrome.storage.local.set({'lastname': 10}, function() {
+    // });
+    //
 
   if (tabAction != TAB_ACTION.HIDE) {
     // show footer

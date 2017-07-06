@@ -61,7 +61,6 @@ for (var i = 0; i < clusters.length; i++) {
     }
     DATASET.push(tempdata);
 }
-console.log("hi");
 
 fieldNames = [];
 numOfInstances = 0;
@@ -72,8 +71,6 @@ for (var i = 0; i < clusters.length; i++) {
     }
 }
 
-console.log("hello");
-console.log(fieldNames);
 dataSet = [];
 for (var j = 0; j < numOfInstances; j++) {
     dataSet[j] = Array.apply(null, Array(clusters.length)).map(function () {return ""});
@@ -85,7 +82,12 @@ for (var i = 0; i < clusters.length; i++) {
     }
 }
 
-console.log(dataSet);
+chrome.storage.local.set({"dataSet": dataSet});
+chrome.storage.local.set({"fieldNames": fieldNames});
+
+//var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+//myWindow.document.write("<script> document.write(chrome.storage.local.get('lastname')) <\/script>");
+// myWindow.document.write("<script> document.write('adsfdsaf fdsfa') <\/script>");
 
 $('head').append('<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.css"/>');
 gridView.innerHTML = '<table id="data-table" class="display" width="100%"></table>'
