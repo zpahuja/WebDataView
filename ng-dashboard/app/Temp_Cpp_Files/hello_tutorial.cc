@@ -12,6 +12,10 @@
 #include "string"
 #include "map"
 #include "cmath"
+#include "iostream"
+#include "fstream"
+#include "iterator"
+
 using namespace std;
 
 namespace {
@@ -35,8 +39,105 @@ class HelloTutorialInstance : public pp::Instance {
       return;
 
 
-  //Form a vector of Important Features
+  pp::VarArray arr(globalBlocks);
+  dataset = make_map_vector(arr);
+  
+  //pp::VarArray answer(reverse_int_vector(cluster_data));
+  //initialise_cluster_values();
+  third_idx = -1;
+  find_inputs();
+  feature_extraction();
+  find_record_vec();
+  find_field_in_record(first_idx);
+  find_field_in_record(second_idx);
+  if(third_idx!=-1)
+    find_field_in_record(third_idx);
+  //assign_clusters();
+
+  //Convert cluster_indices -> cluster_values to return via NACL
+  for(int i=0;i<dataset.size();i++)
+  {
+    cluster_values[dataset[i]["-vips-id"]] = cluster_indices[find_idx_vips_id(dataset[i]["-vips-id"])];
+  }
+
+  pp::VarDictionary answer(reverse_map(cluster_values));
+  PostMessage(answer);
+
+  }
+
+
+  // converting the input into the form that can be used by 
+  // the C++ code and libraries
+  vector< map<string,string> > make_map_vector(pp::VarArray arr);
+
+  // Finding the inputs given by the user
+  void find_inputs();
+
+  // Extracting the numerical features
+  void feature_extraction();
+
+  // Finding the vector of records
+  // consists of the indices of each VIPS block in a particular record
+  // of all records
+  void find_record_vec();
+
+  // Find the index of a VIPS block using VIPS id 
+  int find_idx_vips_id(string str);
+
+  // Function for finding a field in a record
+  // with respect to input from user
+  // using euclidean distance
+  void find_field_in_record(int current_idx);
+
+  // Helper to find the number of records
+  int find_number_rec();
+
+
+
+
+  int first_idx,second_idx,third_idx; // 1 input each for each field
+  vector<int> cluster_indices; // main thing to return
+
+
+
+
+   //Helper Functions
+
+  //Euclidean distance between the features
+  int find_euclidean(vector<int> A,vector<int> B);
+
+  // converting the vector to form that can be sent back to
+  // to the Javascript module
+  pp::VarArray reverse_map_vector(vector< map<string,string> > v);
+  pp::VarArray reverse_int_vector(vector< vector<int> > v);
+  pp::VarDictionary reverse_map(map<string,int> my_map);
+
+
+  
+  // Numerical features of data for comparison
+  vector<vector<int> > cluster_data;
+
+  // Final Cluster values to return
+  map <string,int> cluster_values;
+
+  // Includes all indices which are in a particular record
+  // Indexed by record_numer
+  vector<vector<int> > record_vector;
+
+
+  // Global Blocks dataset 
+  vector< map<string,string> > dataset;
+
+
+};
+
+
+
+// Make Feature dataset 
+void HelloTutorialInstance::feature_extraction()
+{
   vector<string> names;
+
   names.push_back("-att-title");
   names.push_back("-style-font-size");
   names.push_back("-att-tagName");
@@ -45,8 +146,9 @@ class HelloTutorialInstance : public pp::Instance {
   names.push_back("-style-width");
   names.push_back("-style-height");
   names.push_back("-att-childElementCount");
-  names.push_back("-style-line-height");
-
+  names.push_back("-vips-startX");
+  names.push_back("-vips-startY");
+  //names.push_back("-style-line-height");
 
   //Form the vector of Colours
   vector<string> colors;
@@ -69,87 +171,179 @@ class HelloTutorialInstance : public pp::Instance {
   back_list.push_back("white");
   back_list.push_back("#ebc6eb");
 
-  vector< map<string,string> > dataset;
-  pp::VarArray arr(globalBlocks);
-  dataset = make_map_vector(arr);
-
-  
-
   for(int i=0;i<dataset.size();i++)
   {
     vector<int> temp;
     for(int j =0; j< names.size();j++)
     {
-      
       if(names[j]=="-att-title"||names[j]=="-att-tagName")
       {
-        map<string,string> temp_val = dataset[i];
-        temp.push_back(int(temp_val[names[j]].size()*100));
+        temp.push_back(int(dataset[i][names[j]].length()*100));
       }
       else if(names[j]=="-style-font-family"||names[j]=="-att-className")
       {
-        map<string,string> temp_val = dataset[i];
-        temp.push_back(int(temp_val[names[j]].size()*300));
+        temp.push_back(int(dataset[i][names[j]].length()*300));
       }
       else if(names[j]=="-style-width"||names[j]=="-style-height")
       {
-        map<string,string> temp_val = dataset[i];
-        temp.push_back(int(temp_val[names[j]].size()/10));
+        string temp_str = dataset[i][names[j]];
+        string s;
+        for(int i=0;i<temp_str.length()-2;i++)
+        {
+          s.push_back(temp_str[i]);
+        }
+        temp.push_back(stoi(s)/10);
+      }
+      else if(names[j]=="-att-childElementCount")
+      {
+        temp.push_back(stoi(dataset[i][names[j]])*800);
+      }
+      else if(names[j]=="-vips-startX"||names[j]=="-vips-startY")
+      {
+        temp.push_back(stoi(dataset[i][names[j]]));
       }
       else
       {
-        map<string,string> temp_val = dataset[i];
-        temp.push_back(int(temp_val[names[j]].size()*800));
+        temp.push_back(stoi(dataset[i][names[j]])*800);
       }
     }
     cluster_data.push_back(temp);
   }
-  //pp::VarArray answer(reverse_int_vector(cluster_data));
-  //PostMessage(answer);
-
-  vector< vector<int> > clusters;
-  //clusters = find_clusters(cluster_data,10,7,visited);
+}
 
 
-  pp::VarArray answer(reverse_int_vector(clusters));
-  PostMessage(answer);
+
+
+void HelloTutorialInstance::find_inputs()
+{
+  cluster_indices.resize(dataset.size(),0);
+  for(int i=0;i<dataset.size();i++)
+  {
+    if(dataset[i]["-input"]=="1")
+    {
+      first_idx = i;
+    }
+    else if(dataset[i]["-input"]=="2")
+    {
+      second_idx = i;
+    }
+    else if(dataset[i]["-input"]=="3")
+    {
+      third_idx = i;
+    }
+    cluster_values[dataset[i]["-vips-id"]] = stoi(dataset[i]["-input"]);
+  }
+  cluster_indices[first_idx] = 1;
+  cluster_indices[second_idx] = 2;
+  if(third_idx!=-1)
+    cluster_indices[third_idx] = 3;
+}
+
+// find number of records
+int HelloTutorialInstance::find_number_rec()
+{
+  int number_rec = 0;
+  for(int i=0;i<dataset.size();i++)
+  {
+    if(stoi(dataset[i]["-record-no"])>number_rec)
+      number_rec = stoi(dataset[i]["-record-no"]);
+  }
+  return number_rec;
+}
+
+// Find the record_vector
+// See definition for details
+void HelloTutorialInstance::find_record_vec()
+{
+  int number_rec = find_number_rec(); // find number of records
+  record_vector.resize(number_rec);
+
+  for(int rec_idx=0;rec_idx<number_rec;rec_idx++)
+  {
+    for(int i=0;i<dataset.size();i++)
+    {
+      if(stoi(dataset[i]["-record-no"])==rec_idx)
+      {
+        record_vector[rec_idx].push_back(i);
+      }
+    }
   }
 
+}
 
-  // converting the input into the form that can be used by 
-  // the C++ code and libraries
-  vector< map<string,string> > make_map_vector(pp::VarArray arr);
+// Finding the particular field in a record
+// using euclidean distance
+void HelloTutorialInstance::find_field_in_record(int current_idx)
+{
+  for(int i=0;i<record_vector.size();i++)
+  {
+    int field_idx = 0;
+    for(int j=0;j<record_vector[i].size();j++)
+    {
+        if(find_euclidean(cluster_data[current_idx],cluster_data[record_vector[i][j]])<find_euclidean(cluster_data[current_idx],cluster_data[record_vector[i][field_idx]]))
+        {
+          field_idx = j;
+        }
+    }
+    cluster_indices[record_vector[i][field_idx]] = cluster_indices[current_idx];
+  }
+  
+}
+/*
+// To fix the records by taking input from the user
+void HelloTutorialInstance::fix_clusters(vector<int> fix_idx,vector<int> cluster_idx)
+{
 
-  // converting the vector to form that can be sent back to
-  // to the Javascript module
-  pp::VarArray reverse_map_vector(vector< map<string,string> > v);
+  for(int c_idx=0; c_idx<fix_idx.size();c_idx++)
+  {
+    if(cluster_indices[fix_idx[c_idx]]!=cluster_idx[c_idx])
+    {
+        cluster_indices[fix_idx[c_idx]] = cluster_idx[c_idx]
+    }
+  }
+}
+*/
 
 
-  pp::VarArray reverse_int_vector(vector< vector<int> > v);
+/*
+void HelloTutorialInstance::assign_clusters()
+{
+
+  for(int c_idx=0; c_idx<cluster_data.size();c_idx++)
+  {
+    
+  }
+}
+*/
 
 
-  //Main functions for DBScan
-  vector< vector<int> > find_clusters(vector<vector<int> > cluster_data,int epsilon,int min_points,vector<int> &visited);
-  void expandCluster(int cluster_ID,vector<int> &neighbors,vector<int> &visited,vector<vector<int> > &clusters);
-  void addToCluster(int point_ID, int cluster_ID,vector<vector<int> > &clusters);
-  vector<int> find_neighbors(int point_ID);
-
-  //Helper Functions
-  void merge_Arrays(vector<int> &a,vector<int> b);
-  float euclidean(vector<int> p, vector<int> q);
-
-  int epsilon;
-  int min_points;
-  vector< vector<int> > clusters; // Check the dimension of clusters
-  vector<int> noise;
-
-  //Temporary variables for calculation
-  vector<int> visited ;
-  vector<int> assigned;
-  vector<vector<int> > cluster_data;
+// Find the euclidean distance between 2 vectors
+int HelloTutorialInstance::find_euclidean(vector<int> A,vector<int> B)
+{
+  int sum = 0;
+  for(int i=0;i<A.size()-2;i++) // To avoid StartX and startY I subtract a 2
+  {
+    if(i!=7)
+      sum+= pow(A[i]-B[i],2);
+  }
+  return sqrt(sum);
+}
 
 
-};
+
+// Find the index of a particular id for simplicity
+// of using cluster_data
+int HelloTutorialInstance::find_idx_vips_id(string str)
+{
+    for(int i=0;i< dataset.size();i++)
+    {
+      if(str.compare(dataset[i]["-vips-id"])==0)
+      {
+        return i;
+      }
+    }
+    return -1;
+}
 
 
 
@@ -178,8 +372,6 @@ vector< map<string,string> > HelloTutorialInstance::make_map_vector(pp::VarArray
     return v;
 }
 
-
-
 // converting the vector to form that can be sent back to
 // to the Javascript module
 pp::VarArray HelloTutorialInstance::reverse_map_vector(vector< map<string,string> > v)
@@ -199,7 +391,8 @@ pp::VarArray HelloTutorialInstance::reverse_map_vector(vector< map<string,string
     return arr;
 }
 
-
+// convert vector to pp::VarArray
+// To send back to the Javascript module
 pp::VarArray HelloTutorialInstance::reverse_int_vector(vector< vector<int> > v)
 {
   pp::VarArray arr;
@@ -217,103 +410,20 @@ pp::VarArray HelloTutorialInstance::reverse_int_vector(vector< vector<int> > v)
     return arr;
 }
 
-vector< vector<int> > HelloTutorialInstance::find_clusters(vector<vector<int> > dataset,int epsilon,int min_points,vector<int> &visited)
+// convert map to pp::VarDictionary
+// To send back to the Javascript module
+pp::VarDictionary HelloTutorialInstance::reverse_map(map<string,int> my_map)
 {
-  vector<int> neighbors;
-  visited.resize(dataset.size(),0);
-  for(int point_ID = 0; point_ID < dataset.size();point_ID++)
-  {
-    if(visited[point_ID] !=1)
-    {
-      visited[point_ID] = 1;
+  pp::VarDictionary dict;
 
-      neighbors = find_neighbors(point_ID);
-
-      if(neighbors.size() < min_points)
-      {
-        noise.push_back(point_ID);
+  typedef map<string, int>::iterator it_type;
+      for(it_type iterator = my_map.begin(); iterator != my_map.end(); iterator++) {
+          dict.Set(iterator->first,iterator->second);
       }
-      else
-      {
-        int cluster_ID = clusters.size();
-        vector<int> temp;
-        clusters.push_back(temp);
-        addToCluster(point_ID,cluster_ID,clusters);
-        expandCluster(cluster_ID,neighbors,visited,clusters);
-      }
-    }
-  }
-  return clusters;
-}
 
-void HelloTutorialInstance::expandCluster(int cluster_ID,vector<int> &neighbors,vector<int> &visited,vector<vector<int> > &clusters)
-{
-  for(int i=0;i<neighbors.size();i++)
-  {
-    int point_ID2 = neighbors[i];
-
-    if(visited[point_ID2] == 1)
-    {
-      visited[point_ID2] = 1;
-      vector<int> neighbors2 = find_neighbors(point_ID2);
-
-      if(neighbors2.size() >= min_points)
-      {
-        merge_Arrays(neighbors,neighbors2);
-      }
-    }
-
-    if(assigned[point_ID2]!=1)
-      addToCluster(point_ID2,cluster_ID,clusters);
-  }
-}
-
-void HelloTutorialInstance::addToCluster(int point_ID, int cluster_ID,vector<vector<int> > &clusters)
-{
-  clusters[cluster_ID].push_back(point_ID);
-  assigned[point_ID] = 1;
-}
-
-// Function to find all the neighbors of a given point
-vector<int> HelloTutorialInstance::find_neighbors(int point_ID)
-{
-  vector<int> neighbors;
-
-  for(int i=0;i<cluster_data.size();i++)
-  {
-    int dist = euclidean(cluster_data[point_ID],cluster_data[i]);
-    if(dist < epsilon)
-    {
-      neighbors.push_back(i);
-    }
-  }
-  return neighbors;
-}
+  return dict;
 
 
-/***********************************************/
-//Helper Functions
-
-//Function to merge 2 arrays
-void HelloTutorialInstance::merge_Arrays(vector<int> &a, vector<int> b)
-{
-  a.insert(a.end(),b.begin(),b.end());
-  return;
-}
-
-
-// Function for finding the euclidean distance in a multidimensional space
-float HelloTutorialInstance::euclidean(vector<int> p, vector<int> q)
-{
-  int sum = 0;
-  int i = min(p.size(),q.size());
-
-  while(i>0)
-  {
-    sum+= pow(p[i]-q[i],2);
-    i--;
-  }
-  return sqrt(sum);
 }
 
 
@@ -321,7 +431,7 @@ float HelloTutorialInstance::euclidean(vector<int> p, vector<int> q)
 
 
 
-
+// Ending
 
 class HelloTutorialModule : public pp::Module {
  public:
