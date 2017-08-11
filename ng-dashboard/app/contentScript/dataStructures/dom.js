@@ -8,7 +8,7 @@
         if (typeof module !== "undefined" && module.exports) {
             module.exports = domJSON;
         }
-        exports = dmoJSON;
+        exports = domJSON;
     } else {
         window.domJSON = factory(root);
     }
@@ -22,15 +22,15 @@
     };
     var defaultsForToJSON = {
         absolutePaths: [ "action", "data", "href", "src" ],
-        attributes: true,
-        computedStyle: false,
+        attributes: false,
+        computedStyle: true,
         cull: true,
         deep: true,
         domProperties: true,
         filter: false,
         htmlOnly: false,
-        metadata: true,
-        serialProperties: false,
+        metadata: false,
+        serialProperties: true,
         stringify: false
     };
     var defaultsForToDOM = {
@@ -197,18 +197,24 @@
     var copyJSON = function(node, opts) {
         var copy = {};
         for (var n in node) {
-            if (typeof node[n] !== "undefined" && typeof node[n] !== "function" && n.charAt(0).toLowerCase() === n.charAt(0)) {
-                if (typeof node[n] !== "object" || node[n] instanceof Array) {
-                    if (opts.cull) {
-                        if (node[n] || node[n] === 0 || node[n] === false) {
-                            copy[n] = node[n];
+            try {
+                if (typeof node[n] !== "undefined" && typeof node[n] !== "function" && n.charAt(0).toLowerCase() === n.charAt(0)) {
+                    if (typeof node[n] !== "object" || node[n] instanceof Array) {
+                        if (opts.cull) {
+                            if (node[n] || node[n] === 0 || node[n] === false) {
+                                copy['-att-' + n] = node[n];
+                            }
+                        } else {
+                            copy['-att-' + n] = node[n];
                         }
-                    } else {
-                        copy[n] = node[n];
                     }
                 }
             }
+            catch (err) {
+                console.log(err.message);
+            }
         }
+        copy['-att-box'] = node;
         copy = boolFilter(copy, opts.domProperties);
         return copy;
     };
@@ -236,7 +242,7 @@
         }
         for (var k in style) {
             if (k !== "cssText" && !k.match(/\d/) && typeof style[k] === "string" && style[k].length) {
-                css[k] = style[k];
+                css['-style-' + k] = style[k];
             }
         }
         return opts.computedStyle instanceof Array ? boolFilter(css, opts.computedStyle) : css;
@@ -256,7 +262,9 @@
             copy.attributes = attrJSON(node, opts);
         }
         if (opts.computedStyle && (style = styleJSON(node, opts))) {
-            copy.style = style;
+            for (var key in style) {
+                copy[key] = style[key];
+            }
         }
         if (opts.deep === true || typeof opts.deep === "number" && opts.deep > depth) {
             children = [];
@@ -268,7 +276,7 @@
                     children.push(thisChild);
                 }
             }
-            copy.childNodes = children;
+            copy['-att-childNodes'] = children;
         }
         return copy;
     };
@@ -333,6 +341,23 @@
             return JSON.stringify(output);
         }
         return output;
+    };
+    domJSON.toJSONList = function(node, opts) {
+        var root = domJSON.toJSON(node, opts)
+        var flattenedJSON = [], bfs_queue = [root], currNode;
+
+        //BFS
+        while(bfs_queue.length>0) {
+            currNode = bfs_queue.shift();
+            flattenedJSON.push(currNode)
+
+            if (!currNode['-att-childNodes'].length) { continue; }
+
+            for (var i = 0; i< currNode['-att-childNodes'].length; i++) {
+                bfs_queue.push(currNode['-att-childNodes'][i]);
+            }
+        }
+        return flattenedJSON;
     };
     var createNode = function(type, doc, data) {
         if (doc instanceof DocumentFragment) {

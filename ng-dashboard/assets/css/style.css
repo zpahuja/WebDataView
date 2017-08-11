@@ -1,64 +1,115 @@
-body {
-    width : auto;
-    height:auto;
-    min-height: 256px;
-    min-width: 256px;
-}
-table{
-    position: relative;
-    margin-top: 150px;
-    border-collapse: collapse;
-}
-td{ 
-    width: auto;
-    min-width: 60px;
-    height:auto;
-    border: 1px #ccc solid;
+/*
+ * floating widget for web view
+ */
+#web-view-widget {
+    position: fixed;
+    width: 50%;
+    min-width: 250px;
+    height: 60px;
+    top: 10%;
+    border-radius: 5px;
+    margin: auto;
+    right: 25%;
+    z-index: 99999;
+    background-color: white;
+    box-shadow: rgba(188,188,188,0.6) 0px 0px 10px;
+    -webkit-transition: box-shadow 0.2s ease-in-out;
 }
 
-h2{
-    position: absolute;
-    left:0px;
-    margin-bottom: 10px;
+#web-view-widget:hover {
+    box-shadow: rgba(188, 188, 188, 0.8) 0px 4px 15px;
 }
 
 
-.todo-item .btn-choose {
-    display:none;
-}
-
-.todo-item:hover .btn-choose {
-    display: block;
-}
-
-.todo-item .todo-content {
-    font-weight: bold;
-}
-.todo-item.completed .todo-content {
-    color:darkgray;
-    font-weight: normal;
-    text-decoration: line-through;
-}
-
-#todo-list {
-    margin-bottom: 10px;
-}
-
-#btn-remove-all {
-    margin-bottom: 10px;
-}
-
-#toolbar{
-    position: absolute;
-    left:0px;
-    top:90px;
+/*
+ * popOver
+ */
+.popover {
+    border: none;
+    z-index: 10000 !important;
 }
 
 .arrow {
     opacity: 0;
 }
 
-.popover {
-    border: none;
-    z-index: 10000 !important;
+.popover-title { display: none; }
+
+/*
+ * font awesome
+ */
+.fa-fw-lg {
+    width: 1.7em;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.fa-globe {
+    background: -webkit-linear-gradient(left, #4568DC, #B06AB3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
+}
+
+.fa-table {
+    background: -webkit-linear-gradient(left, #B06AB3, #C33764);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
+}
+
+/*
+ * floating widget
+ */
+
+.widget {
+    display-inside: inline-block;
+    text-align: left;
+    margin-top: 18px;
+}
+
+.widget-buttons {
+    float: left;
+}
+
+div.widget-labels {
+    overflow: auto;
+    white-space: nowrap;
+    padding-bottom: 12px;
+    max-width: 77%;
+    float:left;
+}
+
+div.widget-labels li {
+    font-family: 'Proxima Nova Alt Regular';
+    display: inline-block;
+    text-align: center;
+    font-size: 1.25em;
+    color: #969696;
+    margin-right: 15px;
+}
+
+div.widget-vertical-separator {
+    border-left: 1.5px solid rgba(218,218,218,80);
+    height: 24px;
+    float: left;
+    margin: auto 12px;
+}
+
+.widget-label-circle-svg {
+    margin-right: 7px;
+}
+
+.widget-scroll-buttons {
+    float: right;
+    display: inline-block;
+}
+/*
+ * font path
+ */
+@font-face {
+    font-family: 'Proxima Nova Alt Regular';
+    src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Mark Simonson - Proxima Nova Alt Regular-webfont.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }

@@ -1,17 +1,17 @@
 {
   "manifest_version": 2,
-  "name"            : "Web Data View",
-  "description"     : "Structured Data Extraction Framework",
-  "short_name"      : "WDV",
+  "name"            : "Clip",
+  "description"     : "Copy-Paste Data from Web pages",
+  "short_name"      : "Clip",
   "version"         : "0.1",
 
   "browser_action" : {
     "default_icon"  : {
-      "16" : "assets/images/logo.png",
-      "19" : "assets/images/logo.png",
-      "38" : "assets/images/logo.png",
-      "48" : "assets/images/logo.png",
-      "128": "assets/images/logo.png"
+      "16" : "assets/images/logo_grayscale_16.png",
+      "19" : "assets/images/logo_grayscale_19.png",
+      "38" : "assets/images/logo_grayscale_38.png",
+      "48" : "assets/images/logo_color_48.png",
+      "128": "assets/images/logo_color_128.png"
     }
   },
 
@@ -23,12 +23,15 @@
     "tabs",
     "<all_urls>",
     "activeTab",
-    "storage"
+    "storage",
+    "*://*.com/*"
   ],
 
   "web_accessible_resources": [
-    "footer/*",
-    "app/contentScript/gridView/*"
+    "app/contentScript/*",
+    "app/contentScript/webView/*",
+    "lib/font-awesome/fonts/*",
+    "assets/*"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
@@ -38,7 +41,16 @@
   "content_scripts": [
       {
         "matches" : ["<all_urls>"],
-        "js"      : ["lib/jquery/jquery-3.1.1.min.js", "lib/jquery/jquery.dataTables.min.js"]
+        "js"      : ["lib/jquery/jquery-3.1.1.min.js"]
       }
-  ]
+  ],
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "Command+E"
+      }
+    }
+  }
 }
