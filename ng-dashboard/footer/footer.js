@@ -1,13 +1,16 @@
+/*
 var body = document.getElementsByTagName("body")[0];
+
 var ft = document.createElement("div");
 ft.style.position = "fixed";
-ft.style.width = "100%";
+ft.style.width = "50%";
 ft.style.height = "7%";
-ft.style.bottom = "0px";
+ft.style.top = "80px";
+ft.style.left = "25%";
 ft.style.backgroundColor = "white";
 ft.style.zIndex = "10000";
+ft.style.boxShadow = "0px 0px 8px #bcbcbc";
 ft.id = "web-data-view-footer";
-ft.style.opacity = "0.75";
 // append footer
 body.appendChild(ft);
 
@@ -100,13 +103,4 @@ $(document).ready(function() {
         scrollY: "800px"
     } );
 } );
-
-// var hot = new Handsontable(container, {
-//     data: DATASET,
-//     minSpareCols: 1,
-//     minSpareRows: 1,
-//     rowHeaders: true,
-//     colHeaders: true,
-//     contextMenu: true,
-//     autoWrapRow: true
-// });
+   */

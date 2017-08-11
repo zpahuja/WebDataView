@@ -1,0 +1,10 @@
+### Eclipse
+local.properties
+.settings/
+.loadpath
+.project
+
+### JetBrains
+*.iml
+.idea/
+
