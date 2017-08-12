@@ -16,7 +16,7 @@
   },
 
   "background" : {
-    "scripts" : ["app/background.js"]
+    "scripts" : ["lib/jquery/jquery-3.1.1.min.js", "app/background.js"]
   },
 
   "permissions": [
@@ -34,7 +34,7 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
 
   // add any library here if it must always be executed upon every page load even before extension icon is clicked
-  // "js"      : ["lib/jquery/jquery-3.1.1.min.js", "lib/jquery/jquery.dataTables.min.js"]
+  //"js"      : ["lib/jquery/jquery-3.1.1.min.js"],
   "content_scripts": [
       {
         "matches" : ["<all_urls>"],

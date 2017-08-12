@@ -4,8 +4,13 @@
 
 chrome.storage.local.get(function(result){console.log(result)});
 chrome.storage.local.get(function(res){
+// chrome.runtime.onMessage.addListener(
+//     function(request, sender, sendResponse) {
     dataSet = res.dataSet;
     fieldNames = res.fieldNames;
+        // dataSet = request.dataSet;
+        // fieldNames = request.fieldNames;
+
     // localStorage = chrome.storage.local;
 
     // // Set up the editor
@@ -55,6 +60,7 @@ chrome.storage.local.get(function(res){
         var tbl = $('#data-table').DataTable( {
             data: dataSet,
             columns: fieldNames,
+            order: [],
             scrollX: "100%",
             scrollY: "600px",
             dom: 'Bfrtip',
@@ -72,17 +78,45 @@ chrome.storage.local.get(function(res){
             connectWith: ".dropable",
             cursor: "move"
         });
+        $('.dt-buttons').append("<button id='selable'>Selectable</button>");
+        $('.dt-buttons').append("<button id='notselable'>Not Selectable</button>");
+        $('.dt-buttons').append("<button id='merge'>Merge</button>");
+        $('.dt-buttons').append("<select> <option value='query1'>Query1</option> <option value='query2'>Query2</option> <option value='query3'>Query3</option> </select>");
+
+
+        $('#selable').click(function() {
+            $('#data-table').selectable({filter: ".movable", cancel: ".handle"});
+        });
+
+        $('#notselable').click(function() {
+            $('#data-table').selectable("destroy");
+        });
+
+
+        //$('#data-table').selectable({cancel: ".handle"});
+        $('#data-table').selectable({filter: ".movable", cancel: ".handle"});
+        $('#data-table').selectable("destroy");
+        $('#data-table td').addClass('dropable');
         tbl.on('mouseup', function(e){
             var text = window.getSelection();
             // check if anything is actually highlighted
             if(text.toString()) {
                 // we've got a highlight, now do your stuff here
                 var range = window.getSelection().getRangeAt(0);
-                var newNode = $('<div></div>').addClass('movable')[0];
+                var newNode = $('<div></div>').addClass('movable').addClass( "ui-corner-all")[0];
                 range.surroundContents(newNode);
+                var nnNode = range.extractContents().firstElementChild;
+                // console.log(nnNode);
+                $(nnNode).prepend( "<div class='handle'><span class='ui-icon ui-icon-carat-2-n-s'></span></div>" );
+                //$(nnNode).selectable({cancel: ".handle"});
+                range.insertNode(nnNode);
+                // $(newNode).prepend( "<div class='handle'><span class='ui-icon ui-icon-carat-2-n-s'></span></div>" ).selectable({cancel: ".handle"});
                 window.getSelection().empty();
+                tbl.sortable("refresh");
+                //tbl.selectable("refresh");
             }
-        })
+        });
+        // tbl.sortable({ handle: ".handle" });
     } );
 
 
