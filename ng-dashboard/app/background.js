@@ -1,7 +1,5 @@
 'use strict';
 
-console.log(chrome.runtime.id);
-
 /**
  * Constants of tab states
  * @enum {bool}
@@ -68,14 +66,14 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
 function updateIcon(tabId) {
     if (tabId == activeTabId) {
         if (tabStates[tabId] == TAB_STATE.ACTIVE)
-            chrome.browserAction.setIcon({path: "assets/images/logo_color_16.png"});
+            chrome.browserAction.setIcon({path: "assets/logo/logo_color_16.png"});
         else
-            chrome.browserAction.setIcon({path: "assets/images/logo_grayscale_16.png"});
+            chrome.browserAction.setIcon({path: "assets/logo/logo_grayscale_16.png"});
     }
 }
 
 /**
- * toggle footer and browserAction icon
+ * toggle widget and browserAction icon
  */
 chrome.browserAction.onClicked.addListener(function(tab) {
     var tabAction = toggleState(tab.id);
@@ -108,28 +106,26 @@ function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
         chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"}, function() {
-            chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
             chrome.tabs.insertCSS(tabId, {file: "lib/font-awesome/css/font-awesome.css"});
             chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
-            chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.min.js"});
             //chrome.tabs.executeScript(null, {file: "lib/FileSaver.min.js"});
             chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-ui.min.js"});
-            chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
+            chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.scrollstop.min.js"});
             chrome.tabs.executeScript(null, {file: "lib/mousetrap.min.js"}, function() {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/hotkeys.js"});
             });
             chrome.tabs.insertCSS(tabId, {file: "assets/css/style.css"});
-            chrome.tabs.executeScript(null, {file: "app/contentScript/dataStructures/dom.js"}, function() {
-                // web view scripts
-                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webView.js"}, function() {
-                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function() {
-                        if (chrome.runtime.lastError) {console.error(chrome.runtime.lastError.message);}
-                    });
-                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/popOver.js"});
-                });
-                // TODO grid view scripts
 
+            // web view scripts
+            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webView.js"}, function() {
+                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function() {
+                    if (chrome.runtime.lastError) {console.error(chrome.runtime.lastError.message);}
+                });
+                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"});
             });
+
+            // TODO grid view scripts
+            // chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
         });
     }
 
@@ -155,6 +151,11 @@ chrome.runtime.onMessage.addListener(
         console.log("Message from tab " + senderTabId + " content script:" + sender.tab.url);
         // handle hotkeys
         if (request.type == "hotkey") {
+            /**
+             * VIPS tree not supported anymore
+             * Comment stub below provided as an example how to handle hot keys request using message passing
+             */
+            /*
             // switch to vips tree
             if (request.event == "ctrl+shift+v") {
                 if (senderTabId == activeTabId) {
@@ -165,36 +166,7 @@ chrome.runtime.onMessage.addListener(
                                 // remove listener
                                 chrome.tabs.onUpdated.removeListener(reExecuteScripts);
                                 // re-execute scripts
-                                chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"}, function() {
-                                    chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
-                                    chrome.tabs.insertCSS(tabId, {file: "lib/font-awesome/css/font-awesome.css"});
-                                    chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
-                                    chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.min.js"});
-                                    chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-ui.min.js"});
-                                    chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
-                                    chrome.tabs.executeScript(null, {file: "lib/mousetrap.min.js"}, function() {
-                                        chrome.tabs.executeScript(null, {file: "app/contentScript/hotkeys.js"});
-                                    });
-                                    chrome.tabs.insertCSS(senderTabId, {file: "assets/css/style.css"});
-
-                                    // load vips api
-                                    chrome.tabs.executeScript(null, {file: "lib/TreeModel.js"});
-                                    chrome.tabs.executeScript(null, {file: "app/contentScript/dataStructures/vips.js"}, function() {
-                                        // web view scripts
-                                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webView.js"}, function() {
-                                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"});
-                                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/popOver.js"});
-                                            // send message to web view to switch to vips tree
-                                            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                                                chrome.tabs.sendMessage(tabs[0].id, {type: "actionRequired", event: "switch to vips"}, function(response) {
-                                                    console.log("Received response from webView.js for tab " + senderTabId + " : " + response);
-                                                });
-                                            });
-                                        });
-                                        // TODO grid view scripts
-
-                                    });
-                                });
+                                // CODE REMOVED
                             }
                         });
                     });
@@ -203,5 +175,6 @@ chrome.runtime.onMessage.addListener(
                     sendResponse("Tab must be in focus to request switch to VIPS tree");
                 }
             }
+            */
         }
     });

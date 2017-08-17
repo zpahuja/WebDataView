@@ -1,0 +1,109 @@
+/*
+ * floating widget for web view
+ */
+
+#draggable-fullsize-container {
+    width: 100%;
+    height: 100%;
+}
+
+.webdataview .widget {
+    display-inside: inline-block;
+    text-align: left;
+    margin-top: 18px;
+}
+.webdataview .widget-buttons {
+    float: left;
+    vertical-align: middle;
+}
+.webdataview div.widget-labels {
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 77%;
+    float: left;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.webdataview div.widget-labels li {
+    font-family: 'Proxima Nova Alt Regular';
+    display: inline-block;
+    text-align: center;
+    font-size: 18px;
+    color: #969696;
+    margin-right: 15px;
+    letter-spacing: 0.1px;
+}
+.webdataview div.widget-vertical-separator {
+    border-left: 1px solid rgba(174, 174, 174, 0.3);
+    height: 24px;
+    float: left;
+    margin: auto 12px;
+}
+.webdataview .widget-label-circle-svg {
+    margin-right: 7px;
+}
+.webdataview .widget-scroll-buttons {
+    float: right;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/*
+ * Custom scrollbar for widget labels
+ * Uncomment below to remove custom scroll bar
+ */
+.webdataview .widget-labels::-webkit-scrollbar {
+    height: 2px;
+}
+.webdataview .widget-labels::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+    outline: 2px solid #e6e6e6;
+    -webkit-transition: background-color 0.5s ease-in-out;
+}
+.webdataview .show-scrollbar ::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+}
+
+/*
+ * font awesome
+ */
+.webdataview .fa-fw-lg {
+    width: 1.7em;
+    text-align: center;
+    font-size: 1.5em;
+}
+.webdataview .fa-fw-widget-icon {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.webdataview .fa-globe {
+    background: -webkit-linear-gradient(left, #4568DC, #B06AB3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
+}
+.webdataview .fa-table {
+    background: -webkit-linear-gradient(left, #B06AB3, #c33764, orange);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
+}
+
+/*
+ * font path
+ */
+@font-face {
+    font-family: 'Proxima Nova Alt Regular';
+    src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Mark Simonson - Proxima Nova Alt Regular-webfont.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Proxima Nova Thin';
+    src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Mark Simonson - Proxima Nova Thin-webfont.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

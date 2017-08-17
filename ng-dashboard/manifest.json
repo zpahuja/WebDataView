@@ -7,11 +7,11 @@
 
   "browser_action" : {
     "default_icon"  : {
-      "16" : "assets/images/logo_grayscale_16.png",
-      "19" : "assets/images/logo_grayscale_19.png",
-      "38" : "assets/images/logo_grayscale_38.png",
-      "48" : "assets/images/logo_color_48.png",
-      "128": "assets/images/logo_color_128.png"
+      "16" : "assets/logo/logo_grayscale_16.png",
+      "19" : "assets/logo/logo_grayscale_19.png",
+      "38" : "assets/logo/logo_grayscale_38.png",
+      "48" : "assets/logo/logo_color_48.png",
+      "128": "assets/logo/logo_color_128.png"
     }
   },
 
@@ -29,9 +29,10 @@
 
   "web_accessible_resources": [
     "app/contentScript/*",
-    "app/contentScript/webView/*",
     "lib/font-awesome/fonts/*",
-    "assets/*"
+    "lib/boundary/*",
+    "assets/*",
+    "lib/font-awesome/css/font-awesome.css"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
@@ -41,7 +42,15 @@
   "content_scripts": [
       {
         "matches" : ["<all_urls>"],
-        "js"      : ["lib/jquery/jquery-3.1.1.min.js"]
+        "js"      : [
+          "lib/jquery/jquery-3.1.1.min.js",
+          "lib/boundary/boundary.js"
+        ],
+        "css"     : [
+          "lib/boundary/boundary.css",
+          "assets/css/boundary-box.css"
+        ],
+        "all_frames": false
       }
   ],
 

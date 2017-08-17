@@ -1,3 +1,6 @@
+// VIPS is no longer supported
+
+/*
 // switch to vips tree from dom
 Mousetrap.bind(['command+shift+v', 'ctrl+shift+v'], function(e, combo) {
     console.log("HOTKEY " + combo);
@@ -6,4 +9,4 @@ Mousetrap.bind(['command+shift+v', 'ctrl+shift+v'], function(e, combo) {
     });
     return false;
 });
-
+*/

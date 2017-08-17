@@ -23,7 +23,7 @@
     var defaultsForToJSON = {
         absolutePaths: [ "action", "data", "href", "src" ],
         attributes: false,
-        computedStyle: true,
+        computedStyle: false,
         cull: true,
         deep: true,
         domProperties: true,
