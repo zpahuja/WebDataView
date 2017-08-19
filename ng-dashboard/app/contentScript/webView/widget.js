@@ -12,23 +12,26 @@ Boundary.loadBoxCSS('#webdataview-floating-widget', chrome.extension.getURL('ass
 Boundary.loadBoxCSS('#webdataview-floating-widget', chrome.extension.getURL('lib/font-awesome/css/font-awesome.css'));
 
 // inject widget html
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
     box.load(chrome.extension.getURL("app/contentScript/webView/widget.html"), function() {
         // make widget draggable
+        //$('#webdataview-draggable-widget-container').draggable({ scroll: "false", iframeFix: true });
+
         Boundary.findElemInBox('#draggable-fullsize-container', '#webdataview-floating-widget').mousedown(function (e) {
-            var startX = e.pageX;
-            var startY = e.pageY;
-            $(this).mousemove(function (event) {
-                var offset = $('#webdataview-draggable-widget-container').offset();
-                $('#webdataview-draggable-widget-container').offset({top: offset.top + event.pageY - startY, left: offset.left + event.pageX - startX});
-                $('#webdataview-floating-widget').offset($('#webdataview-draggable-widget-container').offset());
-                startX = event.pageX;
-                startY = event.pageY;
+            var start_coords = {};
+            var container_offset = $('#webdataview-draggable-widget-container').offset();
+            $(document).mousemove(function (event) {
+                if(!start_coords.x) {
+                    start_coords.x = event.pageX;
+                    start_coords.y = event.pageY;
+                }
+                console.log({top: container_offset.top + event.pageY - start_coords.y, left: container_offset.left + event.pageX - start_coords.x});
+                $('#webdataview-draggable-widget-container').offset({top: container_offset.top + event.pageY - start_coords.y, left: container_offset.left + event.pageX - start_coords.x});
             });
         }).mouseup(function () {
-            $(this).unbind('mousemove');
+            $(document).unbind('mousemove');
         }).mouseout(function () {
-            $(this).unbind('mousemove');
+            $(document).unbind('mousemove');
         });
 
         // set img source for left and right chevron arrow buttons in widget
@@ -44,7 +47,42 @@ jQuery(document).ready(function($){
         });
 
         // 'move' cursor icon for widget for dragging
-        Boundary.findElemInBox('#draggable-fullsize-container', '#webdataview-floating-widget').css({ "cursor": "move" });
-        Boundary.findElemInBox('#draggable-fullsize-container', '#webdataview-floating-widget').children().css({ "cursor": "default" });
+        var widget_container_selector = Boundary.findElemInBox('#draggable-fullsize-container', '#webdataview-floating-widget');
+        var widget_container_children_selector= widget_container_selector.children();
+        widget_container_selector.css({ "cursor": "move" });
+        widget_container_children_selector.css({ "cursor": "default"});
+
+        /*
+        widget_container_selector.hover(
+            function() {
+                $('#webdataview-iframe-overlay').css( {'z-index': 2147483646} );
+            }, function() {
+                $('#webdataview-iframe-overlay').css( {'z-index': 2147483644} );
+            }
+        );
+
+        widget_container_children_selector.hover(
+            function() {
+                $('#webdataview-iframe-overlay').css( {'z-index': 2147483644} );
+            }
+        );
+        */
+
+        /*
+         widget_container_selector.mousedown(
+         function() { $('#webdataview-iframe-overlay').css( {'z-index': 2147483646} ).trigger( "mousedown" );}
+         );
+
+         $('#webdataview-iframe-overlay').mouseup(
+         function() { $('#webdataview-iframe-overlay').css( {'z-index': 2147483644} ); }
+         );
+
+         widget_container_children_selector.mousedown(
+         function() {
+         $('#webdataview-iframe-overlay').css( {'z-index': 2147483644} );
+         }
+         );
+         */
+
     });
 });

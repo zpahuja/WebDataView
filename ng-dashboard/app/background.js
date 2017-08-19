@@ -110,6 +110,7 @@ function tabController(tabId, tabAction, callback) {
             chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
             //chrome.tabs.executeScript(null, {file: "lib/FileSaver.min.js"});
             chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-ui.min.js"});
+            chrome.tabs.executeScript(null, {file: "lib/dragiframe.js"});
             chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.scrollstop.min.js"});
             chrome.tabs.executeScript(null, {file: "lib/mousetrap.min.js"}, function() {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/hotkeys.js"});

@@ -1,4 +1,4 @@
-#webdataview-draggable-widget-container, #webdataview-floating-widget {
+#webdataview-draggable-widget-container {
     position: fixed;
     width: 50%;
     min-width: 250px;
@@ -7,12 +7,21 @@
     border-radius: 5px;
     margin: auto;
     right: 25%;
-    z-index: 2147483646;
-    background-color: white;
+    z-index: 2147483647;
+    background-color: transparent;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
     -webkit-transition: box-shadow 0.5s ease-in-out;
 }
 
 #webdataview-draggable-widget-container:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 16px 16px 38px;
+}
+
+#webdataview-floating-widget {
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+    z-index: 2147483647;
+    position: absolute !important;
+    background-color: white !important;
 }
