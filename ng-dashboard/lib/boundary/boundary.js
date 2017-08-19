@@ -2,7 +2,8 @@ var Boundary = {};
 
 /******************************** create a box ********************************/
 
-Boundary.createBox = function(id, className, appendToElemSelector) {
+Boundary.createBox = function(id, className, appendToSelector) {
+    appendToSelector = appendToSelector ? appendToSelector : 'body';
 	var attrs = {};
 	if (id) {
 		attrs.id = id;
@@ -10,12 +11,7 @@ Boundary.createBox = function(id, className, appendToElemSelector) {
 	attrs.class = className ? "boundary-default-iframe " + className : "boundary-default-iframe";
 	var iframe = $('<iframe />', attrs);
 	if (window.self === window.top) {
-		if (appendToElemSelector) {
-			$(appendToElemSelector).append(iframe);
-		}
-		else {
-			$("body").append(iframe);
-		}
+        $(appendToSelector).append(iframe);
 	}
 	iframe.contents().find("head").append($("<link/>", {
 		rel: "stylesheet",

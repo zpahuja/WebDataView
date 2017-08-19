@@ -20,7 +20,7 @@ var DIF_iframeMouseDownTop = new Object();
 var DIF_pageMouseDownLeft = new Object();
 var DIF_pageMouseDownTop = new Object();
 var DIF_handles = new Object();
-var DIF_highestZIndex=99;
+var DIF_highestZIndex= 2147483647;
 var DIF_raiseSelectedIframe=false;
 var DIF_allowDragOffScreen=false;
 

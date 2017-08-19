@@ -1,22 +1,33 @@
-// create div containing iFrame
-var body = document.getElementsByTagName("body")[0];
-var container_div = document.createElement("div");
-container_div.id = "webdataview-draggable-widget-container";
-body.appendChild(container_div);
+// test
+var testBox = Boundary.createBox('webdataview-test');
+$('#webdataview-test').css({'width':'200px','height':'200px','position':'absolute','top':150,'left':50, 'background-color': 'yellow'});
 
 // create iFrame box
-var box = Boundary.createBox('webdataview-floating-widget', undefined, '#webdataview-draggable-widget-container');
+var box = Boundary.createBox('webdataview-floating-widget');
 
 // load iFrame CSS
 Boundary.loadBoxCSS('#webdataview-floating-widget', chrome.extension.getURL('assets/css/boundary-box-elements.css'));
 Boundary.loadBoxCSS('#webdataview-floating-widget', chrome.extension.getURL('lib/font-awesome/css/font-awesome.css'));
+Boundary.loadBoxJS('#webdataview-floating-widget', chrome.extension.getURL('lib/dragiframe.js'));
+Boundary.loadBoxJS('#webdataview-test', chrome.extension.getURL('lib/dragiframe.js'));
+Boundary.loadBoxJS('#webdataview-test', chrome.extension.getURL('lib/jquery/jquery-3.1.1.min.js'));
+Boundary.loadBoxJS('#webdataview-test', chrome.extension.getURL('lib/boundary/boundary.js'));
 
 // inject widget html
 jQuery(document).ready(function($) {
+    testBox.load(chrome.extension.getURL("app/contentScript/webView/iframe.html"), function() {
+        console.log('body loaded');
+        testBox.ready(function(){
+            console.log('body ready');
+            Boundary.loadBoxJS('#webdataview-test', chrome.extension.getURL('app/contentScript/webView/iframe_onload.js'));
+        });
+    });
+
     box.load(chrome.extension.getURL("app/contentScript/webView/widget.html"), function() {
         // make widget draggable
         //$('#webdataview-draggable-widget-container').draggable({ scroll: "false", iframeFix: true });
 
+        /*
         Boundary.findElemInBox('#draggable-fullsize-container', '#webdataview-floating-widget').mousedown(function (e) {
             var start_coords = {};
             var container_offset = $('#webdataview-draggable-widget-container').offset();
@@ -33,6 +44,7 @@ jQuery(document).ready(function($) {
         }).mouseout(function () {
             $(document).unbind('mousemove');
         });
+        */
 
         // set img source for left and right chevron arrow buttons in widget
         Boundary.findElemInBox('#widget-left-arrow', '#webdataview-floating-widget').attr('src', chrome.extension.getURL("assets/icons/chevron-left.svg"));
