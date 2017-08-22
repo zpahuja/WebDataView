@@ -16,3 +16,22 @@
 #webdataview-draggable-widget-container:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 16px 16px 38px;
 }
+
+#webview-iframe {
+    position: fixed;
+    width: 50%;
+    min-width: 250px;
+    height: 60px;
+    top: 10%;
+    border-radius: 5px;
+    margin: auto;
+    right: 25%;
+    z-index: 2147483646;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    -webkit-transition: box-shadow 0.5s ease-in-out;
+}
+
+#webview-iframe:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 16px 16px 38px;
+}

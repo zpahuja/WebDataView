@@ -31,9 +31,7 @@
     "app/contentScript/*",
     "lib/font-awesome/fonts/*",
     "lib/boundary/*",
-    "assets/*",
-    "lib/font-awesome/css/font-awesome.css",
-    "lib/*"
+    "assets/*"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
