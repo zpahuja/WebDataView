@@ -29,25 +29,28 @@
 
   "web_accessible_resources": [
     "app/contentScript/*",
-    "lib/font-awesome/fonts/*",
-    "lib/boundary/*",
+    "lib/*",
     "assets/*"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
 
-  // add any library here if it must always be executed upon every page load even before extension icon is clicked
-  // "js"      : ["lib/jquery/jquery-3.1.1.min.js", "lib/jquery/jquery.dataTables.min.js"]
+   // add any library here if it must always be executed upon every page load even before extension icon is clicked
   "content_scripts": [
       {
         "matches" : ["<all_urls>"],
         "js"      : [
           "lib/jquery/jquery-3.1.1.min.js",
-          "lib/boundary/boundary.js"
+          "lib/boundary/boundary.js",
+          "lib/jquery/jquery-ui.min.js",
+          "lib/ntc.js",
+          "lib/mousetrap.min.js",
+          "lib/jquery/jquery.scrollstop.min.js"
         ],
         "css"     : [
           "lib/boundary/boundary.css",
-          "assets/css/boundary-box.css"
+          "assets/css/boundary-box.css",
+          "lib/jquery/jquery-ui.css"
         ],
         "all_frames": false
       }

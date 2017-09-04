@@ -1,37 +1,28 @@
-#webdataview-floating-widget {
-    position: absolute;
-    width: 50%;
-    min-width: 250px;
-    height: 60px;
-    top: 10%;
-    border-radius: 5px;
-    margin: auto;
-    right: 25%;
-    z-index: 2147483647;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-    -webkit-transition: box-shadow 0.5s ease-in-out;
-}
-
-#webdataview-draggable-widget-container:hover {
-    box-shadow: rgba(0, 0, 0, 0.3) 16px 16px 38px;
-}
-
-#webview-iframe {
+.webdataview #webdataview-floating-widget {
+    all: initial;
     position: fixed;
     width: 50%;
     min-width: 250px;
     height: 60px;
+    left: 25%;
     top: 10%;
-    border-radius: 5px;
+    border-radius: 8px;
     margin: auto;
-    right: 25%;
-    z-index: 2147483646;
+    z-index: 2147483647;
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 15px;
     -webkit-transition: box-shadow 0.5s ease-in-out;
+    cursor: move;
 }
 
-#webview-iframe:hover {
-    box-shadow: rgba(0, 0, 0, 0.3) 16px 16px 38px;
+.webdataview #webdataview-floating-widget:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 12px 12px 38px;
+}
+
+.webdataview #webdataview-widget-iframe {
+    all: initial;
+    position: absolute;
+    height: 35px;
+    margin: auto 20px;
+    cursor: default;
 }

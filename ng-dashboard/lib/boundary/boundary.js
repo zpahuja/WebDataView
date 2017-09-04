@@ -24,21 +24,27 @@ Boundary.createBox = function(id, className, appendToSelector) {
 
 /******************************** style elements within a box ********************************/
 
-Boundary.loadBoxCSS = function(boxSelector, CSSPath) {
+Boundary.loadBoxCSS = function(boxSelector, CSSPath, callback) {
 	var head = $(boxSelector).contents().find("head");
 	head.append($("<link/>", {
 		rel: "stylesheet",
 		href: CSSPath,
 		type: "text/css"
 	}));
+	if (callback && typeof(callback) === 'function') {
+		callback();
+	}
 };
 
-Boundary.loadBoxJS = function(boxSelector, JSPath) {
+Boundary.loadBoxJS = function(boxSelector, JSPath, callback) {
 	var head = $(boxSelector).contents().find("head");
 	head.append($("<link/>", {
 		href: JSPath,
 		type: "text/javascript"
 	}));
+	if (callback && typeof(callback) === 'function') {
+		callback();
+	}
 };
 
 /******************************** find/modify a specific boxe ********************************/

@@ -105,29 +105,26 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
-        chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"}, function() {
-            chrome.tabs.insertCSS(tabId, {file: "lib/font-awesome/css/font-awesome.css"});
-            chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
-            //chrome.tabs.executeScript(null, {file: "lib/FileSaver.min.js"});
-            chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-ui.min.js"});
-            //chrome.tabs.executeScript(null, {file: "lib/dragiframe.js"});
-            chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.scrollstop.min.js"});
-            chrome.tabs.executeScript(null, {file: "lib/mousetrap.min.js"}, function() {
-                chrome.tabs.executeScript(null, {file: "app/contentScript/hotkeys.js"});
-            });
-            chrome.tabs.insertCSS(tabId, {file: "assets/css/style.css"});
+        chrome.tabs.executeScript(null, {file: "app/contentScript/hotkeys.js"});
+        chrome.tabs.insertCSS(tabId, {file: "assets/css/style.css"});
 
-            // web view scripts
-            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webView.js"}, function() {
-                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function() {
-                    if (chrome.runtime.lastError) {console.error(chrome.runtime.lastError.message);}
+        // web view scripts
+        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewUtilities.js"}, function() {
+            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewMessagePassingHandler.js"}, function () {
+                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
+                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
+                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
+                            if (chrome.runtime.lastError) {
+                                console.error(chrome.runtime.lastError.message);
+                            }
+                        });
+                    });
                 });
-                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"});
             });
-
-            // TODO grid view scripts
-            // chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
         });
+
+        // TODO grid view scripts
+        // chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
     }
 
     // resume
