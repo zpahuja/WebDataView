@@ -41,16 +41,15 @@
         "matches" : ["<all_urls>"],
         "js"      : [
           "lib/jquery/jquery-3.1.1.min.js",
-          "lib/boundary/boundary.js",
+          "app/contentScript/periphery/periphery.js",
           "lib/jquery/jquery-ui.min.js",
           "lib/ntc.js",
           "lib/mousetrap.min.js",
           "lib/jquery/jquery.scrollstop.min.js"
         ],
         "css"     : [
-          "lib/boundary/boundary.css",
-          "assets/css/boundary-box.css",
-          "lib/jquery/jquery-ui.css"
+          "app/contentScript/periphery/periphery.css",
+          "assets/css/periphery-external.css"
         ],
         "all_frames": false
       }

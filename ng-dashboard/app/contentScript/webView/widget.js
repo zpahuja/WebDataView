@@ -13,7 +13,7 @@ web_data_view_widget.id = 'webdataview-floating-widget';
 document.getElementById('webdataview-widget-container').appendChild(web_data_view_widget);
 
 // add floating widget iframe
-var widget_iframe = Boundary.createBox('webdataview-widget-iframe', 'webdataview-iframe', '#webdataview-floating-widget');
+var widget_iframe = Periphery.createBox('webdataview-widget-iframe', 'webdataview-iframe', '#webdataview-floating-widget');
 
 /**
  * add scripts to widget <head> tag
@@ -57,9 +57,9 @@ $(document).ready(function(){
     $(window).resize(setIframeDimensions);
 
     // make sure JS libraries and CSS load before body's HTML using callbacks
-    Boundary.loadBoxJS('#webdataview-widget-iframe', chrome.extension.getURL('lib/jquery/jquery-3.1.1.min.js'), function() {
-        Boundary.loadBoxCSS('#webdataview-widget-iframe', chrome.extension.getURL('lib/font-awesome/css/font-awesome.css'), function() {
-            Boundary.loadBoxCSS('#webdataview-widget-iframe', chrome.extension.getURL('assets/css/boundary-box-elements.css'), function() {
+    Periphery.loadBoxJS('#webdataview-widget-iframe', chrome.extension.getURL('lib/jquery/jquery-3.1.1.min.js'), function() {
+        Periphery.loadBoxCSS('#webdataview-widget-iframe', chrome.extension.getURL('lib/font-awesome/css/font-awesome.css'), function() {
+            Periphery.loadBoxCSS('#webdataview-widget-iframe', chrome.extension.getURL('assets/css/periphery-internal.css'), function() {
 
                 /**
                  * load widget html
@@ -68,7 +68,7 @@ $(document).ready(function(){
                 widget_iframe.load(chrome.extension.getURL("app/contentScript/webView/widget.html"), function() {
                     widget_iframe.ready(function() {
                         // hide left menu buttons (scroll buttons and download button)
-                        var widget_download_button = Boundary.findElemInBox('#widget-download-data', '#webdataview-widget-iframe');
+                        var widget_download_button = Periphery.findElemInBox('#widget-download-data', '#webdataview-widget-iframe');
                         widget_download_button.hide();
 
                         // hide/show download button on hover
@@ -95,12 +95,12 @@ $(document).ready(function(){
                             }
                         );
 
-                        var widget_label_selector = Boundary.findElemInBox('.widget-labels', '#webdataview-widget-iframe');
+                        var widget_label_selector = Periphery.findElemInBox('.widget-labels', '#webdataview-widget-iframe');
 
                         // set widget label width
                         function setWidgetLabelsWidth() {
-                            var vert_sep_selector = Boundary.findElemInBox('.widget-vertical-separator', '#webdataview-widget-iframe');
-                            var scroll_btn_selector = Boundary.findElemInBox('.widget-scroll-buttons', '#webdataview-widget-iframe');
+                            var vert_sep_selector = Periphery.findElemInBox('.widget-vertical-separator', '#webdataview-widget-iframe');
+                            var scroll_btn_selector = Periphery.findElemInBox('.widget-scroll-buttons', '#webdataview-widget-iframe');
                             widget_label_selector.width(parseFloat(scroll_btn_selector.offset().left) - (parseFloat(vert_sep_selector.offset().left) + parseFloat(vert_sep_selector.outerWidth()) + parseFloat(vert_sep_selector.css('margin-right'))) -2);
                         }
                         setTimeout(function() { setWidgetLabelsWidth(); }, 100);
@@ -108,14 +108,14 @@ $(document).ready(function(){
 
                         // show/ hide scrollbar
                         widget_label_selector.on("scrollstart", function() {
-                            Boundary.findElemInBox('#web-view-widget', '#webdataview-widget-iframe').addClass('show-scrollbar');
+                            Periphery.findElemInBox('#web-view-widget', '#webdataview-widget-iframe').addClass('show-scrollbar');
                         });
                         widget_label_selector.on("scrollstop", function() {
-                            Boundary.findElemInBox('#web-view-widget', '#webdataview-widget-iframe').removeClass('show-scrollbar');
+                            Periphery.findElemInBox('#web-view-widget', '#webdataview-widget-iframe').removeClass('show-scrollbar');
                         });
 
                         // position shadow inset on top of widget labels
-                        var widget_labels_shadow_box = Boundary.findElemInBox('.widget-labels-shadow-box', '#webdataview-widget-iframe');
+                        var widget_labels_shadow_box = Periphery.findElemInBox('.widget-labels-shadow-box', '#webdataview-widget-iframe');
                         function positionShadowOnWidgetLabels() {
                             widget_labels_shadow_box.css({
                                 'top': parseFloat(widget_label_selector.offset().top) - 20,
