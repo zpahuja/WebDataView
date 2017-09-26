@@ -41,15 +41,16 @@
         "matches" : ["<all_urls>"],
         "js"      : [
           "lib/jquery/jquery-3.1.1.min.js",
-          "app/contentScript/periphery/periphery.js",
           "lib/jquery/jquery-ui.min.js",
+          "app/contentScript/webView/contentFrame/contentFrame.js",
           "lib/ntc.js",
           "lib/mousetrap.min.js",
-          "lib/jquery/jquery.scrollstop.min.js"
+          "lib/jquery/jquery.scrollstop.min.js",
+          "lib/popper/popper.js"
         ],
         "css"     : [
-          "app/contentScript/periphery/periphery.css",
-          "assets/css/periphery-external.css"
+          "app/contentScript/webView/contentFrame/contentFrame.css",
+          "assets/css/content-frame-external.css"
         ],
         "all_frames": false
       }

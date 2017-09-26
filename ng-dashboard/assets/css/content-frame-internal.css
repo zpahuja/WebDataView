@@ -4,6 +4,8 @@
 
 body {
     overflow-y: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 #iframe-fullsize-container {
