@@ -1,0 +1,13 @@
+.movable {
+    border:1px solid #ccc;
+    background-color: #eaeaea;
+    margin: 2px;
+    padding: 2px;
+}
+
+/*.handle { background: #999999; position: absolute; left: 0; top: 0; bottom: 0; padding:8px; }*/
+.handle { background: #999999; position: absolute; }
+.ui-selecting { background: #eee; }
+.ui-selecting .handle { background: #ddd; }
+.ui-selected { background: #def; }
+.ui-selected .handle { background: #cde; }

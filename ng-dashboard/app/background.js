@@ -108,7 +108,7 @@ function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
         chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"}, function() {
-            chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
+            //chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
             chrome.tabs.insertCSS(tabId, {file: "lib/font-awesome/css/font-awesome.css"});
             chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
             chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.min.js"});
@@ -124,10 +124,13 @@ function tabController(tabId, tabAction, callback) {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webView.js"}, function() {
                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function() {
                         if (chrome.runtime.lastError) {console.error(chrome.runtime.lastError.message);}
+                        chrome.tabs.executeScript(null, {file: 'app/contentScript/gridView/gridview-button.js'});
                     });
                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/popOver.js"});
                 });
                 // TODO grid view scripts
+                chrome.tabs.executeScript(null, {file: 'app/contentScript/gridView/gridview-trigger.js'}, function () {
+                });
 
             });
         });
@@ -166,7 +169,7 @@ chrome.runtime.onMessage.addListener(
                                 chrome.tabs.onUpdated.removeListener(reExecuteScripts);
                                 // re-execute scripts
                                 chrome.tabs.executeScript(null, {file: "lib/jquery/jquery-3.1.1.min.js"}, function() {
-                                    chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
+                                    //chrome.tabs.insertCSS(tabId, {file: "lib/bootstrap/css/bootstrap.min.css"});
                                     chrome.tabs.insertCSS(tabId, {file: "lib/font-awesome/css/font-awesome.css"});
                                     chrome.tabs.executeScript(null, {file: "lib/ntc.js"});
                                     chrome.tabs.executeScript(null, {file: "lib/bootstrap/js/bootstrap.min.js"});
@@ -203,5 +206,41 @@ chrome.runtime.onMessage.addListener(
                     sendResponse("Tab must be in focus to request switch to VIPS tree");
                 }
             }
+        }
+    });
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.command == "trigger-gridview") {
+            var the_url = "";
+            var the_query = "";
+            // var the_query = "query1";
+            chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+                the_url = tabs[0].url;
+                console.log(the_url);
+                // if (the_url.indexOf("edu") !== -1 && the_url.indexOf("illinois") !== -1 && the_url.indexOf("directory") !== -1) {
+                //     the_query = "query4";
+                // } else if (the_url.indexOf("edu") !== -1 || the_url.indexOf("org") !== -1) {
+                //     the_query = "query3";
+                // }
+                console.log(the_query);
+                console.log("Getting from Flask...");
+                //$.get( "http://crow.cs.illinois.edu:5000", { url: "https://www.walmart.com/search/?query=laundry&cat_id=0", query: "query1" }, function( data ) {
+                $.get( "http://crow.cs.illinois.edu:5000", { url: the_url, query: the_query }, function( data ) {
+                    console.log( "Data Loaded: " + data );
+                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                        chrome.tabs.sendMessage(tabs[0].id, {greeting: data}, function(response) {
+                            //console.log(response.farewell);
+                            console.log("creating popup...");
+                            chrome.windows.create({
+                                type: 'popup',
+                                url: chrome.extension.getURL('gridView/gridview.html')
+                            }, function (newWindow) {
+                                console.log(newWindow);
+                            });
+                        });
+                    });
+                });
+            });
         }
     });

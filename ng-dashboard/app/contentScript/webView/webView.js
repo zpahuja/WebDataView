@@ -1,6 +1,10 @@
 // get DOM tree flattened
 if (typeof domJSON !== 'undefined') {
-    globalBlocks = domJSON.toJSONList(document.documentElement);
+
+    // console.time('encryption');
+    // console.log("domjsonlist");
+    // globalBlocks = domJSON.toJSONList(document.documentElement);
+    // console.timeEnd('encryption');
 }
 
 // listen for message to switch to vips

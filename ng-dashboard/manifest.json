@@ -16,7 +16,7 @@
   },
 
   "background" : {
-    "scripts" : ["app/background.js"]
+    "scripts" : ["lib/jquery/jquery-3.1.1.min.js", "app/background.js"]
   },
 
   "permissions": [
@@ -30,8 +30,10 @@
   "web_accessible_resources": [
     "app/contentScript/*",
     "app/contentScript/webView/*",
+    "app/contentScript/gridView/*",
     "lib/font-awesome/fonts/*",
-    "assets/*"
+    "assets/*",
+    "lib/*"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
