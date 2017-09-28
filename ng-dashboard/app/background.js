@@ -143,7 +143,7 @@ function tabController(tabId, tabAction, callback) {
 
 
 /**
- * message listener and handler
+ * message listener and handler handle hot key
  */
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {

@@ -1,11 +1,9 @@
-
 /*
  // html for popover buttons
  var popover_html = '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label"></i>' +
  '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
  '<i class="fa fa-link fa-fw-lg" id="web-view-merge"></i>' +
  '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>';
-
  // set popover attributes
  for (var i = 0; i < globalBlocks.length; i++) {
  var box = globalBlocks[i]['-att-box'];
@@ -64,9 +62,9 @@ class TestTooltip {
                 for (let j=0; j < collected_data.length; j++) {
                     let keys = Object.keys(collected_data[j]);
                     keys.forEach(function(key) {
-                       if (collected_data[j][key] == selected_nodes[i]) {
+                        if (collected_data[j][key] == selected_nodes[i]) {
                             delete collected_data[j][key];
-                       }
+                        }
                     });
                 }
             }
@@ -80,7 +78,7 @@ class TestTooltip {
             for (let i=0; i<4; i++) {
                 assign_color_html += "<tr>"
                 for (let j=0; j<6; j++) {
-                    assign_color_html += "<td class=\"web-view-assign-color\" style=\"cursor:pointer;background-color: rgb" + COLORS[i*6+j]+ "\"></td>"
+                    assign_color_html += "<td class=\"web-view-assign-color\" style=\"cursor:pointer;background-color: rgb(255,255,255)" + COLORS[i*6+j]+ "\"></td>"
                 }
                 assign_color_html += "</tr>"
             }
@@ -122,20 +120,20 @@ class TestTooltip {
                 }
             });
             /*
-            for (let i = 0; i < selected_nodes.length; i++) {
-                selected_nodes[i].style.outline = "none";
-                for (let j=0; j < collected_data.length; j++) {
-                    let keys = Object.keys(collected_data[j]);
-                    keys.forEach(function(key) {
-                        if (collected_data[j][key] == selected_nodes[i]) {
-                            delete collected_data[j][key];
-                        }
-                    });
-                }
-            }
-            selected_nodes = [];
-            self.instance.hide();
-            */
+             for (let i = 0; i < selected_nodes.length; i++) {
+             selected_nodes[i].style.outline = "none";
+             for (let j=0; j < collected_data.length; j++) {
+             let keys = Object.keys(collected_data[j]);
+             keys.forEach(function(key) {
+             if (collected_data[j][key] == selected_nodes[i]) {
+             delete collected_data[j][key];
+             }
+             });
+             }
+             }
+             selected_nodes = [];
+             self.instance.hide();
+             */
         });
     }
 
@@ -168,34 +166,32 @@ function selectionHandler() {
         return;
     }
     /*
-    var idx = getVipsIndexFromBoxId(event.target.id);
-    // if click outside of view, then deselect all elements, hide tooltip, empty selectedBlockIndices and return
-    if (!idx) {
-        deselectVipsBlockArray(selectedBlockIndices);
-        destroyTooltip();
-        selectedBlockIndices = [];
-        return;
-    }
-    var selectIndexColor = getClusterColorFromIndex(idx);
-
-    if (alignSelectionWithClusterClassFlag) {
-        alignWithSelectedBlockCluster(idx, selectIndexColor);
-        return;
-    }
-
-    // toggle Selection for an index that is already selected
-    if(selectedBlockIndices.indexOf(idx) != -1) {
-        deselectVipsBlock(idx);
-        // if no selected box, destroy tooltip
-        if (isEmptyArray(selectedBlockIndices))
-            destroyTooltip();
-    }
-    else {
-        event.target.style.border = "2px solid " + selectIndexColor;
-        selectedBlockIndices.push(idx);
-        updateTooltip(idx, selectIndexColor);
-    }
-    */
+     var idx = getVipsIndexFromBoxId(event.target.id);
+     // if click outside of view, then deselect all elements, hide tooltip, empty selectedBlockIndices and return
+     if (!idx) {
+     deselectVipsBlockArray(selectedBlockIndices);
+     destroyTooltip();
+     selectedBlockIndices = [];
+     return;
+     }
+     var selectIndexColor = getClusterColorFromIndex(idx);
+     if (alignSelectionWithClusterClassFlag) {
+     alignWithSelectedBlockCluster(idx, selectIndexColor);
+     return;
+     }
+     // toggle Selection for an index that is already selected
+     if(selectedBlockIndices.indexOf(idx) != -1) {
+     deselectVipsBlock(idx);
+     // if no selected box, destroy tooltip
+     if (isEmptyArray(selectedBlockIndices))
+     destroyTooltip();
+     }
+     else {
+     event.target.style.border = "2px solid " + selectIndexColor;
+     selectedBlockIndices.push(idx);
+     updateTooltip(idx, selectIndexColor);
+     }
+     */
     $('#webview-popper-container').remove();
 
     let tooltip_color = "rgb" + COLORS[used_col_idx];
@@ -383,9 +379,9 @@ function alignWithSelectedBlockCluster(idx, clusterColor) {
 function rgb2hex(rgb){
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
     return (rgb && rgb.length === 4) ? "#" +
-    ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-    ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
 appendLabel2Widget = function(labelName, labelColor) {
