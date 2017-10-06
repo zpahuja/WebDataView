@@ -31,13 +31,13 @@ $(document).ready(function(){
     // make widget draggable and resizable
     // stop callback very important for responsive-ness
     $('#webdataview-floating-widget').draggable({
-         containment: 'window',
-         scroll: false,
-         stop: function() {
-             $(this).css("left", parseFloat($(this).css("left")) / ($(window).width() / 100)+"%");
-             $(this).css("top", parseFloat($(this).css("top")) / ($(window).height() / 100)+"%");
-         }
-     }).resizable({
+        containment: 'window',
+        scroll: false,
+        stop: function() {
+            $(this).css("left", parseFloat($(this).css("left")) / ($(window).width() / 100)+"%");
+            $(this).css("top", parseFloat($(this).css("top")) / ($(window).height() / 100)+"%");
+        }
+    }).resizable({
         handles: 'e,w',
         minWidth: 250,
         stop: function() {
@@ -91,9 +91,9 @@ $(document).ready(function(){
                                 widget_download_button.hide(0, '', function() {
                                     // TODO use callback
                                     setWidgetLabelsWidth(/*function() {
-                                        console.log('callback called on hover end');
-                                        setTimeout(function() { positionShadowOnWidgetLabels(); }, 100);
-                                    }*/);
+                                     console.log('callback called on hover end');
+                                     setTimeout(function() { positionShadowOnWidgetLabels(); }, 100);
+                                     }*/);
                                     setTimeout(function() { positionShadowOnWidgetLabels(); }, 100);
                                 });
                             }
@@ -143,10 +143,10 @@ $(document).ready(function(){
                         };
 
                         /*
-                        for (var i = 0; i < 15; i++) {
-                            FloatingWidgetMenu.appendLabel('redy', 'red');
-                        }
-                        */
+                         for (var i = 0; i < 15; i++) {
+                         FloatingWidgetMenu.appendLabel('redy', 'red');
+                         }
+                         */
                     });
                 });
             });

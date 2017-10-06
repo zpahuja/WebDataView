@@ -114,10 +114,12 @@ function tabController(tabId, tabAction, callback) {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
                     chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
                         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
-                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
-                                if (chrome.runtime.lastError) {
-                                    console.error(chrome.runtime.lastError.message);
-                                }
+                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
+                                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
+                                    if (chrome.runtime.lastError) {
+                                        console.error(chrome.runtime.lastError.message);
+                                    }
+                                });
                             });
                         });
                     });
@@ -156,25 +158,25 @@ chrome.runtime.onMessage.addListener(
              * Comment stub below provided as an example how to handle hot keys request using message passing
              */
             /*
-            // switch to vips tree
-            if (request.event == "ctrl+shift+v") {
-                if (senderTabId == activeTabId) {
-                    chrome.tabs.reload(senderTabId, {bypassCache: false}, function() {
-                        // wait for tab to finish reloading
-                        chrome.tabs.onUpdated.addListener(function reExecuteScripts (tabId , info) {
-                            if (tabId == activeTabId && info.status === 'complete') {
-                                // remove listener
-                                chrome.tabs.onUpdated.removeListener(reExecuteScripts);
-                                // re-execute scripts
-                                // CODE REMOVED
-                            }
-                        });
-                    });
-                }
-                else {
-                    sendResponse("Tab must be in focus to request switch to VIPS tree");
-                }
-            }
-            */
+             // switch to vips tree
+             if (request.event == "ctrl+shift+v") {
+             if (senderTabId == activeTabId) {
+             chrome.tabs.reload(senderTabId, {bypassCache: false}, function() {
+             // wait for tab to finish reloading
+             chrome.tabs.onUpdated.addListener(function reExecuteScripts (tabId , info) {
+             if (tabId == activeTabId && info.status === 'complete') {
+             // remove listener
+             chrome.tabs.onUpdated.removeListener(reExecuteScripts);
+             // re-execute scripts
+             // CODE REMOVED
+             }
+             });
+             });
+             }
+             else {
+             sendResponse("Tab must be in focus to request switch to VIPS tree");
+             }
+             }
+             */
         }
     });

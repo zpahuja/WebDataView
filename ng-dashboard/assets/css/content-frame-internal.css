@@ -158,7 +158,6 @@ body {
     -webkit-text-fill-color: transparent;
     display: initial;
 }
-
 .webdataview .fa-chevron-right {
     background: linear-gradient(to left, rgb(210,210,210), rgb(240,240,240));
     -webkit-background-clip: text;
