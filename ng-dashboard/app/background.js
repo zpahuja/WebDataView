@@ -102,6 +102,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
  * @param tab
  * @param tabAction
  */
+
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {

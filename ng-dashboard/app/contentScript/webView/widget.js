@@ -139,7 +139,10 @@ $(document).ready(function(){
                          * params: label title and color in rgb, rgba, hex or name
                          */
                         FloatingWidgetMenu.appendLabel = function(labelName, labelColor) {
-                            widget_label_selector.find('ul').append('<li class="widget-labels-li" id = '+ labelColor +'> <svg class="widget-label-circle-svg" height="10" width="10"> <circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" /> </svg>'+ labelName +'</li>');
+                            widget_label_selector.find('ul').append('<li class="widget-labels-li" id = '+ labelColor +'>' +
+                                ' <svg class="widget-label-circle-svg" height="10" width="10"> ' +
+                                '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" /> ' +
+                                '</svg>'+ labelName +'</li>');
                         };
 
                         /*

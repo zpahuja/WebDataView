@@ -26,6 +26,7 @@ labels_list = [];
 
 class TestTooltip {
     constructor(referenceElement, color) {
+
         self.instance = new Tooltip(referenceElement, {
             title: '<div id="webview-popper-container"></div>',
             trigger: "click",
@@ -288,13 +289,6 @@ function getVipsIndexFromBoxId(strIdx) {
 }
 
 
-
-
-
-
-
-
-
 /*
  TODO
  * Deselect if clicked outside any of the boxes
@@ -384,11 +378,16 @@ function rgb2hex(rgb){
         ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
+
 appendLabel2Widget = function(labelName, labelColor) {
     labels_list.push(labelName);
     let labelId = labelColor.substring(4, labelColor.length - 1).replace(',','-').replace(',','-');
-    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').append('<li class="widget-labels-li" id = '+ labelId +'> <svg class="widget-label-circle-svg" height="10" width="10"> <circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" /> </svg>'+ labelName +'</li>');
-    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
+    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').append('' +
+        '<li class="widget-labels-li" id = '+ labelId +'> ' +
+        '<svg class="widget-label-circle-svg" height="10" width="10"> ' +
+        '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" />' +
+        ' </svg>'+ labelName +'</li>');
+    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).hover(function(e) {
         let circle = $(e.target).find('svg').find('circle');
         let circle_fill_color = circle.css("fill") == "rgb(255, 255, 255)" ? labelColor : "rgb(255, 255, 255)";
         circle.css({"fill": circle_fill_color});
@@ -399,11 +398,58 @@ appendLabel2Widget = function(labelName, labelColor) {
                 if (circle_fill_color == "rgb(255, 255, 255)") {
                     collected_data[i][field_label].style.outline = "none";
                 } else {
+
                     collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
                 }
             }
         }
     });
+    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
+
+        $(e.target).hide();
+
+        function changeFunction(e){
+            console.log("not working");
+        }
+        console.log(ContentFrame.findElementInContentFrame('#delete_label_id', '#webdataview-floating-widget').length);
+        let widget_delete_label = new ContentFrame({
+            'id':'delete_label_id',
+            'class':'delete_label_class',
+            'appendTo': '#webdataview-floating-widget',
+            'css': ['lib/font-awesome/css/font-awesome.css'],
+            'js': ['app/contentScript/webView/label_delete.js'],
+            'inlineCss': {"width": "200px", "height": "145px", "border": "none", "border-radius": 6,
+                "margin-top": "60px", "background-color": "black"}
+        });
+
+        let tooltip_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
+            '<div>' +
+            '<br><form action="myform.cgi"> ' +
+            '<input type="text" name="text" id="text" maxlength="10">' +
+            '<label for="text"> Change label name here:</label> ' +
+                '<div>'+
+            '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete" onclick="doFunction()">Delete</button> <br>'+
+            '<button style="display: inline-block" type="button" class="btn btn-info" id="label_change" onclick="changeFunction(this.e)">Change</button>' +
+            '</div>'+
+            '</div>');
+
+         widget_delete_label.body.append(tooltip_html);
+
+
+        // ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').append('' +
+        //     '<li class="widget-labels-li" id = '+ labelId +'> ' +
+        //     '<svg class="widget-label-circle-svg" height="10" width="10"> ' +
+        //     '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" />' +
+        //     ' </svg>'+ 'not working' +'</li>');
+        ContentFrame.findElementInContentFrame('#label_delete', '#delete_label_id').click(function(e) {
+            console.log("here here");
+            $(e.target).hide();
+        });
+
+
+    });
+
+
 };
 
 /**
