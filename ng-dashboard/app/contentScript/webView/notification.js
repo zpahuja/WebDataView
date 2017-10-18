@@ -29,42 +29,44 @@ let note_iframe_cf = new ContentFrame({
 
 let note_iframe = note_iframe_cf.body;
 
-// class Notification {
-//     constructor(referenceElement, color) {
-//         // self.instance = new Tooltip(referenceElement, {
-//         //     title: '<div id="webview-popper-container1"></div>',
-//         //     trigger: "click",
-//         //     placement: "top-start",
-//         //     html: true
-//         // });
-//         // self.instance.show();
-//         let cf = new ContentFrame({
-//             'id':'webview-note',
-//             'class': 'webdataview-iframe',
-//             'appendTo': '#webview-popper-container1',
-//             'css': ['lib/font-awesome/css/font-awesome.css'],
-//             // 'inlineCss': {"width": "275px", "height": "240px", "z-index": 2147483647, "border-radius": 6, "background-color": "black"}
-//         });
-//         let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
-//             '<div class="webdataview" id="iframe-fullsize-container">' +
-//             ' <div class="widget" id="web-view-widget">' +
-//             '<div class="widget-buttons widget-float-left" style="height: 30px;">' +
-//             '<p><b>Hi Herbert,</b>  </p> <p><b>Would you like to get notification next time? </b></p>' +
-//             ' <button type="button" class="btn btn-success" id="note_accept">Yes, Please</button>&nbsp;&nbsp;&nbsp; ' +
-//             '<button type="button" class="btn btn-info" id="note_reject">Maybe Later</button>' +
-//             '</div> </div> </div>');
-//         cf.body.append(note_html);
-//         // accept notification
-//         ContentFrame.findElementInContentFrame('#note_accept', '#webview-note').click(function() {
-//
-//         });
-//         // reject notification
-//         ContentFrame.findElementInContentFrame('#note_reject', '#webview-note').click(function() {
-//
-//         });
-//
-//     }
-// }
+class Notification {
+    constructor(referenceElement, color) {
+        // self.instance = new Tooltip(referenceElement, {
+        //     title: '<div id="webview-popper-container1"></div>',
+        //     trigger: "click",
+        //     placement: "top-start",
+        //     html: true
+        // });
+        // self.instance.show();
+        let cf = new ContentFrame({
+            'id':'webview-note',
+            'class': 'webdataview-iframe',
+            'appendTo': '#webview-popper-container1',
+            'css': ['lib/font-awesome/css/font-awesome.css'],
+            // 'inlineCss': {"width": "275px", "height": "240px", "z-index": 2147483647, "border-radius": 6, "background-color": "black"}
+        });
+        let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
+            '<div class="webdataview" id="iframe-fullsize-container">' +
+            ' <div class="widget" id="web-view-widget">' +
+            '<div class="widget-buttons widget-float-left" style="height: 30px;">' +
+            '<p><b>Hi Herbert,</b>  </p> <p><b>Would you like to get notification next time? </b></p>' +
+            ' <button type="button" class="btn btn-success" id="note_accept">Yes, Please</button>&nbsp;&nbsp;&nbsp; ' +
+            '<button type="button" class="btn btn-info" id="note_reject">Maybe Later</button>' +
+            '</div> </div> </div>');
+        cf.body.append(note_html);
+        // accept notification
+        ContentFrame.findElementInContentFrame('#note_accept', '#webview-note').click(function() {
+
+        });
+        // reject notification
+        ContentFrame.findElementInContentFrame('#note_reject', '#webview-note').click(function() {
+
+        });
+
+    }
+}
+
+
 $(document).ready(function() {
     note_iframe_cf.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
         note_iframe_cf.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
