@@ -406,7 +406,7 @@ appendLabel2Widget = function(labelName, labelColor) {
     });
     ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
 
-        $(e.target).hide();
+        //$(e.target).hide();
 
         function changeFunction(e){
             console.log("not working");
@@ -423,12 +423,15 @@ appendLabel2Widget = function(labelName, labelColor) {
         });
 
         let tooltip_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
+            '<script >' +
+            '' +
+            '</script>'+
             '<div>' +
             '<br><form action="myform.cgi"> ' +
             '<input type="text" name="text" id="text" maxlength="10">' +
             '<label for="text"> Change label name here:</label> ' +
-                '<div>'+
-            '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete" onclick="doFunction()">Delete</button> <br>'+
+            '<div>'+
+            '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete">Delete</button> <br>'+
             '<button style="display: inline-block" type="button" class="btn btn-info" id="label_change" onclick="changeFunction(this.e)">Change</button>' +
             '</div>'+
             '</div>');
@@ -444,6 +447,7 @@ appendLabel2Widget = function(labelName, labelColor) {
         ContentFrame.findElementInContentFrame('#label_delete', '#delete_label_id').click(function(e) {
             console.log("here here");
             $(e.target).hide();
+            // want to call contentFrame.delete()
         });
 
 
