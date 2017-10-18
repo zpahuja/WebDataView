@@ -424,8 +424,7 @@ appendLabel2Widget = function(labelName, labelColor) {
 
         let tooltip_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
             '<div>' +
-            '<br><form action="myform.cgi"> ' +
-            '<input type="text" name="searchTxt" id="searchTxt" maxlength="10" value="Test"/>' +
+            '<input type="text" name="searchTxt" id="searchTxt" maxlength="10" value="Input new labels"/>' +
             '<label for="text"> Change label name here:</label> ' +
             '<div>'+
             '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete">Delete</button> <br>'+
@@ -458,16 +457,10 @@ appendLabel2Widget = function(labelName, labelColor) {
         let change_action = ContentFrame.findElementInContentFrame('#label_change', '#delete_label_id');
         change_action.click(function(e) {
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#delete_label_id');
-            console.log(input_label.get(0));
-            console.log(input_label.value);
-            let elements = $(current.target);
-            for(var i = 0; i < elements.length; i++) {
-                console.log(elements[i].innerHTML);
-            }
-            // let ddd = $(current.target).find('li');
-            // console.log(ddd);
-
-
+            console.log(input_label.get(0).value);
+            let old = current.target.innerHTML;
+            let first = old.substring(0, old.lastIndexOf(">")+1);
+            current.target.innerHTML = first + input_label.get(0).value;
         });
     });
 
