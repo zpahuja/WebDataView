@@ -19,16 +19,15 @@
  }
  */
 
-var web_data_view_noti = document.createElement('div');
-web_data_view_noti.id = 'webdataview-floating-noti';
-document.getElementById('webdataview-widget-container').appendChild(web_data_view_noti);
-
-var note_iframe_cf = new ContentFrame({
-    'id':'webdataview-widget-iframe',
-    'class': 'webdataview-iframe',
-    'appendTo': '#webdataview-floating-noti'
+let note_iframe_cf = new ContentFrame({
+    'id':'noti_id',
+    'class': 'noti_class',
+    'appendTo': '#webdataview-widget-container',
+    'css': ['lib/font-awesome/css/font-awesome.css'],
+    'inlineCss': {"width": "275px", "height": "240px", "z-index": 2147483647, "border-radius": 6, "background-color": "black"}
 });
-var note_iframe = note_iframe_cf.body;
+
+let note_iframe = note_iframe_cf.body;
 
 // class Notification {
 //     constructor(referenceElement, color) {
@@ -66,34 +65,22 @@ var note_iframe = note_iframe_cf.body;
 //
 //     }
 // }
-
 $(document).ready(function() {
-    $('#webdataview-floating-noti') .draggable({
-        containment: 'window',
-        scroll: false,
-        stop: function() {
-            $(this).css("left", parseFloat($(this).css("left")) / ($(window).width() / 100)+"%");
-            $(this).css("top", parseFloat($(this).css("top")) / ($(window).height() / 100)+"%");
-        }
-    }).resizable({
-        handles: 'e,w',
-        minWidth: 250,
-        stop: function() {
-            $(this).css("left", parseFloat($(this).css("left")) / ($(window).width() / 100)+"%");
-            $(this).css("width", parseFloat($(this).css("width")) / ($(window).width() / 100)+"%");
-        }
-    });
     note_iframe_cf.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
         note_iframe_cf.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
             note_iframe_cf.loadCSS('assets/css/content-frame-internal.css', function() {
-
-                 /**
-                 * load widget html
-                 * note: only load the body, not the entire html
-                 */
                 note_iframe.load(chrome.extension.getURL("app/contentScript/webView/notification.html"), function() {
                     note_iframe.ready(function() {
-
+                        console.log("Wtf not working ");
+                        let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
+                            '<div class="webdataview" id="iframe-fullsize-container">' +
+                            ' <div class="widget" id="web-view-widget">' +
+                            '<div class="widget-buttons widget-float-left" style="height: 30px;">' +
+                            '<p><b>Hi Herbert,</b>  </p> <p><b>Would you like to get notification next time? </b></p>' +
+                            ' <button type="button" class="btn btn-success" id="note_accept">Yes, Please</button>&nbsp;&nbsp;&nbsp; ' +
+                            '<button type="button" class="btn btn-info" id="note_reject">Maybe Later</button>' +
+                            '</div> </div> </div>');
+                        note_iframe_cf.body.append(note_html);
                     } );
                 });
             });
@@ -125,6 +112,9 @@ $(document).ready(function() {
 //  }
 //  }
 //  */
+
+
+
 // var COLORS = ["(2,63,165)","(125,135,185)","(190,193,212)","(214,188,192)","(187,119,132)","(142,6,59)","(74,111,227)","(133,149,225)","(181,187,227)","(230,175,185)","(224,123,145)","(211,63,106)","(17,198,56)","(141,213,147)","(198,222,199)","(234,211,198)","(240,185,141)","(239,151,8)","(15,207,192)","(156,222,214)","(213,234,231)","(243,225,235)","(246,196,225)","(247,156,212)"];
 // shuffle(COLORS);
 // collected_data = [];
@@ -173,11 +163,11 @@ $(document).ready(function() {
 //         self.instance.hide();
 //     }
 // }
-// var selected_nodes = [];
-// var tooltip_node = undefined;
-// var alignSelectionWithClusterClassFlag = false;
-// var used_col_idx = 0;
-// var class_to_color_idx = {};
+// let selected_nodes = [];
+// let tooltip_node = undefined;
+// let alignSelectionWithClusterClassFlag = false;
+// let used_col_idx = 0;
+// let class_to_color_idx = {};
 // document.addEventListener("click", selectionHandler);
 // function selectionHandler() {
 //     event.preventDefault();
