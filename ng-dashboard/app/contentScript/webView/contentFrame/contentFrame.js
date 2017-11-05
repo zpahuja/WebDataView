@@ -126,7 +126,7 @@ class ContentFrame {
      * @param {string} filepath file path of HTML, not the chrome extension URL
      * @param {Function} callback callback function
      */
-    loadHTML() {
+    loadHTML(filepath, callback) {
         self.body.load(chrome.extension.getURL(filepath), function () {
             if (callback && typeof(callback) === 'function') {
                 callback();

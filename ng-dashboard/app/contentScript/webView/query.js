@@ -1,3 +1,6 @@
+/**
+ * Created by Herbert on 11/3/2017.
+ */
 /*
  // html for popover buttons
  var popover_html = '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label"></i>' +
@@ -18,21 +21,21 @@
  }
  }
  */
-let web_data_view_noti = document.createElement('div');
-web_data_view_noti.id = 'webdataview-floating-noti';
-document.body.appendChild(web_data_view_noti);
+let web_data_view_query = document.createElement('div');
+web_data_view_query.id = 'webdataview-floating-query';
+document.body.appendChild(web_data_view_query);
 
-let cfn = new ContentFrame({
-    'id':'webview-note',
+let cfq = new ContentFrame({
+    'id':'webview-query',
     'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "275px", "height": "240px", "margin-left": "730px","margin-bottom": "420px", "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    'inlineCss': {"width": "345px", "height": "280px", "margin-left": "730px", "margin-top": "1px", "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
 });
 
-let cfn_iframe = cfn.body;
+let cfq_iframe = cfq.body;
 
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
 //     '<div class="webdataview" id="iframe-fullsize-container">' +
@@ -42,17 +45,17 @@ let cfn_iframe = cfn.body;
 //     ' <button type="button" class="btn btn-success" id="note_accept">Yes, Please</button>&nbsp;&nbsp;&nbsp; ' +
 //     '<button type="button" class="btn btn-info" id="note_reject">Maybe Later</button>' +
 //     '</div></div> </div>');
-// cfn.body.append(note_html);
+// cfq.body.append(note_html);
 
-ContentFrame.findElementInContentFrame('#note_accept', '#webview-note').click(function() {
+ContentFrame.findElementInContentFrame('#note_accept', '#webview-query').click(function() {
 
 });
 // reject notification
-ContentFrame.findElementInContentFrame('#note_reject', '#webview-note').click(function() {
+ContentFrame.findElementInContentFrame('#note_reject', '#webview-query').click(function() {
 
 });
 $(document).ready(function() {
-    $('#webdataview-floating-noti').draggable({
+    $('#webdataview-floating-query').draggable({
         containment: 'window',
         scroll: false,
         stop: function() {
@@ -68,12 +71,12 @@ $(document).ready(function() {
         }
     });
 
-    cfn.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
-        cfn.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
-            cfn.loadCSS('assets/css/content-frame-internal.css', function() {
-                cfn.body.load(chrome.extension.getURL("app/contentScript/webView/notification.html"), function () {
-                    cfn_iframe.ready(function() {
-                        console.log("here here");
+    cfq.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
+        cfq.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
+            cfq.loadCSS('assets/css/content-frame-internal.css', function() {
+                cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
+                    cfq_iframe.ready(function() {
+
                     });
                 });
             });

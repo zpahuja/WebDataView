@@ -102,7 +102,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
  * @param tab
  * @param tabAction
  */
-
+console.log(__dirname);
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
@@ -115,11 +115,13 @@ function tabController(tabId, tabAction, callback) {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
                     chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
                         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
-                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
                                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
+                                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
+                                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
                                     if (chrome.runtime.lastError) {
                                         console.error(chrome.runtime.lastError.message);
                                     }
+                                    });
                                 });
                             });
                         });
@@ -149,6 +151,11 @@ function tabController(tabId, tabAction, callback) {
  * message listener and handler handle hot key
  */
 chrome.runtime.onMessage.addListener(
+    function(request,sender,senderResponse){
+        if(request.msg==="socket"){
+            console.log("receive from socket server: "+request.text);
+        }
+    },
     function(request, sender, sendResponse) {
         var senderTabId = sender.tab.id;
         console.log("Message from tab " + senderTabId + " content script:" + sender.tab.url);
@@ -180,4 +187,6 @@ chrome.runtime.onMessage.addListener(
              }
              */
         }
-    });
+    }
+);
+
