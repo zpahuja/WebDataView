@@ -27,9 +27,9 @@ document.body.appendChild(web_data_view_query);
 
 let cfq = new ContentFrame({
     'id':'webview-query',
-    'appendTo': '#webdataview-floating-widget',
+    // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "345px", "height": "280px", "margin-left": "730px", "margin-top": "1px", "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    'inlineCss': {"width": "275px", "height": "270px", "position": "fixed", "right":0, "top": "140px", "z-index": 2147483647, "border-radius": 6, "background-color": "green"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
@@ -72,11 +72,86 @@ $(document).ready(function() {
     });
 
     cfq.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
-        cfq.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
-            cfq.loadCSS('assets/css/content-frame-internal.css', function() {
-                cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
-                    cfq_iframe.ready(function() {
+        cfq.loadJS('lib/socket.io', function() {
+            cfq.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
+                cfq.loadCSS('assets/css/content-frame-internal.css', function() {
+                    cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
+                        cfq_iframe.ready(function() {
+                            let socket = io.connect('http://localhost:5000/');
+                            let $messageForm = $('#messageForm');
+                            let $messageFormDesc = $('#messageFormDesc');
+                            let $message = $('#message');
+                            let $messageDesc = $('#messageDesc');
+                            let $domain = $('#domain');
+                            let $currentdomain = $('#currentdomain');
+                            let $domainForm = $('#domainForm');
+                            let $newdomain = $('#newdomain');
+                            let $chat = $('#chat');
+                            let $userForm = $('#userForm');
+                            let $userFormArea = $('#userFormArea');
+                            let $messageArea = $('#messageArea');
+                            let $users = $('#users');
+                            let $username = $('#username');
+                            let $feedback = $('#domain-feedback');
 
+                            $messageForm.submit(function(e){
+                                e.preventDefault();
+                                console.log($message.val());
+                                socket.emit('send message', {username: $username.val(), message: $message.val(), domain_name: $domain.val()});
+                                $message.val(''); //message empty now
+                            });
+
+                            $messageFormDesc.submit(function(e){
+                                e.preventDefault();
+                                socket.emit('send message', {username: $username.val(), message: $messageDesc.val(), domain_name: $domain.val()});
+                                $messageDesc.val(''); //messageDesc empty now
+                            });
+
+                            $domainForm.submit(function(e){
+                                e.preventDefault();
+                                socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
+                                $domain.value = $newdomain.val();
+                            });
+
+                            $userForm.submit(function(e){
+                                console.log('not working!');
+                                e.preventDefault();
+                                socket.emit('new user', {username: $username.val(), domain_name: $domain.val()});
+                                console.log('wtf');
+                                $userFormArea.hide();
+                                $messageArea.show();
+                            });
+
+                            socket.on('new domain', function(data){
+                                let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
+                                $feedback.html(html);
+                                let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
+                                $currentdomain.html(newdomain);
+                                $domain.value = data;
+                            });
+
+                            socket.on('new message', function(data){
+                                $chat.append('<div class="well"><strong>'+data.users+'</strong>: '+data.msg+'</div>');
+                            });
+
+
+                            socket.on('get users', function(data){
+                                let html = '';
+                                for(i = 0; i < data.length; i++){
+                                    html += '<li class="list-group-item">'+data[i]+'</li>';
+                                }
+                                $users.html(html);
+                            });
+
+                            socket.on('get domains', function(data){
+                                let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
+                                $currentdomain.html(html);
+                            });
+
+                            window.addEventListener('unload', function(event) {
+                                socket.emit('leave', {username: $username.val(), domain_name: $domain.val()});
+                            });
+                        });
                     });
                 });
             });

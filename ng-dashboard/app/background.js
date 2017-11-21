@@ -117,10 +117,11 @@ function tabController(tabId, tabAction, callback) {
                         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
                                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
                                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
+                                        chrome.tabs.executeScript(null, {file: "lib/socket.io.js"});
                                         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
-                                    if (chrome.runtime.lastError) {
-                                        console.error(chrome.runtime.lastError.message);
-                                    }
+                                            if (chrome.runtime.lastError) {
+                                                console.error(chrome.runtime.lastError.message);
+                                            }
                                     });
                                 });
                             });
@@ -150,6 +151,7 @@ function tabController(tabId, tabAction, callback) {
 /**
  * message listener and handler handle hot key
  */
+
 chrome.runtime.onMessage.addListener(
     function(request,sender,senderResponse){
         if(request.msg==="socket"){
@@ -157,7 +159,7 @@ chrome.runtime.onMessage.addListener(
         }
     },
     function(request, sender, sendResponse) {
-        var senderTabId = sender.tab.id;
+        let senderTabId = sender.tab.id;
         console.log("Message from tab " + senderTabId + " content script:" + sender.tab.url);
         // handle hotkeys
         if (request.type == "hotkey") {

@@ -16,7 +16,7 @@
   },
 
   "background" : {
-    "scripts" : ["app/background.js"]
+    "scripts" : ["app/background.js", "lib/socket.io.js"]
   },
 
   "permissions": [
@@ -24,7 +24,8 @@
     "<all_urls>",
     "activeTab",
     "storage",
-    "*://*.com/*"
+    "*://*.com/*",
+    "http://localhost/*"
   ],
 
   "web_accessible_resources": [
@@ -33,7 +34,7 @@
     "assets/*"
   ],
 
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+//  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
 
   // add any library here if it must always be executed upon every page load even before extension icon is clicked
   "content_scripts": [
@@ -46,7 +47,8 @@
         "lib/ntc.js",
         "lib/mousetrap.min.js",
         "lib/jquery/jquery.scrollstop.min.js",
-        "lib/popper/popper.js"
+        "lib/popper/popper.js",
+        "lib/socket.io.js"
       ],
       "css"     : [
         "app/contentScript/webView/contentFrame/contentFrame.css",

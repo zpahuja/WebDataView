@@ -24,9 +24,9 @@ document.body.appendChild(web_data_view_noti);
 
 let cfn = new ContentFrame({
     'id':'webview-note',
-    'appendTo': '#webdataview-floating-widget',
+    // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "275px", "height": "240px", "margin-left": "730px","margin-bottom": "420px", "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    'inlineCss': {"width": "275px", "height": "140px", "position": "fixed", "right":0, "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
@@ -73,7 +73,6 @@ $(document).ready(function() {
             cfn.loadCSS('assets/css/content-frame-internal.css', function() {
                 cfn.body.load(chrome.extension.getURL("app/contentScript/webView/notification.html"), function () {
                     cfn_iframe.ready(function() {
-                        console.log("here here");
                     });
                 });
             });

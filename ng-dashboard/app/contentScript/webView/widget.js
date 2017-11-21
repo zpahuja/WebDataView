@@ -2,23 +2,23 @@
  * add container div
  * this container has class 'webdataview' so prefixed CSS can be applied to its descendants
  */
-var web_data_view_widget_container = document.createElement('div');
+let web_data_view_widget_container = document.createElement('div');
 web_data_view_widget_container.className = 'webdataview';
 web_data_view_widget_container.id = 'webdataview-widget-container';
 document.body.appendChild(web_data_view_widget_container);
 
 // add div containing iframe
-var web_data_view_widget = document.createElement('div');
+let web_data_view_widget = document.createElement('div');
 web_data_view_widget.id = 'webdataview-floating-widget';
 document.getElementById('webdataview-widget-container').appendChild(web_data_view_widget);
 
 // add floating widget iframe
-var widget_iframe_cf = new ContentFrame({
+let widget_iframe_cf = new ContentFrame({
     'id':'webdataview-widget-iframe',
     'class': 'webdataview-iframe',
     'appendTo': '#webdataview-floating-widget'
 });
-var widget_iframe = widget_iframe_cf.body;
+let widget_iframe = widget_iframe_cf.body;
 
 /**
  * add scripts to widget <head> tag
@@ -72,7 +72,7 @@ $(document).ready(function(){
                 widget_iframe.load(chrome.extension.getURL("app/contentScript/webView/widget.html"), function() {
                     widget_iframe.ready(function() {
                         // hide left menu buttons (scroll buttons and download button)
-                        var widget_download_button = ContentFrame.findElementInContentFrame('#widget-download-data', '#webdataview-widget-iframe');
+                        let widget_download_button = ContentFrame.findElementInContentFrame('#widget-download-data', '#webdataview-widget-iframe');
                         widget_download_button.hide();
 
                         // hide/show download button on hover
@@ -99,12 +99,12 @@ $(document).ready(function(){
                             }
                         );
 
-                        var widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
+                        let widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
 
                         // set widget label width
                         function setWidgetLabelsWidth() {
-                            var vert_sep_selector = ContentFrame.findElementInContentFrame('.widget-vertical-separator', '#webdataview-widget-iframe');
-                            var scroll_btn_selector = ContentFrame.findElementInContentFrame('.widget-scroll-buttons', '#webdataview-widget-iframe');
+                            let vert_sep_selector = ContentFrame.findElementInContentFrame('.widget-vertical-separator', '#webdataview-widget-iframe');
+                            let scroll_btn_selector = ContentFrame.findElementInContentFrame('.widget-scroll-buttons', '#webdataview-widget-iframe');
                             widget_label_selector.width(parseFloat(scroll_btn_selector.offset().left) - (parseFloat(vert_sep_selector.offset().left) + parseFloat(vert_sep_selector.outerWidth()) + parseFloat(vert_sep_selector.css('margin-right'))) -2);
                         }
                         setTimeout(function() { setWidgetLabelsWidth(); }, 100);
@@ -119,7 +119,7 @@ $(document).ready(function(){
                         });
 
                         // position shadow inset on top of widget labels
-                        var widget_labels_shadow_box = ContentFrame.findElementInContentFrame('.widget-labels-shadow-box', '#webdataview-widget-iframe');
+                        let widget_labels_shadow_box = ContentFrame.findElementInContentFrame('.widget-labels-shadow-box', '#webdataview-widget-iframe');
                         function positionShadowOnWidgetLabels() {
                             widget_labels_shadow_box.css({
                                 'top': parseFloat(widget_label_selector.offset().top) - 20,
@@ -132,7 +132,7 @@ $(document).ready(function(){
 
                         /******************************** Floating Widget Menu API ********************************/
 
-                        var FloatingWidgetMenu = {};
+                        let FloatingWidgetMenu = {};
 
                         /**
                          * append label to floating widget
@@ -146,7 +146,7 @@ $(document).ready(function(){
                         };
 
                         /*
-                         for (var i = 0; i < 15; i++) {
+                         for (let i = 0; i < 15; i++) {
                          FloatingWidgetMenu.appendLabel('redy', 'red');
                          }
                          */
