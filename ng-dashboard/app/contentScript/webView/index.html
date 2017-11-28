@@ -1,158 +1,143 @@
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Web Dataview Socket Query</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<style>
-		body{
-			margin-top: 30px;
-		}
-		#messageArea{
-			display:none;
-		}
-	</style>
-</head>
-<body>
-<div class="container">
-	<div id="userFormArea" class="row">
-		<div class="col-md-12">
-			<form id = "userForm">
-				<div class="form-group">
-					<label>Enter UserName:</label>
-					<input class="form-control" id="username" />
-					<br />
-					<label>Enter Domain:</label>
-					<textarea class="form-control" id="domain"></textarea>
-					<br />
-					<input type="submit" class="btn btn-success" value="Login" />
-				</div>
-			</form>
-		</div>
-	</div>
+
+	<!--     <div id="userFormArea", class="row">
+          <div class="col-md-12">
+
+          </div>
+        </div> -->
 	<div id="messageArea" class="row">
 		<div class="col-md-4">
-			<div class="well">
-				<h3>Users in Your Domain: </h3>
-				<ul class="list-group" id="users"></ul>
-				<h3>Your Current Domain Name: </h3>
-				<ul class="list-group" id="currentdomain"></ul>
+			<div style="background-color: #e6db74; margin-top: 0; padding-top: 0;">
+				<h5 style="font-weight: 700; margin-top: 0; padding-top: 0;">Users in Your Domain: </h5>
+				<!--<ul class="list-group" id="users"></ul>-->
+                <ul class="nav" id="users" style="max-height: 40px; overflow-y:auto; list-style: none;"></ul>
+				<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name:</h5>
 			</div>
 		</div>
 		<div class="col-md-8">
-			<div class="chat", id ="chat"></div>
+            <div class="well sidebar-nav">
+                <ul class="nav" id="chat" style="max-height: 40px; overflow-y:auto; list-style: none;">
+                    <li><strong>Query Response:</strong></li>
+                </ul>
+            </div>
+			<form id = "userForm">
+				<div class="form-group">
+                    <div>
+                        <label>Enter Name: </label>
+                        <input style="width: 200px; overflow: hidden;  display: inline-block;" class="form-control" id="username" />
+                        <input style="display: inline-block;  float: right" id="login" type="submit" class="btn btn-success" value="Login" />
+                    </div>
+				</div>
+			</form>
 			<form id ="messageForm">
 				<div class="form-group">
 					<label>Enter Query by Name:</label>
-					<textarea class="form-control" id="message"></textarea>
-					<br />
-					<input type="submit" class="btn btn-primary" value="Send Query Name" />
-				</div>
+                    <!--<p style="display: inline-block; right: 0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>-->
+                    <input style="display: inline-block; float: right" type="submit" class="btn btn-primary" value="Send Query" />
+					<textarea  class="form-control" id="message"></textarea>
+                </div>
 			</form>
 			<form id ="messageFormDesc">
 				<div class="form-group">
 					<label>Enter Query by Description:</label>
-					<textarea class="form-control" id="messageDesc"></textarea>
-					<br />
-					<input type="submit" class="btn btn-success" value="Send Query Description" />
+                    <input style="display: inline-block; float: right" type="submit" class="btn btn-warning" value="Send Description" />
+                    <textarea style="height: 110px;" class="form-control" id="messageDesc"></textarea>
 				</div>
 			</form>
-			<form id ="domainForm">
-				<div class="form-group">
-					<label>Change Domain:</label>
-					<textarea class="form-control" id="newdomain"></textarea>
-					<br />
-					<input type="submit" class="btn btn-warning" value="Change Domain Name" />
-				</div>
-			</form>
+			<!--<form id ="domainForm">-->
+				<!--<div class="form-group">-->
+					<!--<label>Change Domain:</label>-->
+					<!--<textarea class="form-control" id="newdomain"></textarea>-->
+					<!--<br />-->
+					<!--<input type="submit" class="btn btn-warning" value="Change Domain Name" />-->
+				<!--</div>-->
+			<!--</form>-->
 			<div id="domain-feedback"></div>
 		</div>
 	</div>
 
 </div>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-		let socket = io.connect('http://localhost:5000');
-		console.log('yall moom');
-//        let socket = io.connect();
-        let $messageForm = $('#messageForm');
-        let $messageFormDesc = $('#messageFormDesc');
-        let $message = $('#message');
-        let $messageDesc = $('#messageDesc');
-        let $domain = $('#domain');
-        let $currentdomain = $('#currentdomain');
-        let $domainForm = $('#domainForm');
-        let $newdomain = $('#newdomain');
-        let $chat = $('#chat');
-        let $userForm = $('#userForm');
-        let $userFormArea = $('#userFormArea');
-        let $messageArea = $('#messageArea');
-        let $users = $('#users');
-        let $username = $('#username');
-        let $feedback = $('#domain-feedback');
+<!--<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>-->
+<!--<script type="text/javascript">-->
+    <!--$(function(){-->
+		<!--let socket = io.connect('http://localhost:5000');-->
+		<!--console.log('yall moom');-->
+<!--//        let socket = io.connect();-->
+        <!--let $messageForm = $('#messageForm');-->
+        <!--let $messageFormDesc = $('#messageFormDesc');-->
+        <!--let $message = $('#message');-->
+        <!--let $messageDesc = $('#messageDesc');-->
+        <!--let $domain = $('#domain');-->
+        <!--let $currentdomain = $('#currentdomain');-->
+        <!--let $domainForm = $('#domainForm');-->
+        <!--let $newdomain = $('#newdomain');-->
+        <!--let $chat = $('#chat');-->
+        <!--let $userForm = $('#userForm');-->
+        <!--let $userFormArea = $('#userFormArea');-->
+        <!--let $messageArea = $('#messageArea');-->
+        <!--let $users = $('#users');-->
+        <!--let $username = $('#username');-->
+        <!--let $feedback = $('#domain-feedback');-->
 
-        $messageForm.submit(function(e){
-            e.preventDefault();
-            console.log($message.val());
-            socket.emit('send message', {username: $username.val(), message: $message.val(), domain_name: $domain.val()});
-            $message.val(''); //message empty now
-        });
+        <!--$messageForm.submit(function(e){-->
+            <!--e.preventDefault();-->
+            <!--console.log($message.val());-->
+            <!--socket.emit('send message', {username: $username.val(), message: $message.val(), domain_name: $domain.val()});-->
+            <!--$message.val(''); //message empty now-->
+        <!--});-->
 
-        $messageFormDesc.submit(function(e){
-            e.preventDefault();
-            socket.emit('send message', {username: $username.val(), message: $messageDesc.val(), domain_name: $domain.val()});
-            $messageDesc.val(''); //messageDesc empty now
-        });
+        <!--$messageFormDesc.submit(function(e){-->
+            <!--e.preventDefault();-->
+            <!--socket.emit('send message', {username: $username.val(), message: $messageDesc.val(), domain_name: $domain.val()});-->
+            <!--$messageDesc.val(''); //messageDesc empty now-->
+        <!--});-->
 
-        $domainForm.submit(function(e){
-            e.preventDefault();
-            socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
-            $domain.value = $newdomain.val();
-        });
+        <!--$domainForm.submit(function(e){-->
+            <!--e.preventDefault();-->
+            <!--socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});-->
+            <!--$domain.value = $newdomain.val();-->
+        <!--});-->
 
-        $userForm.submit(function(e){
-            e.preventDefault();
-            socket.emit('new user', {username: $username.val(), domain_name: $domain.val()});
-            console.log('wtf')
-            $userFormArea.hide();
-            $messageArea.show();
-        });
+        <!--$userForm.submit(function(e){-->
+            <!--e.preventDefault();-->
+            <!--console.log('wtf');-->
+            <!--socket.emit('new user', {username: $username.val(), domain_name: $domain.val()});-->
+            <!--$userFormArea.hide();-->
+            <!--$messageArea.show();-->
+        <!--});-->
 
-        socket.on('new domain', function(data){
-            let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
-            $feedback.html(html);
-            let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
-            $currentdomain.html(newdomain);
-            $domain.value = data;
-        });
+        <!--socket.on('new domain', function(data){-->
+            <!--let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';-->
+            <!--$feedback.html(html);-->
+            <!--let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';-->
+            <!--$currentdomain.html(newdomain);-->
+            <!--$domain.value = data;-->
+        <!--});-->
 
-        socket.on('new message', function(data){
-            $chat.append('<div class="well"><strong>'+data.users+'</strong>: '+data.msg+'</div>');
-        });
+        <!--socket.on('new message', function(data){-->
+            <!--$chat.append('<div class="well"><strong>'+data.users+'</strong>: '+data.msg+'</div>');-->
+        <!--});-->
 
 
-        socket.on('get users', function(data){
-            let html = '';
-            for(i = 0; i < data.length; i++){
-                html += '<li class="list-group-item">'+data[i]+'</li>';
-            }
-            $users.html(html);
-        });
+        <!--socket.on('get users', function(data){-->
+            <!--let html = '';-->
+            <!--for(i = 0; i < data.length; i++){-->
+                <!--html += '<li class="list-group-item">'+data[i]+'</li>';-->
+            <!--}-->
+            <!--$users.html(html);-->
+        <!--});-->
 
-        socket.on('get domains', function(data){
-            let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
-            $currentdomain.html(html);
-        });
+        <!--socket.on('get domains', function(data){-->
+            <!--let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';-->
+            <!--$currentdomain.html(html);-->
+        <!--});-->
 
-        window.addEventListener('unload', function(event) {
-            socket.emit('leave', {username: $username.val(), domain_name: $domain.val()});
-        });
-    });
-</script>
-</body>
-</html>
+        <!--window.addEventListener('unload', function(event) {-->
+            <!--socket.emit('leave', {username: $username.val(), domain_name: $domain.val()});-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->

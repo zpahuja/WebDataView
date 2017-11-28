@@ -3,13 +3,13 @@
  */
 /*
  // html for popover buttons
- var popover_html = '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label"></i>' +
+ let popover_html = '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label"></i>' +
  '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
  '<i class="fa fa-link fa-fw-lg" id="web-view-merge"></i>' +
  '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>';
  // set popover attributes
- for (var i = 0; i < globalBlocks.length; i++) {
- var box = globalBlocks[i]['-att-box'];
+ for (let i = 0; i < globalBlocks.length; i++) {
+ let box = globalBlocks[i]['-att-box'];
  if (box.nodeType == 1) { // check node is DOM element, not text
  box.setAttribute("data-toggle", "popover");
  box.setAttribute("data-content", popover_html);
@@ -29,7 +29,7 @@ let cfq = new ContentFrame({
     'id':'webview-query',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "275px", "height": "270px", "position": "fixed", "right":0, "top": "140px", "z-index": 2147483647, "border-radius": 6, "background-color": "green"}
+    'inlineCss': {"width": "375px", "height": "460px", "position": "fixed", "right": "10px", "top": "144px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
@@ -74,82 +74,135 @@ $(document).ready(function() {
     cfq.loadJS('lib/jquery/jquery-3.1.1.min.js', function() {
         cfq.loadJS('lib/socket.io', function() {
             cfq.loadCSS('lib/font-awesome/css/font-awesome.css', function() {
-                cfq.loadCSS('assets/css/content-frame-internal.css', function() {
-                    cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
-                        cfq_iframe.ready(function() {
-                            let socket = io.connect('http://localhost:5000/');
-                            let $messageForm = $('#messageForm');
-                            let $messageFormDesc = $('#messageFormDesc');
-                            let $message = $('#message');
-                            let $messageDesc = $('#messageDesc');
-                            let $domain = $('#domain');
-                            let $currentdomain = $('#currentdomain');
-                            let $domainForm = $('#domainForm');
-                            let $newdomain = $('#newdomain');
-                            let $chat = $('#chat');
-                            let $userForm = $('#userForm');
-                            let $userFormArea = $('#userFormArea');
-                            let $messageArea = $('#messageArea');
-                            let $users = $('#users');
-                            let $username = $('#username');
-                            let $feedback = $('#domain-feedback');
-
-                            $messageForm.submit(function(e){
-                                e.preventDefault();
-                                console.log($message.val());
-                                socket.emit('send message', {username: $username.val(), message: $message.val(), domain_name: $domain.val()});
-                                $message.val(''); //message empty now
-                            });
-
-                            $messageFormDesc.submit(function(e){
-                                e.preventDefault();
-                                socket.emit('send message', {username: $username.val(), message: $messageDesc.val(), domain_name: $domain.val()});
-                                $messageDesc.val(''); //messageDesc empty now
-                            });
-
-                            $domainForm.submit(function(e){
-                                e.preventDefault();
-                                socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
-                                $domain.value = $newdomain.val();
-                            });
-
-                            $userForm.submit(function(e){
-                                console.log('not working!');
-                                e.preventDefault();
-                                socket.emit('new user', {username: $username.val(), domain_name: $domain.val()});
-                                console.log('wtf');
-                                $userFormArea.hide();
-                                $messageArea.show();
-                            });
-
-                            socket.on('new domain', function(data){
-                                let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
-                                $feedback.html(html);
-                                let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
-                                $currentdomain.html(newdomain);
-                                $domain.value = data;
-                            });
-
-                            socket.on('new message', function(data){
-                                $chat.append('<div class="well"><strong>'+data.users+'</strong>: '+data.msg+'</div>');
-                            });
+                cfq.loadCSS('lib/bootstrap/css/bootstrap.min.css', function() {
+                    cfq.loadCSS('assets/css/content-frame-internal.css', function() {
+                        cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
+                            cfq_iframe.ready(function() {
+                                let socket = io.connect('http://127.0.0.1:5353/');
+                                // let socket = io.connect('http://kite.cs.illinois.edu:5355/');
+                                socket.on("hello",function(data){
+                                    console.log(data);
+                                    chrome.runtime.sendMessage({msg:"socket",text:data.text},function(response){});
+                                });
 
 
-                            socket.on('get users', function(data){
-                                let html = '';
-                                for(i = 0; i < data.length; i++){
-                                    html += '<li class="list-group-item">'+data[i]+'</li>';
-                                }
-                                $users.html(html);
-                            });
+                                let $messageForm = $('#messageForm');
+                                let $messageFormDesc = $('#messageFormDesc');
+                                let $message;
+                                let $messageDesc;
+                                let $domain = $('#domain');
+                                let $currentdomain = $('#currentdomain');
+                                let $domainForm = $('#domainForm');
+                                let $newdomain = $('#newdomain');
+                                let $chat;
+                                let $userForm = $('#userForm');
+                                let $userFormArea = $('#userFormArea');
+                                let $messageArea = $('#messageArea');
+                                let $users;
+                                let $username;
+                                let $feedback = $('#domain-feedback');
 
-                            socket.on('get domains', function(data){
-                                let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
-                                $currentdomain.html(html);
-                            });
+                                let current_domain = location.hostname;
+                                let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
+                                ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
 
-                            window.addEventListener('unload', function(event) {
-                                socket.emit('leave', {username: $username.val(), domain_name: $domain.val()});
+                                window.onbeforeunload = function(e) {
+                                    e.preventDefault();
+                                    if($username !== undefined) {
+                                        socket.emit('leave', {username: $username, domain_name: location.hostname});
+                                    }
+                                };
+
+                                ContentFrame.findElementInContentFrame('#userForm','#webview-query').submit(function(e){
+                                    e.preventDefault();
+                                    $username = ContentFrame.findElementInContentFrame('#username','#webview-query').val();
+
+                                    socket.emit('new user', {username: $username, domain_name: location.hostname});
+                                    ContentFrame.findElementInContentFrame('#username','#webview-query').val('');
+                                    let login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
+
+                                    ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                });
+
+
+                                socket.on('get users', function(data){
+                                    // let user_html = '<ul class="list-group" id="users">';
+                                    // console.log(data);
+                                    // for(i = 0; i < data.length; i++){
+                                    //     user_html += '<li class="list-group-item">'+data[i]+'</li>';
+                                    // }
+                                    // user_html += '</ul>';
+                                    // ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
+                                    $users = ContentFrame.findElementInContentFrame('#users','#webview-query');
+                                    let user_html = '<ul class="nav" id="users" style="max-height: 40px; overflow-y:auto; list-style: none;">';
+                                    console.log(data);
+                                    for(i = 0; i < data.length; i++){
+                                        user_html += '<li>'+data[i]+'</li>';
+                                    }
+                                    user_html += '</ul>';
+                                    ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
+                                    $users.animate({scrollTop: $users.prop("scrollHeight")}, 500);
+                                });
+
+                                ContentFrame.findElementInContentFrame('#messageForm','#webview-query').submit(function(e){
+                                    e.preventDefault();
+                                    if($username === undefined){
+                                        let login_html = $.parseHTML('<input style="width: 200px; overflow: hidden;  display: inline-block; background-color: #f92672" class="form-control" id="username" value="Please enter name first!"/>');
+                                        ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                    }
+                                    else {
+                                        $message = ContentFrame.findElementInContentFrame('#message', '#webview-query').val();
+                                        console.log($message);
+                                        socket.emit('send message', {
+                                            username: $username,
+                                            message: $message,
+                                            domain_name: location.hostname
+                                        });
+                                        ContentFrame.findElementInContentFrame('#message', '#webview-query').val('');
+                                    }
+                                });
+
+                                socket.on('new message', function(data){
+                                    $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
+                                    $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
+                                    $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 500);
+                                });
+
+                                ContentFrame.findElementInContentFrame('#messageFormDesc','#webview-query').submit(function(e){
+                                    e.preventDefault();
+                                    if($username === undefined){
+                                        let login_html = $.parseHTML('<input style="width: 200px; overflow: hidden;  display: inline-block; background-color: #ff338b" class="form-control" id="username" value="Please enter name first!"/>');
+                                        ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                    }
+                                    else {
+                                        $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
+                                        console.log($messageDesc);
+                                        socket.emit('send message', {
+                                            username: $username,
+                                            message: $messageDesc,
+                                            domain_name: $domain.val()
+                                        });
+                                        ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val('');
+                                    }
+                                });
+
+
+                                ContentFrame.findElementInContentFrame('#domainForm','#webview-query').submit(function(e){
+                                    e.preventDefault();
+                                    socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
+                                });
+
+                                socket.on('new domain', function(data){
+                                    let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
+                                    $feedback.html(html);
+                                    let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
+                                    $currentdomain.html(newdomain);
+                                });
+
+                                // socket.on('get domains', function(data){
+                                //     let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
+                                //     $currentdomain.html(html);
+                                // });
                             });
                         });
                     });

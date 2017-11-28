@@ -34,7 +34,7 @@
     "assets/*"
   ],
 
-//  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
 
   // add any library here if it must always be executed upon every page load even before extension icon is clicked
   "content_scripts": [

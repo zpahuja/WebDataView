@@ -26,7 +26,7 @@ let cfn = new ContentFrame({
     'id':'webview-note',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "275px", "height": "140px", "position": "fixed", "right":0, "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    'inlineCss': {"width": "275px", "height": "140px", "position": "fixed", "right": "10px", "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
