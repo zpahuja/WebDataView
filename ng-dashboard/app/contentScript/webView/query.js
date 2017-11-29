@@ -177,7 +177,7 @@ $(document).ready(function() {
                                     else {
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
                                         console.log($messageDesc);
-                                        socket.emit('send message', {
+                                        socket.emit('send message by desc', {
                                             username: $username,
                                             message: $messageDesc,
                                             domain_name: $domain.val()

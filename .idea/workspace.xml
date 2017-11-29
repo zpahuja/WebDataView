@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/manifest.json" afterPath="$PROJECT_DIR$/ng-dashboard/manifest.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,7 +29,7 @@
           <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4150">
+                <state relative-caret-position="850">
                   <caret line="166" column="25" lean-forward="false" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="25" />
                   <folding />
                 </state>
@@ -79,21 +75,21 @@
           <file leaf-file-name="query.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="671">
-                  <caret line="214" column="0" lean-forward="true" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+                <state relative-caret-position="417">
+                  <caret line="170" column="100" lean-forward="false" selection-start-line="170" selection-start-column="100" selection-end-line="170" selection-end-column="100" />
                   <folding>
-                    <marker date="1511896991074" expanded="true" signature="5182:5198" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="5240:5252" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="5240:5270" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="5279:5285" ph=" " />
-                    <marker date="1511896991074" expanded="true" signature="6443:6516" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="6443:6542" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="7618:7670" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="8564:8645" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="10393:10474" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="11959:11971" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="12167:12178" ph="..." />
-                    <marker date="1511896991074" expanded="true" signature="12463:12474" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="5182:5198" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="5240:5252" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="5240:5270" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="5279:5285" ph=" " />
+                    <marker date="1511984755377" expanded="true" signature="6443:6516" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="6443:6542" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="7618:7670" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="8564:8645" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="10393:10474" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="11967:11979" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="12175:12186" ph="..." />
+                    <marker date="1511984755377" expanded="true" signature="12471:12482" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -118,7 +114,7 @@
           <file leaf-file-name="manifest.json" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="252">
+                <state relative-caret-position="25">
                   <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
                   <folding>
                     <marker date="1511589170487" expanded="true" signature="1584:1587" ph="{&quot;all_frames&quot;: false...}" />
@@ -265,6 +261,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -534,7 +531,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
@@ -661,15 +657,16 @@
       <workItem from="1511498825676" duration="1171000" />
       <workItem from="1511540291663" duration="25488000" />
       <workItem from="1511625463052" duration="12166000" />
-      <workItem from="1511896949625" duration="153000" />
+      <workItem from="1511896949625" duration="864000" />
+      <workItem from="1511983300046" duration="3098000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123058000" />
+    <option name="totallyTimeSpent" value="126867000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.027604166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -899,17 +896,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4150">
-          <caret line="166" column="25" lean-forward="false" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="25">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
             <marker date="1511589170487" expanded="true" signature="1584:1587" ph="{&quot;all_frames&quot;: false...}" />
@@ -917,23 +906,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="166" column="25" lean-forward="false" selection-start-line="166" selection-start-column="25" selection-end-line="166" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="214" column="0" lean-forward="true" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+        <state relative-caret-position="417">
+          <caret line="170" column="100" lean-forward="false" selection-start-line="170" selection-start-column="100" selection-end-line="170" selection-end-column="100" />
           <folding>
-            <marker date="1511896991074" expanded="true" signature="5182:5198" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="5240:5252" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="5240:5270" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="5279:5285" ph=" " />
-            <marker date="1511896991074" expanded="true" signature="6443:6516" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="6443:6542" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="7618:7670" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="8564:8645" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="10393:10474" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="11959:11971" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="12167:12178" ph="..." />
-            <marker date="1511896991074" expanded="true" signature="12463:12474" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="5182:5198" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="5240:5252" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="5240:5270" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="5279:5285" ph=" " />
+            <marker date="1511984755377" expanded="true" signature="6443:6516" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="6443:6542" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="7618:7670" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="8564:8645" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="10393:10474" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="11967:11979" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="12175:12186" ph="..." />
+            <marker date="1511984755377" expanded="true" signature="12471:12482" ph="..." />
           </folding>
         </state>
       </provider>
