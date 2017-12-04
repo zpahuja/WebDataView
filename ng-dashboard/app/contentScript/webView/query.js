@@ -21,6 +21,10 @@
  }
  }
  */
+
+var COLORS = ["(2,63,165)","(125,135,185)","(190,193,212)","(214,188,192)","(187,119,132)","(142,6,59)","(74,111,227)","(133,149,225)","(181,187,227)","(230,175,185)","(224,123,145)","(211,63,106)","(17,198,56)","(141,213,147)","(198,222,199)","(234,211,198)","(240,185,141)","(239,151,8)","(15,207,192)","(156,222,214)","(213,234,231)","(243,225,235)","(246,196,225)","(247,156,212)"];
+shuffle(COLORS);
+
 let web_data_view_query = document.createElement('div');
 web_data_view_query.id = 'webdataview-floating-query';
 document.body.appendChild(web_data_view_query);
@@ -29,7 +33,7 @@ let cfq = new ContentFrame({
     'id':'webview-query',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "375px", "height": "460px", "position": "fixed", "right": "10px", "top": "144px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
+    'inlineCss': {"width": "375px", "height": "550px", "position": "fixed", "right": "10px", "top": "1px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
@@ -85,7 +89,6 @@ $(document).ready(function() {
                                     chrome.runtime.sendMessage({msg:"socket",text:data.text},function(response){});
                                 });
 
-
                                 let $messageForm = $('#messageForm');
                                 let $messageFormDesc = $('#messageFormDesc');
                                 let $message;
@@ -101,10 +104,15 @@ $(document).ready(function() {
                                 let $users;
                                 let $username;
                                 let $feedback = $('#domain-feedback');
+                                let $xpath;
+                                let target = [];
+                                let $visib = ContentFrame.findElementInContentFrame('#visib_button','#webview-query');
 
                                 let current_domain = location.hostname;
                                 let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
+                                console.log(location.href);
+
 
                                 window.onbeforeunload = function(e) {
                                     e.preventDefault();
@@ -156,7 +164,7 @@ $(document).ready(function() {
                                         socket.emit('send message', {
                                             username: $username,
                                             message: $message,
-                                            domain_name: location.hostname
+                                            domain_name: location.href
                                         });
                                         ContentFrame.findElementInContentFrame('#message', '#webview-query').val('');
                                     }
@@ -165,7 +173,40 @@ $(document).ready(function() {
                                 socket.on('new message', function(data){
                                     $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
                                     $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
-                                    $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 500);
+                                    $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
+                                    $xpath = data.msg;
+                                    $xpath = JSON.parse($xpath);
+                                    let temp;
+                                    let fake = {};
+                                    fake["prices"] = "sx-price-whole";
+                                    let array = Object.values(fake);
+
+                                    // let array = Object.values($xpath.fields);
+                                    for(i = 0; i < $xpath.boxes.length; i++){
+                                        temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                        if(temp !== null){
+                                            for(j = 0; j < array.length; j++){
+                                                let selection = temp.getElementsByClassName(array[j]);
+                                                if(selection.length !== 0)
+                                                {
+                                                    target.push(selection);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if(target.length !== 0){
+                                        $visib.css('visibility','visible');
+                                        $visib.click(function(e){
+                                            console.log(target);
+                                            e.preventDefault();
+                                            for(i=0; i < target.length; i++){
+                                                target[i][0].style.backgroundColor = "yellow";
+                                            }
+                                        });
+                                    }
+                                    // chrome.runtime.sendMessage({msg:"xpath", text: $xpath.boxes[0]},function(response){});
+                                    // console.log(temp.getElementsByClassName($xpath.fields.price));
+                                    // .style.backgroundColor = "yellow";
                                 });
 
                                 ContentFrame.findElementInContentFrame('#messageFormDesc','#webview-query').submit(function(e){
@@ -176,11 +217,10 @@ $(document).ready(function() {
                                     }
                                     else {
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
-                                        console.log($messageDesc);
                                         socket.emit('send message by desc', {
                                             username: $username,
                                             message: $messageDesc,
-                                            domain_name: $domain.val()
+                                            domain_name: location.href
                                         });
                                         ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val('');
                                     }

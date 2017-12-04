@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-md-8">
             <div class="well sidebar-nav">
-                <ul class="nav" id="chat" style="max-height: 40px; overflow-y:auto; list-style: none;">
+                <ul class="nav" id="chat" style="max-height: 80px; overflow-y:auto; list-style: none;">
                     <li><strong>Query Response:</strong></li>
                 </ul>
             </div>
@@ -27,7 +27,7 @@
                     <div>
                         <label>Enter Name: </label>
                         <input style="width: 200px; overflow: hidden;  display: inline-block;" class="form-control" id="username" />
-                        <input style="display: inline-block;  float: right" id="login" type="submit" class="btn btn-success" value="Login" />
+                        <input style="background-color: #0bbd27 !important; display: inline-block;  float: right" id="login" type="submit" class="btn btn-success" value="Login" />
                     </div>
 				</div>
 			</form>
@@ -35,15 +35,15 @@
 				<div class="form-group">
 					<label>Enter Query by Name:</label>
                     <!--<p style="display: inline-block; right: 0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>-->
-                    <input style="display: inline-block; float: right" type="submit" class="btn btn-primary" value="Send Query" />
-					<textarea  class="form-control" id="message"></textarea>
+                    <input style="background-color: #2c0eff !important; display: inline-block; float: right" type="submit" class="btn btn-primary" value="Send Query" />
+					<textarea  style="height: 30px;" class="form-control" id="message"></textarea>
                 </div>
 			</form>
 			<form id ="messageFormDesc">
 				<div class="form-group">
 					<label>Enter Query by Description:</label>
-                    <input style="display: inline-block; float: right" type="submit" class="btn btn-warning" value="Send Description" />
-                    <textarea style="height: 110px;" class="form-control" id="messageDesc"></textarea>
+                    <input style="background-color: #ffa500 !important; display: inline-block; float: right" type="submit" class="btn btn-warning" value="Send Description" />
+                    <textarea style="height: 90px;" class="form-control" id="messageDesc"></textarea>
 				</div>
 			</form>
 			<!--<form id ="domainForm">-->
@@ -54,6 +54,7 @@
 					<!--<input type="submit" class="btn btn-warning" value="Change Domain Name" />-->
 				<!--</div>-->
 			<!--</form>-->
+            <button class="btn btn-danger" id="visib_button" style="right: 0; background-color: #f92672 !important; visibility: hidden">Visualize</button>
 			<div id="domain-feedback"></div>
 		</div>
 	</div>

@@ -49,6 +49,8 @@ class TestTooltip {
             for (var i = 0; i < similar_nodes.length; i++) {
                 selected_nodes.push(similar_nodes[i]);
                 let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]];
+                console.log("r u ready??");
+                console.log(tooltip_color);
                 similar_nodes[i].style.outline = '2px solid ' + tooltip_color;
                 let field_label = ntc.name(rgb2hex(tooltip_color))[1];
                 let data_to_push = {};

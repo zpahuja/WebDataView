@@ -154,44 +154,47 @@ function tabController(tabId, tabAction, callback) {
 
 chrome.runtime.onMessage.addListener(
     function(request,sender,senderResponse){
-        if(request.msg==="socket"){
+        if(request.msg === "socket"){
             console.log("receive from socket server: "+request.text);
         }
-        if(request.msg==="close"){
-            alert('are you sure??/');
+        if(request.msg === "xpath"){
+            alert("fuck");
+            // console.log("fuck is; " + request.text);
+            // let tmp = document.evaluate(JSON.stringify($xpath.boxes[0]), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
         }
+
     },
-    function(request, sender, sendResponse) {
-        let senderTabId = sender.tab.id;
-        console.log("Message from tab " + senderTabId + " content script:" + sender.tab.url);
-        // handle hotkeys
-        if (request.type == "hotkey") {
-            /**
-             * VIPS tree not supported anymore
-             * Comment stub below provided as an example how to handle hot keys request using message passing
-             */
-            /*
-             // switch to vips tree
-             if (request.event == "ctrl+shift+v") {
-             if (senderTabId == activeTabId) {
-             chrome.tabs.reload(senderTabId, {bypassCache: false}, function() {
-             // wait for tab to finish reloading
-             chrome.tabs.onUpdated.addListener(function reExecuteScripts (tabId , info) {
-             if (tabId == activeTabId && info.status === 'complete') {
-             // remove listener
-             chrome.tabs.onUpdated.removeListener(reExecuteScripts);
-             // re-execute scripts
-             // CODE REMOVED
-             }
-             });
-             });
-             }
-             else {
-             sendResponse("Tab must be in focus to request switch to VIPS tree");
-             }
-             }
-             */
-        }
-    }
+    // function(request, sender, sendResponse) {
+    //     let senderTabId = sender.tab.id;
+    //     console.log("Message from tab " + senderTabId + " content script:" + sender.tab.url);
+    //     // handle hotkeys
+    //     if (request.type == "hotkey") {
+    //         /**
+    //          * VIPS tree not supported anymore
+    //          * Comment stub below provided as an example how to handle hot keys request using message passing
+    //          */
+    //         /*
+    //          // switch to vips tree
+    //          if (request.event == "ctrl+shift+v") {
+    //          if (senderTabId == activeTabId) {
+    //          chrome.tabs.reload(senderTabId, {bypassCache: false}, function() {
+    //          // wait for tab to finish reloading
+    //          chrome.tabs.onUpdated.addListener(function reExecuteScripts (tabId , info) {
+    //          if (tabId == activeTabId && info.status === 'complete') {
+    //          // remove listener
+    //          chrome.tabs.onUpdated.removeListener(reExecuteScripts);
+    //          // re-execute scripts
+    //          // CODE REMOVED
+    //          }
+    //          });
+    //          });
+    //          }
+    //          else {
+    //          sendResponse("Tab must be in focus to request switch to VIPS tree");
+    //          }
+    //          }
+    //          */
+    //     }
+    // }
 );
 
