@@ -48,15 +48,14 @@ class TestTooltip {
             var similar_nodes = $('.' + referenceElement.className).get();
             for (var i = 0; i < similar_nodes.length; i++) {
                 selected_nodes.push(similar_nodes[i]);
-                let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]];
-                console.log("r u ready??");
-                console.log(tooltip_color);
+                let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 similar_nodes[i].style.outline = '2px solid ' + tooltip_color;
-                let field_label = ntc.name(rgb2hex(tooltip_color))[1];
-                let data_to_push = {};
+                let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                let data_to_push = {};  //dic label name ->
                 data_to_push[field_label] = similar_nodes[i];
                 collected_data.push(data_to_push);
             }
+            console.log(collected_data);
         });
         // delete selected nodes
         ContentFrame.findElementInContentFrame('#web-view-remove', '#webview-tooltip').click(function() {

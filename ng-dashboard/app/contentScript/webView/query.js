@@ -113,7 +113,6 @@ $(document).ready(function() {
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
                                 console.log(location.href);
 
-
                                 window.onbeforeunload = function(e) {
                                     e.preventDefault();
                                     if($username !== undefined) {
@@ -204,6 +203,8 @@ $(document).ready(function() {
                                             }
                                         });
                                     }
+                                    console.log("collected_data: " + collected_data);
+
                                     // chrome.runtime.sendMessage({msg:"xpath", text: $xpath.boxes[0]},function(response){});
                                     // console.log(temp.getElementsByClassName($xpath.fields.price));
                                     // .style.backgroundColor = "yellow";
