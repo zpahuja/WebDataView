@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
     </list>
@@ -24,14 +26,14 @@
     <favorites_list name="WebDataView" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.47805393">
+    <splitter split-orientation="horizontal" split-proportion="0.164405">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="257">
-                  <caret line="118" column="103" lean-forward="false" selection-start-line="118" selection-start-column="98" selection-end-line="118" selection-end-column="103" />
+                <state relative-caret-position="4050">
+                  <caret line="162" column="9" lean-forward="false" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
                   <folding />
                 </state>
               </provider>
@@ -52,8 +54,8 @@
           <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1250">
-                  <caret line="50" column="56" lean-forward="false" selection-start-line="50" selection-start-column="56" selection-end-line="51" selection-end-column="63" />
+                <state relative-caret-position="1125">
+                  <caret line="45" column="47" lean-forward="false" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
                   <folding>
                     <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#h5#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -65,11 +67,10 @@
                     <element signature="n#style#0;n#input#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#textarea#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#input#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                    <element signature="n#style#0;n#textarea#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                    <marker date="1512248466578" expanded="true" signature="5653:5665" ph="..." />
-                    <marker date="1512248466578" expanded="true" signature="5827:5838" ph="..." />
-                    <marker date="1512248466578" expanded="true" signature="6572:6583" ph="..." />
+                    <marker date="1512592401537" expanded="true" signature="5654:5666" ph="..." />
+                    <marker date="1512592401537" expanded="true" signature="5828:5839" ph="..." />
+                    <marker date="1512592401537" expanded="true" signature="6573:6584" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -78,21 +79,21 @@
           <file leaf-file-name="query.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-193">
-                  <caret line="206" column="0" lean-forward="true" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+                <state relative-caret-position="528">
+                  <caret line="221" column="75" lean-forward="false" selection-start-line="221" selection-start-column="64" selection-end-line="221" selection-end-column="75" />
                   <folding>
-                    <marker date="1512591358282" expanded="true" signature="5797:5813" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="5855:5867" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="5855:5885" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="5894:5900" ph=" " />
-                    <marker date="1512591358282" expanded="true" signature="7118:7191" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="7118:7217" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="8293:8345" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="9239:9320" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="13380:13461" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="14887:14899" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="15095:15106" ph="..." />
-                    <marker date="1512591358282" expanded="true" signature="15391:15402" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="5848:5864" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="5906:5918" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="5906:5936" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="5945:5951" ph=" " />
+                    <marker date="1512771298220" expanded="true" signature="6988:7087" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="7718:7817" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="8987:9039" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="9933:10014" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="15820:15901" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="17327:17339" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="17535:17546" ph="..." />
+                    <marker date="1512771298220" expanded="true" signature="17831:17842" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -105,8 +106,8 @@
           <file leaf-file-name="widget.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2100">
-                  <caret line="87" column="100" lean-forward="false" selection-start-line="87" selection-start-column="100" selection-end-line="87" selection-end-column="100" />
+                <state relative-caret-position="3100">
+                  <caret line="127" column="47" lean-forward="false" selection-start-line="127" selection-start-column="47" selection-end-line="127" selection-end-column="47" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -114,11 +115,21 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="widget.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="200">
+                  <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="43" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="manifest.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="825">
-                  <caret line="33" column="14" lean-forward="false" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+                <state relative-caret-position="1125">
+                  <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
                   <folding>
                     <marker date="1511589170487" expanded="true" signature="1584:1587" ph="{&quot;all_frames&quot;: false...}" />
                   </folding>
@@ -129,18 +140,19 @@
           <file leaf-file-name="tooltip.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="15" column="40" lean-forward="false" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+                <state relative-caret-position="-1125">
+                  <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
                   <folding>
-                    <marker date="1512587966057" expanded="true" signature="2047:2105" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="2171:2188" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="4245:4304" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="4520:4569" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="5446:5513" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="5579:5596" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="17763:17784" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="17893:17914" ph="..." />
-                    <marker date="1512587966057" expanded="true" signature="18016:18037" ph="..." />
+                    <element signature="n#!!doc" expanded="true" />
+                    <marker date="1512771317277" expanded="true" signature="2047:2105" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="2171:2188" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="4556:4615" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="4831:4880" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="5757:5824" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="5890:5907" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="18073:18094" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="18203:18224" ph="..." />
+                    <marker date="1512771317277" expanded="true" signature="18326:18347" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -171,15 +183,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>index</find>
-      <find>url</find>
-      <find>here</find>
-      <find>io</find>
-      <find>execute</find>
-      <find>background</find>
-      <find>ht</find>
-      <find>input</find>
-      <find>html</find>
       <find>boots</find>
       <find>userForm</find>
       <find>cli</find>
@@ -195,12 +198,21 @@
       <find>query res</find>
       <find>click</find>
       <find>webview-query</find>
-      <find>ntc</find>
-      <find>class_to_color_idx</find>
       <find>collected_data</find>
       <find>add</find>
       <find>assign</find>
       <find>collected</find>
+      <find>chrome.runtime.sendMessage</find>
+      <find>web-view-assign-label</find>
+      <find>web-view-assign-color</find>
+      <find>appendLabel2Widget</find>
+      <find>x</find>
+      <find>login</find>
+      <find>rgb2hex</find>
+      <find>ntc</find>
+      <find>class_to_color_idx</find>
+      <find>console.lo</find>
+      <find>TestTooltip</find>
     </findStrings>
     <replaceStrings>
       <replace>cfn</replace>
@@ -229,13 +241,13 @@
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/contentFrame/queryHandle.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/queryHandle.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/manifest.json" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/label_delete.js" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
       </list>
     </option>
   </component>
@@ -670,18 +682,20 @@
       <workItem from="1512230511725" duration="12784000" />
       <workItem from="1512343757900" duration="6570000" />
       <workItem from="1512434685349" duration="1406000" />
-      <workItem from="1512586244887" duration="2990000" />
+      <workItem from="1512586244887" duration="5935000" />
+      <workItem from="1512657694816" duration="12780000" />
+      <workItem from="1512761637291" duration="10268000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174886000" />
+    <option name="totallyTimeSpent" value="200879000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0130480165" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2270355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -710,6 +724,36 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.002283105" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0130480165" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.002283105" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -719,7 +763,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -831,37 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="15" column="95" lean-forward="true" selection-start-line="15" selection-start-column="95" selection-end-line="15" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="50" column="56" lean-forward="false" selection-start-line="50" selection-start-column="56" selection-end-line="51" selection-end-column="63" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h5#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h5#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1512248466578" expanded="true" signature="5653:5665" ph="..." />
-            <marker date="1512248466578" expanded="true" signature="5827:5838" ph="..." />
-            <marker date="1512248466578" expanded="true" signature="6572:6583" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -879,20 +892,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2100">
-          <caret line="87" column="100" lean-forward="false" selection-start-line="87" selection-start-column="100" selection-end-line="87" selection-end-column="100" />
+        <state relative-caret-position="1125">
+          <caret line="45" column="47" lean-forward="false" selection-start-line="45" selection-start-column="47" selection-end-line="45" selection-end-column="47" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h5#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h5#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <marker date="1512592401537" expanded="true" signature="5654:5666" ph="..." />
+            <marker date="1512592401537" expanded="true" signature="5828:5839" ph="..." />
+            <marker date="1512592401537" expanded="true" signature="6573:6584" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="33" column="14" lean-forward="false" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+        <state relative-caret-position="1125">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
             <marker date="1511589170487" expanded="true" signature="1584:1587" ph="{&quot;all_frames&quot;: false...}" />
           </folding>
@@ -909,49 +935,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3100">
+          <caret line="127" column="47" lean-forward="false" selection-start-line="127" selection-start-column="47" selection-end-line="127" selection-end-column="47" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="118" column="103" lean-forward="false" selection-start-line="118" selection-start-column="98" selection-end-line="118" selection-end-column="103" />
+        <state relative-caret-position="4050">
+          <caret line="162" column="9" lean-forward="false" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-193">
-          <caret line="206" column="0" lean-forward="true" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+        <state relative-caret-position="528">
+          <caret line="221" column="75" lean-forward="false" selection-start-line="221" selection-start-column="64" selection-end-line="221" selection-end-column="75" />
           <folding>
-            <marker date="1512591358282" expanded="true" signature="5797:5813" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="5855:5867" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="5855:5885" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="5894:5900" ph=" " />
-            <marker date="1512591358282" expanded="true" signature="7118:7191" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="7118:7217" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="8293:8345" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="9239:9320" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="13380:13461" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="14887:14899" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="15095:15106" ph="..." />
-            <marker date="1512591358282" expanded="true" signature="15391:15402" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="5848:5864" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="5906:5918" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="5906:5936" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="5945:5951" ph=" " />
+            <marker date="1512771298220" expanded="true" signature="6988:7087" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="7718:7817" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="8987:9039" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="9933:10014" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="15820:15901" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="17327:17339" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="17535:17546" ph="..." />
+            <marker date="1512771298220" expanded="true" signature="17831:17842" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="15" column="40" lean-forward="false" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+        <state relative-caret-position="-1125">
+          <caret line="33" column="22" lean-forward="true" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
           <folding>
-            <marker date="1512587966057" expanded="true" signature="2047:2105" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="2171:2188" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="4245:4304" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="4520:4569" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="5446:5513" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="5579:5596" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="17763:17784" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="17893:17914" ph="..." />
-            <marker date="1512587966057" expanded="true" signature="18016:18037" ph="..." />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1512771317277" expanded="true" signature="2047:2105" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="2171:2188" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="4556:4615" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="4831:4880" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="5757:5824" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="5890:5907" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="18073:18094" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="18203:18224" ph="..." />
+            <marker date="1512771317277" expanded="true" signature="18326:18347" ph="..." />
           </folding>
         </state>
       </provider>

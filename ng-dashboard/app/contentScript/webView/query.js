@@ -105,13 +105,13 @@ $(document).ready(function() {
                                 let $username;
                                 let $feedback = $('#domain-feedback');
                                 let $xpath;
+                                let login = false;
                                 let target = [];
                                 let $visib = ContentFrame.findElementInContentFrame('#visib_button','#webview-query');
 
                                 let current_domain = location.hostname;
                                 let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
-                                console.log(location.href);
 
                                 window.onbeforeunload = function(e) {
                                     e.preventDefault();
@@ -123,14 +123,19 @@ $(document).ready(function() {
                                 ContentFrame.findElementInContentFrame('#userForm','#webview-query').submit(function(e){
                                     e.preventDefault();
                                     $username = ContentFrame.findElementInContentFrame('#username','#webview-query').val();
-
-                                    socket.emit('new user', {username: $username, domain_name: location.hostname});
-                                    ContentFrame.findElementInContentFrame('#username','#webview-query').val('');
-                                    let login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
-
-                                    ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                    let login_html;
+                                    if($username === ''){
+                                        login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #ff0000" class="form-control" id="username" value="Please Enter a Valid Name"/>');
+                                        ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                    }
+                                    else if(login === false){
+                                        socket.emit('new user', {username: $username, domain_name: location.hostname});
+                                        // ContentFrame.findElementInContentFrame('#username','#webview-query').val('');
+                                        login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
+                                        ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
+                                        login = true;
+                                    }
                                 });
-
 
                                 socket.on('get users', function(data){
                                     // let user_html = '<ul class="list-group" id="users">';
@@ -179,6 +184,27 @@ $(document).ready(function() {
                                     let fake = {};
                                     fake["prices"] = "sx-price-whole";
                                     let array = Object.values(fake);
+                                    let dummy;
+                                    let labels;
+                                    let labels_dic = {}
+                                    let tool_color;
+                                    for(i=0; i < array.length; i++) {
+                                        //----------Adding the label and color to widget---------
+                                        if (array[i] in class_to_color_idx){
+                                            tool_color = "rgb" + COLORS[class_to_color_idx[array[i]]];
+                                            labels = ntc.name(rgb2hex(tool_color))[1];
+                                            labels_dic[array[i]] = labels;
+                                            console.log("This label already exists in dictionary!");
+                                        }
+                                        else{
+                                            class_to_color_idx[array[i]] = used_col_idx;
+                                            tool_color = "rgb" + COLORS[used_col_idx];
+                                            used_col_idx = used_col_idx + 1;
+                                            labels = ntc.name(rgb2hex(tool_color))[1];
+                                            labels_dic[array[i]] = labels;
+                                            appendLabel2Widget(labels, tool_color);
+                                        }
+                                    }
 
                                     // let array = Object.values($xpath.fields);
                                     for(i = 0; i < $xpath.boxes.length; i++){
@@ -186,24 +212,33 @@ $(document).ready(function() {
                                         if(temp !== null){
                                             for(j = 0; j < array.length; j++){
                                                 let selection = temp.getElementsByClassName(array[j]);
+
                                                 if(selection.length !== 0)
                                                 {
                                                     target.push(selection);
+                                                    let data_to_push = {};  //dic label name ->
+                                                    data_to_push[labels_dic[array[j]]] = selection;
+                                                    collected_data.push(data_to_push);
+                                                    dummy = new TestTooltip(selection, COLORS[class_to_color_idx[array[j]]]);
                                                 }
                                             }
                                         }
                                     }
+
                                     if(target.length !== 0){
                                         $visib.css('visibility','visible');
                                         $visib.click(function(e){
-                                            console.log(target);
                                             e.preventDefault();
                                             for(i=0; i < target.length; i++){
                                                 target[i][0].style.backgroundColor = "yellow";
                                             }
                                         });
                                     }
-                                    console.log("collected_data: " + collected_data);
+
+
+
+
+
 
                                     // chrome.runtime.sendMessage({msg:"xpath", text: $xpath.boxes[0]},function(response){});
                                     // console.log(temp.getElementsByClassName($xpath.fields.price));
@@ -244,6 +279,15 @@ $(document).ready(function() {
                                 //     let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
                                 //     $currentdomain.html(html);
                                 // });
+
+                                function rgb2hex(rgb){
+                                    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+                                    return (rgb && rgb.length === 4) ? "#" +
+                                        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+                                        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+                                        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+                                }
+
                             });
                         });
                     });

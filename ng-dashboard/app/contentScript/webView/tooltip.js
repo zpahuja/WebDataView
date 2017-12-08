@@ -45,14 +45,20 @@ class TestTooltip {
         cf.body.append(tooltip_html);
         // select similar
         ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {
-            var similar_nodes = $('.' + referenceElement.className).get();
-            for (var i = 0; i < similar_nodes.length; i++) {
+            let similar_nodes = $('.' + referenceElement.className).get();
+            for (let i = 0; i < similar_nodes.length; i++) {
                 selected_nodes.push(similar_nodes[i]);
                 let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                // console.log(referenceElement.className);
+                // console.log(tooltip_color);
                 similar_nodes[i].style.outline = '2px solid ' + tooltip_color;
                 let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
                 let data_to_push = {};  //dic label name ->
                 data_to_push[field_label] = similar_nodes[i];
+                // console.log(similar_nodes[i]);
+                // console.log(typeof similar_nodes[i]);
+                // console.log(field_label);
+                // console.log(typeof field_label);
                 collected_data.push(data_to_push);
             }
             console.log(collected_data);
@@ -99,6 +105,7 @@ class TestTooltip {
                 cf.iframe.css({"height":"40px"});
                 cf.body.empty();
                 cf.body.append(tooltip_html);
+
 
                 // change field_label of selected nodes or add them to collected_data
                 for (let idx = 0; idx < selected_nodes.length; idx++) {
@@ -405,10 +412,8 @@ appendLabel2Widget = function(labelName, labelColor) {
         }
     });
     ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
-
         // $(e.target).hide();
         let current = e;
-
         function changeFunction(e){
             console.log("not working");
         }

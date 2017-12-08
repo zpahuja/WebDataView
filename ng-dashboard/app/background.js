@@ -121,6 +121,7 @@ function tabController(tabId, tabAction, callback) {
                                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
                                         if (chrome.runtime.lastError) {
                                             console.error(chrome.runtime.lastError.message);
+
                                         }
                                     });
                                 });
@@ -150,17 +151,15 @@ function tabController(tabId, tabAction, callback) {
 
 /**
  * message listener and handler handle hot key
- */
+     */
 
-chrome.runtime.onMessage.addListener(
+    chrome.runtime.onMessage.addListener(
     function(request,sender,senderResponse){
         if(request.msg === "socket"){
             console.log("receive from socket server: "+request.text);
         }
         if(request.msg === "xpath"){
-            alert("fuck");
-            // console.log("fuck is; " + request.text);
-            // let tmp = document.evaluate(JSON.stringify($xpath.boxes[0]), document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            alert("message passed!!!");
         }
 
     },
