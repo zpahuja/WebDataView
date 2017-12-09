@@ -186,7 +186,7 @@ $(document).ready(function() {
                                     let array = Object.values(fake);
                                     let dummy;
                                     let labels;
-                                    let labels_dic = {}
+                                    let labels_dic = {};
                                     let tool_color;
                                     for(i=0; i < array.length; i++) {
                                         //----------Adding the label and color to widget---------
@@ -215,30 +215,27 @@ $(document).ready(function() {
 
                                                 if(selection.length !== 0)
                                                 {
-                                                    target.push(selection);
+                                                    target.push([array[j], selection[0]]);
                                                     let data_to_push = {};  //dic label name ->
-                                                    data_to_push[labels_dic[array[j]]] = selection;
+                                                    data_to_push[labels_dic[array[j]]] = selection[0];
                                                     collected_data.push(data_to_push);
-                                                    dummy = new TestTooltip(selection, COLORS[class_to_color_idx[array[j]]]);
+                                                    // dummy = new TestTooltip(selection[0], COLORS[class_to_color_idx[array[j]]]);
                                                 }
                                             }
                                         }
                                     }
-
+                                    let current_field;
                                     if(target.length !== 0){
                                         $visib.css('visibility','visible');
                                         $visib.click(function(e){
                                             e.preventDefault();
                                             for(i=0; i < target.length; i++){
-                                                target[i][0].style.backgroundColor = "yellow";
+                                                current_field = target[i][0];
+                                                target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
+                                                // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
                                             }
                                         });
                                     }
-
-
-
-
-
 
                                     // chrome.runtime.sendMessage({msg:"xpath", text: $xpath.boxes[0]},function(response){});
                                     // console.log(temp.getElementsByClassName($xpath.fields.price));

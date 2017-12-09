@@ -26,7 +26,7 @@ labels_list = [];
 
 class TestTooltip {
     constructor(referenceElement, color) {
-
+        console.log(color);
         self.instance = new Tooltip(referenceElement, {
             title: '<div id="webview-popper-container"></div>',
             trigger: "click",
@@ -39,9 +39,9 @@ class TestTooltip {
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css'],
             'js': ['app/contentScript/webView/tooltipHandler.js'],
-            'inlineCss': {"width": "175px", "height": "40px", "z-index": 2147483647, "top":"90px", "border": "none", "border-radius": 6}
+            'inlineCss': {"width": "195px", "height": "40px", "z-index": 2147483647, "top":"90px", "border": "none", "border-radius": 6}
         });
-        var tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: 100%"><i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> <i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i><i class="fa fa-link fa-fw-lg" id="web-view-merge"></i><i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i></div>');
+        let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: 100%"><i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> <i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i><i class="fa fa-link fa-fw-lg" id="web-view-merge"></i><i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i></div>');
         cf.body.append(tooltip_html);
         // select similar
         ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {
