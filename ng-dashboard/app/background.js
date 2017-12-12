@@ -102,7 +102,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
  * @param tab
  * @param tabAction
  */
-console.log(__dirname);
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
@@ -152,8 +151,22 @@ function tabController(tabId, tabAction, callback) {
 /**
  * message listener and handler handle hot key
      */
+chrome.runtime.onConnect.addListener(function(port) {
+    console.log("hello long");
+    console.assert(port.name == "knockknock");
+    console.log("Listener works!!!");
+    port.onMessage.addListener(function(msg) {
+        console.log("shit added!!!");
+        if (msg.joke == "Knock knock")
+            port.postMessage({question: "Who's there?"});
+        else if (msg.answer == "Madame")
+            port.postMessage({question: "Madame who?"});
+        else if (msg.answer == "Madame... Bovary")
+            port.postMessage({question: "I don't get it."});
+    });
+});
 
-    chrome.runtime.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
     function(request,sender,senderResponse){
         if(request.msg === "socket"){
             console.log("receive from socket server: "+request.text);

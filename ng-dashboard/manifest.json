@@ -16,7 +16,8 @@
   },
 
   "background" : {
-    "scripts" : ["app/background.js", "lib/socket.io.js"]
+    "scripts" : ["app/background.js", "lib/socket.io.js"],
+    "persistent": true
   },
 
   "permissions": [

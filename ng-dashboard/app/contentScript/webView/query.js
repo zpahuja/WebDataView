@@ -175,6 +175,19 @@ $(document).ready(function() {
                                 });
 
                                 socket.on('new message', function(data){
+                                    // chrome.runtime.sendMessage({msg:"xpath", text: "persistent storage"},function(response){});
+                                    let port = chrome.runtime.connect({name: "knockknock"});
+                                    port.postMessage({joke: "Knock knock"});
+                                    console.log("message sent from content script!!!");
+                                    port.onMessage.addListener(function(msg) {
+                                        if (msg.question == "Who's there?"){
+                                            console.log("sdfasdfasdf");
+                                            port.postMessage({answer: "Madame"});
+                                        }
+                                        else if (msg.question == "Madame who?")
+                                            port.postMessage({answer: "Madame... Bovary"});
+                                    });
+
                                     $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
                                     $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
                                     $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
@@ -234,10 +247,10 @@ $(document).ready(function() {
                                                 target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
                                                 // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
                                             }
+                                            // console.log(collected_data);
                                         });
                                     }
 
-                                    // chrome.runtime.sendMessage({msg:"xpath", text: $xpath.boxes[0]},function(response){});
                                     // console.log(temp.getElementsByClassName($xpath.fields.price));
                                     // .style.backgroundColor = "yellow";
                                 });
