@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,8 +25,8 @@
           <file leaf-file-name="background.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="549">
-                  <caret line="188" column="34" lean-forward="false" selection-start-line="188" selection-start-column="26" selection-end-line="188" selection-end-column="34" />
+                <state relative-caret-position="350">
+                  <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -36,7 +35,7 @@
           <file leaf-file-name="query.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="383">
+                <state relative-caret-position="1883">
                   <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
                   <folding>
                     <element signature="e#6854#11876#0" expanded="false" />
@@ -167,8 +166,8 @@
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/manifest.json" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
       </list>
     </option>
   </component>
@@ -423,15 +422,15 @@
       <workItem from="1512657694816" duration="12780000" />
       <workItem from="1512761637291" duration="10268000" />
       <workItem from="1512939022610" duration="9854000" />
-      <workItem from="1513107317287" duration="11339000" />
+      <workItem from="1513107317287" duration="12247000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="226890000" />
+    <option name="totallyTimeSpent" value="227798000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-10" y="2" width="1938" height="1028" extended-state="1" />
+    <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2270355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -653,7 +652,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
+        <state relative-caret-position="1883">
           <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
           <folding>
             <element signature="e#6854#11876#0" expanded="false" />
@@ -674,8 +673,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="188" column="34" lean-forward="false" selection-start-line="188" selection-start-column="26" selection-end-line="188" selection-end-column="34" />
+        <state relative-caret-position="350">
+          <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
           <folding />
         </state>
       </provider>

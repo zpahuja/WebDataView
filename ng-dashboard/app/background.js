@@ -155,10 +155,10 @@ function tabController(tabId, tabAction, callback) {
      */
 
 chrome.runtime.onConnect.addListener(function(port) {
-    socket = io.connect('http://127.0.0.1:5353/');
-    // console.log("have been here!!!!");
+    // socket = io.connect('http://127.0.0.1:5353/');
+    socket = io.connect('http://kite.cs.illinois.edu:5355/');
+
     // socket.emit('new user', {username: "Herbert", domain_name: "www.amazon.com"});
-    // socket = io.connect('http://kite.cs.illinois.edu:5355/');
     console.assert(port.name == "knockknock");
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "new user"){
