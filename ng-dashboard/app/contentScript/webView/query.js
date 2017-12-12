@@ -40,7 +40,7 @@ let cfq = new ContentFrame({
 });
 
 let cfq_iframe = cfq.body;
-
+let port = chrome.runtime.connect({name: "knockknock"});
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
 //     '<div class="webdataview" id="iframe-fullsize-container">' +
 //     ' <div class="widget" id="web-view-widget">' +
@@ -82,12 +82,6 @@ $(document).ready(function() {
                     cfq.loadCSS('assets/css/content-frame-internal.css', function() {
                         cfq.body.load(chrome.extension.getURL("app/contentScript/webView/index.html"), function () {
                             cfq_iframe.ready(function() {
-                                let socket = io.connect('http://127.0.0.1:5353/');
-                                // let socket = io.connect('http://kite.cs.illinois.edu:5355/');
-                                socket.on("hello",function(data){
-                                    console.log(data);
-                                    chrome.runtime.sendMessage({msg:"socket",text:data.text},function(response){});
-                                });
 
                                 let $messageForm = $('#messageForm');
                                 let $messageFormDesc = $('#messageFormDesc');
@@ -113,10 +107,94 @@ $(document).ready(function() {
                                 let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
 
+                                port.onMessage.addListener(function(msg) {
+                                    if (msg.question === "get users"){
+                                        let data = msg.data;
+                                        $users = ContentFrame.findElementInContentFrame('#users','#webview-query');
+                                        let user_html = '<ul class="nav" id="users" style="max-height: 40px; overflow-y:auto; list-style: none;">';
+                                        console.log(data);
+                                        for(i = 0; i < data.length; i++){
+                                            user_html += '<li>'+data[i]+'</li>';
+                                        }
+                                        user_html += '</ul>';
+                                        ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
+                                        $users.animate({scrollTop: $users.prop("scrollHeight")}, 500);
+                                    }
+                                    else if (msg.question === "new message") {
+                                        let data = msg.data;
+                                        $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
+                                        $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
+                                        $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
+                                        $xpath = data.msg;
+                                        $xpath = JSON.parse($xpath);
+                                        let temp;
+                                        let fake = {};
+                                        fake["prices"] = "sx-price-whole";
+                                        let array = Object.values(fake);
+                                        let dummy;
+                                        let labels;
+                                        let labels_dic = {};
+                                        let tool_color;
+                                        for(i=0; i < array.length; i++) {
+                                            //----------Adding the label and color to widget---------
+                                            if (array[i] in class_to_color_idx){
+                                                tool_color = "rgb" + COLORS[class_to_color_idx[array[i]]];
+                                                labels = ntc.name(rgb2hex(tool_color))[1];
+                                                labels_dic[array[i]] = labels;
+                                                console.log("This label already exists in dictionary!");
+                                            }
+                                            else{
+                                                class_to_color_idx[array[i]] = used_col_idx;
+                                                tool_color = "rgb" + COLORS[used_col_idx];
+                                                used_col_idx = used_col_idx + 1;
+                                                labels = ntc.name(rgb2hex(tool_color))[1];
+                                                labels_dic[array[i]] = labels;
+                                                appendLabel2Widget(labels, tool_color);
+                                            }
+                                        }
+
+                                        // let array = Object.values($xpath.fields);
+                                        for(i = 0; i < $xpath.boxes.length; i++){
+                                            temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                            if(temp !== null){
+                                                for(j = 0; j < array.length; j++){
+                                                    let selection = temp.getElementsByClassName(array[j]);
+
+                                                    if(selection.length !== 0)
+                                                    {
+                                                        target.push([array[j], selection[0]]);
+                                                        let data_to_push = {};  //dic label name ->
+                                                        data_to_push[labels_dic[array[j]]] = selection[0];
+                                                        collected_data.push(data_to_push);
+                                                        // dummy = new TestTooltip(selection[0], COLORS[class_to_color_idx[array[j]]]);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        let current_field;
+                                        if(target.length !== 0){
+                                            $visib.css('visibility','visible');
+                                            $visib.click(function(e){
+                                                e.preventDefault();
+                                                for(i=0; i < target.length; i++){
+                                                    current_field = target[i][0];
+                                                    target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
+                                                    // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
+                                                }
+                                                // console.log(collected_data);
+                                            });
+                                        }
+
+                                        // console.log(temp.getElementsByClassName($xpath.fields.price));
+                                        // .style.backgroundColor = "yellow";
+                                    }
+                                });
+
                                 window.onbeforeunload = function(e) {
                                     e.preventDefault();
                                     if($username !== undefined) {
-                                        socket.emit('leave', {username: $username, domain_name: location.hostname});
+                                        port.postMessage({answer: "leave", username: $username, domain_name: location.hostname});
+                                        // socket.emit('leave', {username: $username, domain_name: location.hostname});
                                     }
                                 };
 
@@ -129,31 +207,13 @@ $(document).ready(function() {
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else if(login === false){
-                                        socket.emit('new user', {username: $username, domain_name: location.hostname});
+                                        // socket.emit('new user', {username: $username, domain_name: location.hostname});
+                                        port.postMessage({answer: "new user", username: $username, domain_name: location.hostname});
                                         // ContentFrame.findElementInContentFrame('#username','#webview-query').val('');
                                         login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                         login = true;
                                     }
-                                });
-
-                                socket.on('get users', function(data){
-                                    // let user_html = '<ul class="list-group" id="users">';
-                                    // console.log(data);
-                                    // for(i = 0; i < data.length; i++){
-                                    //     user_html += '<li class="list-group-item">'+data[i]+'</li>';
-                                    // }
-                                    // user_html += '</ul>';
-                                    // ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
-                                    $users = ContentFrame.findElementInContentFrame('#users','#webview-query');
-                                    let user_html = '<ul class="nav" id="users" style="max-height: 40px; overflow-y:auto; list-style: none;">';
-                                    console.log(data);
-                                    for(i = 0; i < data.length; i++){
-                                        user_html += '<li>'+data[i]+'</li>';
-                                    }
-                                    user_html += '</ul>';
-                                    ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
-                                    $users.animate({scrollTop: $users.prop("scrollHeight")}, 500);
                                 });
 
                                 ContentFrame.findElementInContentFrame('#messageForm','#webview-query').submit(function(e){
@@ -164,97 +224,17 @@ $(document).ready(function() {
                                     }
                                     else {
                                         $message = ContentFrame.findElementInContentFrame('#message', '#webview-query').val();
-                                        console.log($message);
-                                        socket.emit('send message', {
-                                            username: $username,
-                                            message: $message,
-                                            domain_name: location.href
-                                        });
+
+                                        port.postMessage({answer: "send message", username: $username, message: $message,domain_name: location.href});
+
+                                        // socket.emit('send message', {
+                                        //     username: $username,
+                                        //     message: $message,
+                                        //     domain_name: location.href
+                                        // });
                                         ContentFrame.findElementInContentFrame('#message', '#webview-query').val('');
                                     }
                                 });
-
-                                socket.on('new message', function(data){
-                                    // chrome.runtime.sendMessage({msg:"xpath", text: "persistent storage"},function(response){});
-                                    let port = chrome.runtime.connect({name: "knockknock"});
-                                    port.postMessage({joke: "Knock knock"});
-                                    console.log("message sent from content script!!!");
-                                    port.onMessage.addListener(function(msg) {
-                                        if (msg.question == "Who's there?"){
-                                            console.log("sdfasdfasdf");
-                                            port.postMessage({answer: "Madame"});
-                                        }
-                                        else if (msg.question == "Madame who?")
-                                            port.postMessage({answer: "Madame... Bovary"});
-                                    });
-
-                                    $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
-                                    $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
-                                    $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
-                                    $xpath = data.msg;
-                                    $xpath = JSON.parse($xpath);
-                                    let temp;
-                                    let fake = {};
-                                    fake["prices"] = "sx-price-whole";
-                                    let array = Object.values(fake);
-                                    let dummy;
-                                    let labels;
-                                    let labels_dic = {};
-                                    let tool_color;
-                                    for(i=0; i < array.length; i++) {
-                                        //----------Adding the label and color to widget---------
-                                        if (array[i] in class_to_color_idx){
-                                            tool_color = "rgb" + COLORS[class_to_color_idx[array[i]]];
-                                            labels = ntc.name(rgb2hex(tool_color))[1];
-                                            labels_dic[array[i]] = labels;
-                                            console.log("This label already exists in dictionary!");
-                                        }
-                                        else{
-                                            class_to_color_idx[array[i]] = used_col_idx;
-                                            tool_color = "rgb" + COLORS[used_col_idx];
-                                            used_col_idx = used_col_idx + 1;
-                                            labels = ntc.name(rgb2hex(tool_color))[1];
-                                            labels_dic[array[i]] = labels;
-                                            appendLabel2Widget(labels, tool_color);
-                                        }
-                                    }
-
-                                    // let array = Object.values($xpath.fields);
-                                    for(i = 0; i < $xpath.boxes.length; i++){
-                                        temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                                        if(temp !== null){
-                                            for(j = 0; j < array.length; j++){
-                                                let selection = temp.getElementsByClassName(array[j]);
-
-                                                if(selection.length !== 0)
-                                                {
-                                                    target.push([array[j], selection[0]]);
-                                                    let data_to_push = {};  //dic label name ->
-                                                    data_to_push[labels_dic[array[j]]] = selection[0];
-                                                    collected_data.push(data_to_push);
-                                                    // dummy = new TestTooltip(selection[0], COLORS[class_to_color_idx[array[j]]]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    let current_field;
-                                    if(target.length !== 0){
-                                        $visib.css('visibility','visible');
-                                        $visib.click(function(e){
-                                            e.preventDefault();
-                                            for(i=0; i < target.length; i++){
-                                                current_field = target[i][0];
-                                                target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
-                                                // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
-                                            }
-                                            // console.log(collected_data);
-                                        });
-                                    }
-
-                                    // console.log(temp.getElementsByClassName($xpath.fields.price));
-                                    // .style.backgroundColor = "yellow";
-                                });
-
                                 ContentFrame.findElementInContentFrame('#messageFormDesc','#webview-query').submit(function(e){
                                     e.preventDefault();
                                     if($username === undefined){
@@ -263,28 +243,29 @@ $(document).ready(function() {
                                     }
                                     else {
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
-                                        socket.emit('send message by desc', {
-                                            username: $username,
-                                            message: $messageDesc,
-                                            domain_name: location.href
-                                        });
+
+                                        port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc,domain_name: location.href});
+                                        // socket.emit('send message by desc', {
+                                        //     username: $username,
+                                        //     message: $messageDesc,
+                                        //     domain_name: location.href
+                                        // });
                                         ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val('');
                                     }
                                 });
 
-
-                                ContentFrame.findElementInContentFrame('#domainForm','#webview-query').submit(function(e){
-                                    e.preventDefault();
-                                    socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
-                                });
-
-                                socket.on('new domain', function(data){
-                                    let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
-                                    $feedback.html(html);
-                                    let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
-                                    $currentdomain.html(newdomain);
-                                });
-
+                                // ContentFrame.findElementInContentFrame('#domainForm','#webview-query').submit(function(e){
+                                //     e.preventDefault();
+                                //     socket.emit('change domain', {username: $username.val(), domain_name: $newdomain.val()});
+                                // });
+                                //
+                                // socket.on('new domain', function(data){
+                                //     let html = '<strong  style="color: green">'+'Domain Changed Successfully!!!'+'</strong>';
+                                //     $feedback.html(html);
+                                //     let newdomain = '<li class="list-group-item" style="color: blue">'+data+'</li>';
+                                //     $currentdomain.html(newdomain);
+                                // });
+                                //
                                 // socket.on('get domains', function(data){
                                 //     let html = '<li class="list-group-item" style="color: blue">'+data+'</li>';
                                 //     $currentdomain.html(html);

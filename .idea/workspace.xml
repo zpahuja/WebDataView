@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="" />
+    <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -17,35 +20,37 @@
     <favorites_list name="WebDataView" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.8178497">
+    <splitter split-orientation="horizontal" split-proportion="0.9">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="background.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="550">
-                  <caret line="163" column="50" lean-forward="true" selection-start-line="163" selection-start-column="50" selection-end-line="163" selection-end-column="50" />
+                <state relative-caret-position="549">
+                  <caret line="188" column="34" lean-forward="false" selection-start-line="188" selection-start-column="26" selection-end-line="188" selection-end-column="34" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="query.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="query.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="407">
-                  <caret line="184" column="81" lean-forward="true" selection-start-line="184" selection-start-column="81" selection-end-line="184" selection-end-column="81" />
+                <state relative-caret-position="383">
+                  <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
                   <folding>
-                    <marker date="1513112620086" expanded="true" signature="5848:5864" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="5906:5936" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="5945:5951" ph=" " />
-                    <marker date="1513112620086" expanded="true" signature="6988:7087" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="7718:7817" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="8987:9039" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="9933:10014" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="17071:17152" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="18578:18590" ph="..." />
-                    <marker date="1513112620086" expanded="true" signature="18786:18797" ph="..." />
+                    <element signature="e#6854#11876#0" expanded="false" />
+                    <marker date="1513120816453" expanded="true" signature="5451:5467" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="5509:5539" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="5548:5554" ph=" " />
+                    <marker date="1513120816453" expanded="true" signature="6131:6183" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="12921:13020" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="13787:13886" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="14556:14637" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="16060:16141" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="17797:17809" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="18011:18022" ph="..." />
+                    <marker date="1513120816453" expanded="true" signature="18347:18358" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -58,7 +63,7 @@
           <file leaf-file-name="manifest.json" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="275">
+                <state relative-caret-position="425">
                   <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
                   <folding />
                 </state>
@@ -99,9 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>var</find>
-      <find>close</find>
-      <find>font</find>
       <find>http</find>
       <find>ajax</find>
       <find>console.log(messa</find>
@@ -129,6 +131,9 @@
       <find>persis</find>
       <find>pop</find>
       <find>backgr</find>
+      <find>var</find>
+      <find>socket</find>
+      <find>io</find>
     </findStrings>
     <replaceStrings>
       <replace>cfn</replace>
@@ -162,8 +167,8 @@
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/manifest.json" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
       </list>
     </option>
   </component>
@@ -418,15 +423,15 @@
       <workItem from="1512657694816" duration="12780000" />
       <workItem from="1512761637291" duration="10268000" />
       <workItem from="1512939022610" duration="9854000" />
-      <workItem from="1513107317287" duration="4069000" />
+      <workItem from="1513107317287" duration="11339000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="219620000" />
+    <option name="totallyTimeSpent" value="226890000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
+    <frame x="-10" y="2" width="1938" height="1028" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2270355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -640,36 +645,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
+        <state relative-caret-position="425">
           <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="163" column="50" lean-forward="true" selection-start-line="163" selection-start-column="50" selection-end-line="163" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="184" column="81" lean-forward="true" selection-start-line="184" selection-start-column="81" selection-end-line="184" selection-end-column="81" />
+        <state relative-caret-position="383">
+          <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
           <folding>
-            <marker date="1513112620086" expanded="true" signature="5848:5864" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="5906:5936" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="5945:5951" ph=" " />
-            <marker date="1513112620086" expanded="true" signature="6988:7087" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="7718:7817" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="8987:9039" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="9933:10014" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="17071:17152" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="18578:18590" ph="..." />
-            <marker date="1513112620086" expanded="true" signature="18786:18797" ph="..." />
+            <element signature="e#6854#11876#0" expanded="false" />
+            <marker date="1513120816453" expanded="true" signature="5451:5467" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="5509:5539" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="5548:5554" ph=" " />
+            <marker date="1513120816453" expanded="true" signature="6131:6183" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="12921:13020" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="13787:13886" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="14556:14637" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="16060:16141" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="17797:17809" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="18011:18022" ph="..." />
+            <marker date="1513120816453" expanded="true" signature="18347:18358" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="188" column="34" lean-forward="false" selection-start-line="188" selection-start-column="26" selection-end-line="188" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

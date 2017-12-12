@@ -4,7 +4,8 @@
  * Constants of tab states
  * @enum {bool}
  */
-var TAB_STATE = {
+let socket = null;
+let TAB_STATE = {
     ACTIVE   : true,
     INACTIVE : false
 };
@@ -13,7 +14,7 @@ var TAB_STATE = {
  * Constants of tab actions
  * @enum {string}
  */
-var TAB_ACTION = {
+let TAB_ACTION = {
     INIT : 'INIT',
     HIDE : 'HIDE',
     SHOW : 'SHOW'
@@ -22,16 +23,16 @@ var TAB_ACTION = {
 /**
  * @enum {string}
  */
-var VIEW = {
+let VIEW = {
     WEB  : 'WEB',
     GRID : 'GRID',
     BACKGROUND   : 'BACKGROUND',
     NONE : undefined
 };
 
-var tabStates = {}; // tracks state of tabs with extension initiated. tabId unique in browser session across windows
-var tabViews = {}; // TODO tracks view of tabs
-var activeTabId; // id
+let tabStates = {}; // tracks state of tabs with extension initiated. tabId unique in browser session across windows
+let tabViews = {}; // TODO tracks view of tabs
+let activeTabId; // id
 
 /**
  * toggles tab state (ACTIVE or INACTIVE) and returns action (INIT, HIDE or SHOW)
@@ -76,7 +77,7 @@ function updateIcon(tabId) {
  * toggle widget and browserAction icon
  */
 chrome.browserAction.onClicked.addListener(function(tab) {
-    var tabAction = toggleState(tab.id);
+    let tabAction = toggleState(tab.id);
     activeTabId = tab.id;
     updateIcon(tab.id);
     tabController(tab.id, tabAction);
@@ -102,6 +103,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
  * @param tab
  * @param tabAction
  */
+
+
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
@@ -109,6 +112,7 @@ function tabController(tabId, tabAction, callback) {
         chrome.tabs.insertCSS(tabId, {file: "assets/css/style.css"});
 
         // web view scripts
+
         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewUtilities.js"}, function() {
             chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewMessagePassingHandler.js"}, function () {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
@@ -116,11 +120,9 @@ function tabController(tabId, tabAction, callback) {
                         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
                             chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
                                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
-                                    chrome.tabs.executeScript(null, {file: "lib/socket.io.js"});
                                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
                                         if (chrome.runtime.lastError) {
                                             console.error(chrome.runtime.lastError.message);
-
                                         }
                                     });
                                 });
@@ -151,18 +153,45 @@ function tabController(tabId, tabAction, callback) {
 /**
  * message listener and handler handle hot key
      */
+
 chrome.runtime.onConnect.addListener(function(port) {
-    console.log("hello long");
+    socket = io.connect('http://127.0.0.1:5353/');
+    // console.log("have been here!!!!");
+    // socket.emit('new user', {username: "Herbert", domain_name: "www.amazon.com"});
+    // socket = io.connect('http://kite.cs.illinois.edu:5355/');
     console.assert(port.name == "knockknock");
-    console.log("Listener works!!!");
     port.onMessage.addListener(function(msg) {
-        console.log("shit added!!!");
-        if (msg.joke == "Knock knock")
-            port.postMessage({question: "Who's there?"});
-        else if (msg.answer == "Madame")
-            port.postMessage({question: "Madame who?"});
-        else if (msg.answer == "Madame... Bovary")
-            port.postMessage({question: "I don't get it."});
+        if (msg.answer == "new user"){
+            console.log("new_user reached!!!");
+            socket.emit('new user', {username: msg.username, domain_name: msg.domain_name});
+        }
+        else if (msg.answer == "send message") {
+            console.log("send message reached!!!");
+            socket.emit('send message', {username: msg.username, message: msg.message, domain_name: msg.domain_name});
+
+            // port.postMessage({question: "Madame who?"});
+
+        }
+        else if (msg.answer == "send message by desc"){
+            console.log("send message by desc reached!!!");
+            socket.emit('send message by desc', {username: msg.username, message: msg.message, domain_name: msg.domain_name});
+            // port.postMessage({question: "I don't get it."});
+        }
+
+        else if (msg.answer == "leave"){
+            console.log("leave reached!!!");
+            console.log("in backgroundjs: " + msg.domain_name);
+            socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
+            // port.postMessage({question: "I don't get it."});
+        }
+    });
+    socket.on('get users', function(data) {
+        port.postMessage({question: "get users", data: data});
+    });
+
+    socket.on('new message', function(data) {
+        console.log(data);
+        port.postMessage({question: "new message", data: data});
     });
 });
 
