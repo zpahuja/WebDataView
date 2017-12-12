@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/manifest.json" afterPath="$PROJECT_DIR$/ng-dashboard/manifest.json" />
-    </list>
+    <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -423,12 +418,12 @@
       <workItem from="1512657694816" duration="12780000" />
       <workItem from="1512761637291" duration="10268000" />
       <workItem from="1512939022610" duration="9854000" />
-      <workItem from="1513107317287" duration="3994000" />
+      <workItem from="1513107317287" duration="4069000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="219545000" />
+    <option name="totallyTimeSpent" value="219620000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
