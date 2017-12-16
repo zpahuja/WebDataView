@@ -72,6 +72,7 @@ $(document).ready(function(){
                 widget_iframe.load(chrome.extension.getURL("app/contentScript/webView/widget.html"), function() {
                     widget_iframe.ready(function() {
                         // hide left menu buttons (scroll buttons and download button)
+
                         let widget_download_button = ContentFrame.findElementInContentFrame('#widget-download-data', '#webdataview-widget-iframe');
                         widget_download_button.hide();
 
@@ -99,8 +100,68 @@ $(document).ready(function(){
                             }
                         );
 
+                        function isDescendant(parent, child) {
+                            let node = child.parentNode;
+                            while (node != null) {
+                                if (node == parent) {
+                                    return true;
+                                }
+                                node = node.parentNode;
+                            }
+                            return false;
+                        }
                         let widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
+                        let grid_view = ContentFrame.findElementInContentFrame('#grid-view', '#webdataview-widget-iframe');
+                        let record_flag = false;
+                        let output = [];
+                        let record_dom = [];
+                        let non_record = [];
+                        grid_view.click(function(e){
+                            e.preventDefault();
+                            for(i = 0; i < collected_data.length; i++) {
+                                if (Object.keys(collected_data[i])[0] === "records") {
+                                    record_flag = true;
+                                    break;
+                                }
+                            }
+                            if(!record_flag){
+                                alert("Please select boxs and change the label to <records>!");
+                            }
+                            else{
+                                for(i = 0; i < collected_data.length; i++){
+                                    if(Object.keys(collected_data[i])[0] === "records"){
+                                        record_dom.push(Object.values(collected_data[i])[0]);
+                                    }
+                                    else{
+                                        non_record.push(collected_data[i]);
+                                        // console.log(c.textContent);
+                                    }
+                                }
 
+                                let pair = {};
+                                let currentParent;
+                                let potential_child;
+                                let textName;
+                                console.log(record_dom);
+                                for(i = 0; i < record_dom.length; i++){
+                                    currentParent = record_dom[i];
+                                    for(j =0; j < non_record.length; j++){
+                                        potential_child = Object.values(non_record[j])[0];
+                                        // if(isDescendant(currentParent, potential_child)){
+                                        //     textName = Object.values(non_record[j])[0];
+                                        //     textName = textName.textContent;
+                                        //     pair[Object.keys(non_record[j])[0]] = textName;
+                                        // }
+                                    }
+                                    // if( Object.keys(pair).length > 0){
+                                    //     output.push(pair);
+                                    //     pair = {};
+                                    // }
+                                }
+                                console.log(output);
+
+                            }
+                        });
                         // set widget label width
                         function setWidgetLabelsWidth() {
                             let vert_sep_selector = ContentFrame.findElementInContentFrame('.widget-vertical-separator', '#webdataview-widget-iframe');

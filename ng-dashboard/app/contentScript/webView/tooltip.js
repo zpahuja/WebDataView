@@ -156,13 +156,13 @@ class TestTooltip {
 }
 
 // list of selected VIPS blocks
-var selected_nodes = [];
-var tooltip_node = undefined;
-var alignSelectionWithClusterClassFlag = false;
-var used_col_idx = 0;
-var class_to_color_idx = {};
+let selected_nodes = [];
+let tooltip_node = undefined;
+let alignSelectionWithClusterClassFlag = false;
+let used_col_idx = 0;
+let class_to_color_idx = {};
 
-var TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
+let TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
 
 document.addEventListener("click", selectionHandler);
 
@@ -175,7 +175,7 @@ function selectionHandler() {
         return;
     }
     /*
-     var idx = getVipsIndexFromBoxId(event.target.id);
+     let idx = getVipsIndexFromBoxId(event.target.id);
      // if click outside of view, then deselect all elements, hide tooltip, empty selectedBlockIndices and return
      if (!idx) {
      deselectVipsBlockArray(selectedBlockIndices);
@@ -183,7 +183,7 @@ function selectionHandler() {
      selectedBlockIndices = [];
      return;
      }
-     var selectIndexColor = getClusterColorFromIndex(idx);
+     let selectIndexColor = getClusterColorFromIndex(idx);
      if (alignSelectionWithClusterClassFlag) {
      alignWithSelectedBlockCluster(idx, selectIndexColor);
      return;
@@ -212,10 +212,10 @@ function selectionHandler() {
         used_col_idx = used_col_idx + 1;
         appendLabel2Widget(ntc.name(rgb2hex(tooltip_color))[1], tooltip_color);
     }
-    var tip = new TestTooltip(event.target, tooltip_color);
+    let tip = new TestTooltip(event.target, tooltip_color);
 
     if (!tooltip_node || event.target.className != tooltip_node.className) {
-        for (var i = 0; i < selected_nodes.length; i++) {
+        for (let i = 0; i < selected_nodes.length; i++) {
             selected_nodes[i].style.outline = "none";
         }
         selected_nodes = [];
@@ -234,14 +234,14 @@ function updateTooltip(idx, color) {
     if(tooltipBoxIdx)
         destroyTooltip();
     tooltipBoxIdx = idx;
-    var box = globalBlocks[idx]['-att-box'];
+    let box = globalBlocks[idx]['-att-box'];
     $(box).popover("show");
     $('.popover').css('background-color', color);
     //$('.popover.top .arrow').css('border-top-color', color);
 }
 
 function destroyTooltip() {
-    var box = globalBlocks[tooltipBoxIdx]['-att-box'];
+    let box = globalBlocks[tooltipBoxIdx]['-att-box'];
     $(box).popover("hide");
     tooltipBoxIdx = undefined;
 }
@@ -253,8 +253,8 @@ function isEmptyArray(arr) {
 }
 
 function deselectVipsBlock(idx) {
-    var idxClusterColor = getClusterColorFromIndex(idx);
-    var box = globalBlocks[idx]['-att-box'];
+    let idxClusterColor = getClusterColorFromIndex(idx);
+    let box = globalBlocks[idx]['-att-box'];
 
     // reset border
     box.style.border = "2px solid rgba(0,0,0,0)";
@@ -268,7 +268,7 @@ function deselectVipsBlock(idx) {
 }
 
 function deselectVipsBlockArray(arrayIndices) {
-    for (var i = 0; i < arrayIndices.length; i++) {
+    for (let i = 0; i < arrayIndices.length; i++) {
         deselectVipsBlock(arrayIndices[i]);
     }
 }
@@ -285,11 +285,11 @@ function getClusterColorFromIndex(idx) {
  */
 function getVipsIndexFromBoxId(strIdx) {
     // validate vips block
-    var vipsBoxIdPattern =  /vips(\d+)$/i;
-    var regMatch = strIdx.match(vipsBoxIdPattern);
+    let vipsBoxIdPattern =  /vips(\d+)$/i;
+    let regMatch = strIdx.match(vipsBoxIdPattern);
     if(regMatch) {
         // parse index
-        var idx = parseInt(regMatch[1]);
+        let idx = parseInt(regMatch[1]);
         return idx;
     }
     // false for error checking
@@ -306,8 +306,8 @@ function getVipsIndexFromBoxId(strIdx) {
  */
 
 function assignLabel() {
-    for (var i = 0; i < selectedBlockIndices.length; i++) {
-        var idx = selectedBlockIndices[i];
+    for (let i = 0; i < selectedBlockIndices.length; i++) {
+        let idx = selectedBlockIndices[i];
         labels[idx] = label;
         // change colors & cluster & id2cluster
     }
@@ -315,9 +315,9 @@ function assignLabel() {
 
 function deleteSubtreeOfSelectedBlocks() {
     destroyTooltip();
-    for(var i = 0; i < selectedBlockIndices.length; i++) {
-        var idx = selectedBlockIndices[i];
-        var box = globalBlocks[idx]['-att-box'];
+    for(let i = 0; i < selectedBlockIndices.length; i++) {
+        let idx = selectedBlockIndices[i];
+        let box = globalBlocks[idx]['-att-box'];
         box.style.visibility = "hidden";
     }
     selectedBlockIndices = [];
@@ -325,11 +325,11 @@ function deleteSubtreeOfSelectedBlocks() {
 
 function removeFromClusterClass() {
     destroyTooltip();
-    for(var i = 0; i < selectedBlockIndices.length; i++) {
-        var idx = selectedBlockIndices[i];
-        var box = globalBlocks[idx]['-att-box'];
+    for(let i = 0; i < selectedBlockIndices.length; i++) {
+        let idx = selectedBlockIndices[i];
+        let box = globalBlocks[idx]['-att-box'];
         box.style.border = "none";
-        var clusterid = id2cluster[idx];
+        let clusterid = id2cluster[idx];
         if (clusters[clusterid].indexOf(idx) > -1)
             clusters[clusterid].splice(idx, 1);
         id2cluster[idx] = undefined;
@@ -338,23 +338,23 @@ function removeFromClusterClass() {
 }
 
 function selectCluster() {
-    var clusterid = id2cluster[tooltipBoxIdx];
-    var clusterColor = getClusterColorFromIndex(tooltipBoxIdx);
+    let clusterid = id2cluster[tooltipBoxIdx];
+    let clusterColor = getClusterColorFromIndex(tooltipBoxIdx);
     if(clusterid){
-        for (var i = 0; i < clusters[clusterid].length; i++) {
-            var idx = clusters[clusterid][i];
+        for (let i = 0; i < clusters[clusterid].length; i++) {
+            let idx = clusters[clusterid][i];
             if(selectedBlockIndices.indexOf(idx) < 0)
                 selectedBlockIndices.push(idx);
-            var box = globalBlocks[idx]['-att-box'];
+            let box = globalBlocks[idx]['-att-box'];
             box.style.border = "2px solid " + clusterColor;
         }
     }
 }
 
 function alignSelectionWithClusterClass() {
-    for(var i = 0; i < selectedBlockIndices.length; i++) {
-        var idx = selectedBlockIndices[i];
-        var box = globalBlocks[idx]['-att-box'];
+    for(let i = 0; i < selectedBlockIndices.length; i++) {
+        let idx = selectedBlockIndices[i];
+        let box = globalBlocks[idx]['-att-box'];
         box.style.borderStyle = "dotted";
     }
 
@@ -363,11 +363,11 @@ function alignSelectionWithClusterClass() {
 }
 
 function alignWithSelectedBlockCluster(idx, clusterColor) {
-    var clusterId = id2cluster[idx];
+    let clusterId = id2cluster[idx];
 
-    for(var i = 0; i < selectedBlockIndices.length; i++) {
-        var idx = selectedBlockIndices[i];
-        var currentClusterId = id2cluster[idx];
+    for(let i = 0; i < selectedBlockIndices.length; i++) {
+        let idx = selectedBlockIndices[i];
+        let currentClusterId = id2cluster[idx];
         if (clusters[currentClusterId].indexOf(idx) > -1)
             clusters[currentClusterId].splice(idx, 1);
         clusters[clusterId].push(idx);
@@ -394,30 +394,31 @@ appendLabel2Widget = function(labelName, labelColor) {
         '<svg class="widget-label-circle-svg" height="10" width="10"> ' +
         '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" />' +
         ' </svg>'+ labelName +'</li>');
-    ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
-        let circle = $(e.target).find('svg').find('circle');
-        let circle_fill_color = circle.css("fill") == "rgb(255, 255, 255)" ? labelColor : "rgb(255, 255, 255)";
-        circle.css({"fill": circle_fill_color});
-        // toggle fields
-        for (let i = 0; i < collected_data.length; i++) {
-            let field_label = ntc.name(rgb2hex(labelColor))[1];
-            if (field_label in collected_data[i]) {
-                if (circle_fill_color == "rgb(255, 255, 255)") {
-                    collected_data[i][field_label].style.outline = "none";
-                } else {
-
-                    collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
-                }
-            }
-        }
-    });
+    // ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
+    //     let circle = $(e.target).find('svg').find('circle');
+    //     let circle_fill_color = circle.css("fill") == "rgb(255, 255, 255)" ? labelColor : "rgb(255, 255, 255)";
+    //     circle.css({"fill": circle_fill_color});
+    //     // toggle fields
+    //     for (let i = 0; i < collected_data.length; i++) {
+    //         let field_label = ntc.name(rgb2hex(labelColor))[1];
+    //         if (field_label in collected_data[i]) {
+    //             if (circle_fill_color == "rgb(255, 255, 255)") {
+    //                 collected_data[i][field_label].style.outline = "none";
+    //             } else {
+    //
+    //                 collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
+    //             }
+    //         }
+    //     }
+    // });
     ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
         // $(e.target).hide();
         let current = e;
+        let label_name = current.target.innerText;
         function changeFunction(e){
             console.log("not working");
         }
-        console.log(ContentFrame.findElementInContentFrame('#delete_label_id', '#webdataview-floating-widget').length);
+        // console.log(ContentFrame.findElementInContentFrame('#delete_label_id', '#webdataview-floating-widget').length);
         let widget_delete_label = new ContentFrame({
             'id':'delete_label_id',
             'class':'delete_label_class',
@@ -441,17 +442,24 @@ appendLabel2Widget = function(labelName, labelColor) {
 
          widget_delete_label.body.append(tooltip_html);
 
-
         // ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').append('' +
         //     '<li class="widget-labels-li" id = '+ labelId +'> ' +
         //     '<svg class="widget-label-circle-svg" height="10" width="10"> ' +
         //     '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" />' +
         //     ' </svg>'+ 'not working' +'</li>');
         ContentFrame.findElementInContentFrame('#label_delete', '#delete_label_id').click(function(e) {
-            // console.log("here here");
             $(current.target).hide();
             ContentFrame.findElementInContentFrame('#' + e.target.id, '#delete_label_id').hide();
-            // $('#' + e.target.id).hide()
+            for(i = 0; i < labels_list.length; i++){
+                if(labels_list[i] === label_name){
+                    labels_list.splice(i, 1);
+                }
+            }
+            for(i = 0; i < collected_data.length; i++){
+                if(Object.keys(collected_data[i])[0] === label_name){
+                    collected_data.splice(i, 1);
+                }
+            }
         });
         let close_action = ContentFrame.findElementInContentFrame('#label_close', '#delete_label_id');
 
@@ -462,11 +470,28 @@ appendLabel2Widget = function(labelName, labelColor) {
 
         let change_action = ContentFrame.findElementInContentFrame('#label_change', '#delete_label_id');
         change_action.click(function(e) {
+            e.preventDefault();
+
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#delete_label_id');
-            console.log(input_label.get(0).value);
+            input_label = input_label.get(0).value;
             let old = current.target.innerHTML;
             let first = old.substring(0, old.lastIndexOf(">")+1);
-            current.target.innerHTML = first + input_label.get(0).value;
+            current.target.innerHTML = first + input_label;
+
+            for(i = 0; i < labels_list.length; i++){
+                if(labels_list[i] === label_name){
+                    labels_list[i] = input_label;
+                }
+            }
+            let old_val;
+            let new_pair = {};
+            for(i = 0; i < collected_data.length; i++){
+                if(Object.keys(collected_data[i])[0] === label_name){
+                    old_val = Object.values(collected_data[i])[0];
+                    new_pair[input_label] = old_val;
+                    collected_data[i] = new_pair;
+                }
+            }
         });
     });
 

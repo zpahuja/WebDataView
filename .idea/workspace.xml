@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js" line="116" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0294df5f-c463-4145-b83d-f6f8836ae4cc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/background.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/background.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js" afterPath="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,15 +27,55 @@
     <favorites_list name="WebDataView" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.9">
+    <splitter split-orientation="horizontal" split-proportion="0.1">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="background.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="350">
-                  <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+                <state relative-caret-position="4275">
+                  <caret line="171" column="52" lean-forward="false" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="52" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="widget.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="253">
+                  <caret line="130" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="widget.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="125">
+                  <caret line="5" column="68" lean-forward="false" selection-start-line="5" selection-start-column="64" selection-end-line="5" selection-end-column="68" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1200">
+                  <caret line="48" column="46" lean-forward="false" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
+                  <folding>
+                    <element signature="n#style#0;n#input#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#label#1;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                    <element signature="e#2516#2522#0" expanded="true" />
+                    <element signature="e#2522#2528#0" expanded="true" />
+                    <element signature="e#2528#2534#0" expanded="true" />
+                    <element signature="e#2534#2540#0" expanded="true" />
+                    <element signature="e#2540#2546#0" expanded="true" />
+                    <element signature="e#2546#2552#0" expanded="true" />
+                    <element signature="n#style#0;n#textarea#0;n#label#1;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -35,21 +83,20 @@
           <file leaf-file-name="query.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1883">
-                  <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
+                <state relative-caret-position="25">
+                  <caret line="136" column="54" lean-forward="false" selection-start-line="136" selection-start-column="44" selection-end-line="136" selection-end-column="54" />
                   <folding>
-                    <element signature="e#6854#11876#0" expanded="false" />
-                    <marker date="1513120816453" expanded="true" signature="5451:5467" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="5509:5539" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="5548:5554" ph=" " />
-                    <marker date="1513120816453" expanded="true" signature="6131:6183" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="12921:13020" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="13787:13886" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="14556:14637" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="16060:16141" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="17797:17809" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="18011:18022" ph="..." />
-                    <marker date="1513120816453" expanded="true" signature="18347:18358" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="5501:5517" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="5559:5589" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="5598:5604" ph=" " />
+                    <marker date="1513288886137" expanded="true" signature="6181:6233" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="12971:13070" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="13837:13936" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="14606:14687" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="16110:16191" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="18002:18014" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="18216:18227" ph="..." />
+                    <marker date="1513288886137" expanded="true" signature="18552:18563" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -59,32 +106,32 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-          <file leaf-file-name="manifest.json" pinned="false" current-in-tab="true">
+          <file leaf-file-name="manifest.json" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+                <state relative-caret-position="625">
+                  <caret line="25" column="16" lean-forward="false" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tooltip.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="tooltip.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1250">
-                  <caret line="69" column="62" lean-forward="true" selection-start-line="69" selection-start-column="62" selection-end-line="69" selection-end-column="62" />
+                <state relative-caret-position="403">
+                  <caret line="457" column="55" lean-forward="true" selection-start-line="457" selection-start-column="55" selection-end-line="457" selection-end-column="55" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
-                    <marker date="1512777892554" expanded="true" signature="2074:2132" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="2198:2215" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="4583:4642" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="4858:4907" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="5784:5851" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="5917:5934" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="18100:18121" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="18230:18251" ph="..." />
-                    <marker date="1512777892554" expanded="true" signature="18353:18374" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="2074:2132" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="2198:2215" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="4583:4642" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="4858:4907" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="5784:5851" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="5917:5934" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="18208:18229" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="18338:18359" ph="..." />
+                    <marker date="1513382046205" expanded="true" signature="18461:18482" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -103,18 +150,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>http</find>
-      <find>ajax</find>
-      <find>console.log(messa</find>
-      <find>document</find>
-      <find>respon</find>
-      <find>query res</find>
-      <find>click</find>
-      <find>webview-query</find>
-      <find>collected_data</find>
       <find>add</find>
       <find>assign</find>
-      <find>collected</find>
       <find>web-view-assign-label</find>
       <find>web-view-assign-color</find>
       <find>appendLabel2Widget</find>
@@ -130,9 +167,19 @@
       <find>persis</find>
       <find>pop</find>
       <find>backgr</find>
-      <find>var</find>
       <find>socket</find>
       <find>io</find>
+      <find>inline</find>
+      <find>collec</find>
+      <find>grid_view</find>
+      <find>grid-view</find>
+      <find>web-view</find>
+      <find>grid</find>
+      <find>value</find>
+      <find>object.</find>
+      <find>var</find>
+      <find>collected</find>
+      <find>collected_</find>
     </findStrings>
     <replaceStrings>
       <replace>cfn</replace>
@@ -157,17 +204,17 @@
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/contentFrame/query.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/lib/socket.io.min.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/vipsCtrl.js" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/contentFrame/queryHandle.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/queryHandle.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/label_delete.js" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
-        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/manifest.json" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js" />
         <option value="$PROJECT_DIR$/ng-dashboard/app/background.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js" />
+        <option value="$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js" />
       </list>
     </option>
   </component>
@@ -180,7 +227,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-10" />
     <option name="y" value="2" />
-    <option name="width" value="1938" />
+    <option name="width" value="1932" />
     <option name="height" value="1028" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -199,8 +246,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -214,6 +259,94 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ng-dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ng-dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ng-dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jquery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ng-dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="font-awesome" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scss" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebDataView" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ng-dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="font-awesome" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -285,6 +418,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
@@ -422,18 +557,22 @@
       <workItem from="1512657694816" duration="12780000" />
       <workItem from="1512761637291" duration="10268000" />
       <workItem from="1512939022610" duration="9854000" />
-      <workItem from="1513107317287" duration="12247000" />
+      <workItem from="1513107317287" duration="12556000" />
+      <workItem from="1513212262805" duration="2807000" />
+      <workItem from="1513278612532" duration="7369000" />
+      <workItem from="1513301527508" duration="10798000" />
+      <workItem from="1513377651476" duration="4845000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227798000" />
+    <option name="totallyTimeSpent" value="253926000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-10" y="2" width="1938" height="1028" extended-state="0" />
+    <frame x="-10" y="2" width="1932" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2270355" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.05287958" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -501,7 +640,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -603,79 +742,93 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.html" />
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/label_delete.js" />
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html" />
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/notification.js" />
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3100">
-          <caret line="127" column="47" lean-forward="false" selection-start-line="127" selection-start-column="47" selection-end-line="127" selection-end-column="47" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
+        <state relative-caret-position="625">
+          <caret line="25" column="16" lean-forward="false" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="43" />
+        <state relative-caret-position="125">
+          <caret line="5" column="68" lean-forward="false" selection-start-line="5" selection-start-column="64" selection-end-line="5" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js">
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="69" column="62" lean-forward="true" selection-start-line="69" selection-start-column="62" selection-end-line="69" selection-end-column="62" />
+        <state relative-caret-position="1200">
+          <caret line="48" column="46" lean-forward="false" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1512777892554" expanded="true" signature="2074:2132" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="2198:2215" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="4583:4642" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="4858:4907" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="5784:5851" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="5917:5934" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="18100:18121" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="18230:18251" ph="..." />
-            <marker date="1512777892554" expanded="true" signature="18353:18374" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/manifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1883">
-          <caret line="120" column="61" lean-forward="false" selection-start-line="120" selection-start-column="61" selection-end-line="120" selection-end-column="61" />
-          <folding>
-            <element signature="e#6854#11876#0" expanded="false" />
-            <marker date="1513120816453" expanded="true" signature="5451:5467" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="5509:5539" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="5548:5554" ph=" " />
-            <marker date="1513120816453" expanded="true" signature="6131:6183" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="12921:13020" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="13787:13886" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="14556:14637" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="16060:16141" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="17797:17809" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="18011:18022" ph="..." />
-            <marker date="1513120816453" expanded="true" signature="18347:18358" ph="..." />
+            <element signature="n#style#0;n#input#0;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#1;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#2516#2522#0" expanded="true" />
+            <element signature="e#2522#2528#0" expanded="true" />
+            <element signature="e#2528#2534#0" expanded="true" />
+            <element signature="e#2534#2540#0" expanded="true" />
+            <element signature="e#2540#2546#0" expanded="true" />
+            <element signature="e#2546#2552#0" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#label#1;n#div#0;n#form#2;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ng-dashboard/app/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+        <state relative-caret-position="4275">
+          <caret line="171" column="52" lean-forward="false" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="52" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/query.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="136" column="54" lean-forward="false" selection-start-line="136" selection-start-column="44" selection-end-line="136" selection-end-column="54" />
+          <folding>
+            <marker date="1513288886137" expanded="true" signature="5501:5517" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="5559:5589" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="5598:5604" ph=" " />
+            <marker date="1513288886137" expanded="true" signature="6181:6233" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="12971:13070" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="13837:13936" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="14606:14687" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="16110:16191" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="18002:18014" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="18216:18227" ph="..." />
+            <marker date="1513288886137" expanded="true" signature="18552:18563" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/widget.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="130" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ng-dashboard/app/contentScript/webView/tooltip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="457" column="55" lean-forward="true" selection-start-line="457" selection-start-column="55" selection-end-line="457" selection-end-column="55" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1513382046205" expanded="true" signature="2074:2132" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="2198:2215" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="4583:4642" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="4858:4907" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="5784:5851" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="5917:5934" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="18208:18229" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="18338:18359" ph="..." />
+            <marker date="1513382046205" expanded="true" signature="18461:18482" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

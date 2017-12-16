@@ -87,6 +87,7 @@ $(document).ready(function() {
                                 let $messageFormDesc = $('#messageFormDesc');
                                 let $message;
                                 let $messageDesc;
+                                let $messageName;
                                 let $domain = $('#domain');
                                 let $currentdomain = $('#currentdomain');
                                 let $domainForm = $('#domainForm');
@@ -243,8 +244,8 @@ $(document).ready(function() {
                                     }
                                     else {
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
-
-                                        port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc,domain_name: location.href});
+                                        $messageName = ContentFrame.findElementInContentFrame('#messageName', '#webview-query').val();
+                                        port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc, name: $messageName, domain_name: location.href});
                                         // socket.emit('send message by desc', {
                                         //     username: $username,
                                         //     message: $messageDesc,
