@@ -30,7 +30,7 @@ class TestTooltip {
         self.instance = new Tooltip(referenceElement, {
             title: '<div id="webview-popper-container"></div>',
             trigger: "click",
-            placement: "top-start",
+            placement: "auto-top",
             html: true
         });
         self.instance.show();
@@ -461,8 +461,8 @@ appendLabel2Widget = function(labelName, labelColor) {
                 }
             }
         });
-        let close_action = ContentFrame.findElementInContentFrame('#label_close', '#delete_label_id');
 
+        let close_action = ContentFrame.findElementInContentFrame('#label_close', '#delete_label_id');
         close_action.click(function(e) {
             console.log(close_action.get(0));
             $('#delete_label_id').remove();
@@ -471,7 +471,7 @@ appendLabel2Widget = function(labelName, labelColor) {
         let change_action = ContentFrame.findElementInContentFrame('#label_change', '#delete_label_id');
         change_action.click(function(e) {
             e.preventDefault();
-
+            console.log(collected_data);
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#delete_label_id');
             input_label = input_label.get(0).value;
             let old = current.target.innerHTML;
@@ -490,6 +490,7 @@ appendLabel2Widget = function(labelName, labelColor) {
                     old_val = Object.values(collected_data[i])[0];
                     new_pair[input_label] = old_val;
                     collected_data[i] = new_pair;
+                    new_pair = {};
                 }
             }
         });

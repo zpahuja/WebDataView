@@ -33,7 +33,7 @@ let cfq = new ContentFrame({
     'id':'webview-query',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "375px", "height": "550px", "position": "fixed", "right": "10px", "top": "1px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
+    'inlineCss': {"width": "375px", "height": "575px", "position": "fixed", "right": "10px", "top": "1px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
@@ -131,6 +131,7 @@ $(document).ready(function() {
                                         let temp;
                                         let fake = {};
                                         fake["prices"] = "sx-price-whole";
+                                        // fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
                                         let array = Object.values(fake);
                                         let dummy;
                                         let labels;
@@ -160,7 +161,6 @@ $(document).ready(function() {
                                             if(temp !== null){
                                                 for(j = 0; j < array.length; j++){
                                                     let selection = temp.getElementsByClassName(array[j]);
-
                                                     if(selection.length !== 0)
                                                     {
                                                         target.push([array[j], selection[0]]);
@@ -182,7 +182,7 @@ $(document).ready(function() {
                                                     target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
                                                     // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
                                                 }
-                                                // console.log(collected_data);
+                                                console.log(collected_data);
                                             });
                                         }
 

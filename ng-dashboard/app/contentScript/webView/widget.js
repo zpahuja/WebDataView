@@ -19,6 +19,7 @@ let widget_iframe_cf = new ContentFrame({
     'appendTo': '#webdataview-floating-widget'
 });
 let widget_iframe = widget_iframe_cf.body;
+let port_tb = chrome.runtime.connect({name: "tbtb"});
 
 /**
  * add scripts to widget <head> tag
@@ -113,7 +114,7 @@ $(document).ready(function(){
                         let widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
                         let grid_view = ContentFrame.findElementInContentFrame('#grid-view', '#webdataview-widget-iframe');
                         let record_flag = false;
-                        let output = [];
+                        let tb_output = [];
                         let record_dom = [];
                         let non_record = [];
                         grid_view.click(function(e){
@@ -147,18 +148,20 @@ $(document).ready(function(){
                                     currentParent = record_dom[i];
                                     for(j =0; j < non_record.length; j++){
                                         potential_child = Object.values(non_record[j])[0];
-                                        // if(isDescendant(currentParent, potential_child)){
-                                        //     textName = Object.values(non_record[j])[0];
-                                        //     textName = textName.textContent;
-                                        //     pair[Object.keys(non_record[j])[0]] = textName;
-                                        // }
+                                        if(isDescendant(currentParent, potential_child)){
+                                            textName = Object.values(non_record[j])[0];
+                                            textName = textName.textContent;
+                                            pair[Object.keys(non_record[j])[0]] = textName;
+                                        }
                                     }
-                                    // if( Object.keys(pair).length > 0){
-                                    //     output.push(pair);
-                                    //     pair = {};
-                                    // }
+                                    if( Object.keys(pair).length > 0){
+                                        tb_output.push(pair);
+                                        pair = {};
+                                    }
                                 }
-                                console.log(output);
+                                console.log(tb_output);
+                                port_tb.postMessage({answer: "table view", tb_output: tb_output});
+
 
                             }
                         });
