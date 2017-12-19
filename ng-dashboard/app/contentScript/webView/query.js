@@ -41,6 +41,8 @@ let cfq = new ContentFrame({
 
 let cfq_iframe = cfq.body;
 let port = chrome.runtime.connect({name: "knockknock"});
+setTimeout(function(){port.postMessage({answer: "pre check", domain_name: location.href});}, 2000);
+
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
 //     '<div class="webdataview" id="iframe-fullsize-container">' +
 //     ' <div class="widget" id="web-view-widget">' +
@@ -108,6 +110,7 @@ $(document).ready(function() {
                                 let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
 
+
                                 port.onMessage.addListener(function(msg) {
                                     if (msg.question === "get users"){
                                         let data = msg.data;
@@ -121,6 +124,48 @@ $(document).ready(function() {
                                         ContentFrame.findElementInContentFrame('#users','#webview-query').replaceWith(user_html);
                                         $users.animate({scrollTop: $users.prop("scrollHeight")}, 500);
                                     }
+                                    else if (msg.question === "feedback"){
+                                        let data = msg.data;
+                                        let stored_query = data.output;
+                                        console.log(stored_query);
+                                        let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
+                                        let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
+                                        let noti_reject = ContentFrame.findElementInContentFrame('#note_reject', '#webview-note');
+                                        let question_html;
+                                        if(data.output.length !== 0 && notification_flag){
+                                            question_html = $.parseHTML('<p id="question"><b>There are existing query models with the current url, would you like to see it?</b></p>');
+                                            noti_question.replaceWith(question_html);
+                                            noti_reject.css('visibility','hidden');
+                                            let accept_html = $.parseHTML(' <button type="button" class="btn btn-success" id="note_result">Show Me</button>&nbsp;&nbsp;&nbsp;');
+                                            noti_accept.replaceWith(accept_html);
+                                        }
+                                        else{
+                                            question_html = $.parseHTML('<p id="question"><b>There is no query model, please write your own.Would you like to get notification in the future?</b></p>');
+                                            noti_question.replaceWith(question_html);
+                                        }
+                                        function dynamicEvent() {
+                                            let index_pos = parseInt((this.id).slice(-1));
+                                            // console.log(stored_query[index_pos].query_text);
+                                            let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
+                                            ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
+
+                                        }
+                                        ContentFrame.findElementInContentFrame('#note_result', '#webview-note').click(function(e) {
+                                            e.preventDefault();
+                                            console.log("fck happening");
+                                            ContentFrame.findElementInContentFrame('#question', '#webview-note').css('display', 'none');
+                                            for(i = 0; i < stored_query.length; i++) {
+                                                let li = document.createElement('li');
+                                                li.id = 'pop' + i;
+                                                li.innerHTML = '<li><b>' + stored_query[i].query_name + ': &nbsp;&nbsp;&nbsp;</b><button type="button" class="btn btn-success"  style="background-color: #f92672 !important;">populate</button></li>';
+                                                ContentFrame.findElementInContentFrame('#query_pair', '#webview-note').append(li);
+                                                console.log(stored_query[i].query_name);
+                                                li.onclick = dynamicEvent;
+                                            }
+
+                                        });
+                                    }
+
                                     else if (msg.question === "new message") {
                                         let data = msg.data;
                                         $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
@@ -131,7 +176,7 @@ $(document).ready(function() {
                                         let temp;
                                         let fake = {};
                                         fake["prices"] = "sx-price-whole";
-                                        // fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
+                                        fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
                                         let array = Object.values(fake);
                                         let dummy;
                                         let labels;
@@ -155,6 +200,7 @@ $(document).ready(function() {
                                             }
                                         }
 
+                                        ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height','50px');
                                         // let array = Object.values($xpath.fields);
                                         for(i = 0; i < $xpath.boxes.length; i++){
                                             temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;

@@ -111,6 +111,11 @@ $(document).ready(function(){
                             }
                             return false;
                         }
+                        let query_view = ContentFrame.findElementInContentFrame('#search-btn', '#webdataview-widget-iframe');
+                        query_view.click(function(e){
+                            e.preventDefault();
+                            $('#webview-query').toggle();
+                        });
                         let widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
                         let grid_view = ContentFrame.findElementInContentFrame('#grid-view', '#webdataview-widget-iframe');
                         let record_flag = false;

@@ -32,7 +32,7 @@ let cfn = new ContentFrame({
 });
 
 let cfn_iframe = cfn.body;
-
+let notification_flag = true;
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
 //     '<div class="webdataview" id="iframe-fullsize-container">' +
 //     ' <div class="widget" id="web-view-widget">' +
@@ -65,17 +65,26 @@ $(document).ready(function() {
             cfn.loadCSS('assets/css/content-frame-internal.css', function() {
                 cfn.body.load(chrome.extension.getURL("app/contentScript/webView/notification.html"), function () {
                     cfn_iframe.ready(function() {
-                        console.log("notification!!!!!");
+                        let answer_html;
+
+                        ContentFrame.findElementInContentFrame('#note_close', '#webview-note').click(function(e) {
+                            e.preventDefault();
+                            $('#webview-note').css('visibility','hidden');
+                        });
                         ContentFrame.findElementInContentFrame('#note_accept', '#webview-note').click(function(e) {
-                            let answer_html = $.parseHTML('<p id="question" style="color: #0bbd27"><b>Got it! We will notify you next time.</b></p>');
+                            answer_html = $.parseHTML('<p id="question" style="color: #0bbd27"><b>Got it! We will notify you next time.</b></p>');
                             ContentFrame.findElementInContentFrame('#question', '#webview-note').replaceWith(answer_html);
-                            setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 3000);
+                            setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
                         });
 // reject notification
                         ContentFrame.findElementInContentFrame('#note_reject', '#webview-note').click(function(e) {
                             e.preventDefault();
+                                notification_flag = false;
+                                answer_html = $.parseHTML('<p id="question" style="color: #f92672"><b>Got it! No further notification!</b></p>');
+                                ContentFrame.findElementInContentFrame('#question', '#webview-note').replaceWith(answer_html);
+                                setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
                             // let target = ContentFrame.findElementInContentFrame('#webview-note', '#webdataview-floating-noti');
-                            $('#webview-note').css('visibility','hidden');
+                            // $('#webview-note').css('visibility','hidden');
                         });
                     });
                 });

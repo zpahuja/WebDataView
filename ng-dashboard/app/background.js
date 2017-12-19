@@ -155,11 +155,10 @@ function tabController(tabId, tabAction, callback) {
      */
 
 chrome.runtime.onConnect.addListener(function(port) {
-    // socket = io.connect('http://127.0.0.1:5353/');
-    socket = io.connect('http://kite.cs.illinois.edu:5355/');
+    socket = io.connect('http://127.0.0.1:5353/');
+    // socket = io.connect('http://kite.cs.illinois.edu:5355/');
 
     // socket.emit('new user', {username: "Herbert", domain_name: "www.amazon.com"});
-    console.assert(port.name == "knockknock");
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "new user"){
             console.log("new_user reached!!!");
@@ -184,8 +183,9 @@ chrome.runtime.onConnect.addListener(function(port) {
             socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
             // port.postMessage({question: "I don't get it."});
         }
-        else if (msg.answer == "table view"){
-            console.log(msg.tb_output);
+        else if (msg.answer == "pre check"){
+            console.log("Pre check point!!!");   // Send domain to server and return stored result!
+            socket.emit('pre check', {domain_name: msg.domain_name});
         }
     });
     socket.on('get users', function(data) {
@@ -196,11 +196,15 @@ chrome.runtime.onConnect.addListener(function(port) {
         console.log(data);
         port.postMessage({question: "new message", data: data});
     });
+
+    socket.on('feedback', function(data) {
+        console.log(data);
+        port.postMessage({question: "feedback", data: data});
+    });
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
 
-    console.assert(port.name == "tbtb");
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "table view"){
             console.log(msg.tb_output);
