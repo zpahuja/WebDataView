@@ -68,12 +68,18 @@ class TestTooltip {
             for (let i = 0; i < selected_nodes.length; i++) {
                 selected_nodes[i].style.outline = "none";
                 for (let j=0; j < collected_data.length; j++) {
-                    let keys = Object.keys(collected_data[j]);
-                    keys.forEach(function(key) {
-                        if (collected_data[j][key] == selected_nodes[i]) {
-                            delete collected_data[j][key];
-                        }
-                    });
+                    let kval = Object.values(collected_data[j])[0];
+                    // keys.forEach(function(key) {
+                    //     if (collected_data[j][key] == selected_nodes[i]) {
+                    //         // delete collected_data[j][key];
+                    //
+                    //     }
+                    //
+                    // });
+                    if(kval === selected_nodes[i]){
+                        collected_data.splice(j, 1);
+                    }
+
                 }
             }
             selected_nodes = [];

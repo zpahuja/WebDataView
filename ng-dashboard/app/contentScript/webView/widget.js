@@ -100,6 +100,13 @@ $(document).ready(function(){
                                 });
                             }
                         );
+                        function isEmpty(obj) {
+                            for(let key in obj) {
+                                if(obj.hasOwnProperty(key))
+                                    return false;
+                            }
+                            return true;
+                        }
 
                         function isDescendant(parent, child) {
                             let node = child.parentNode;
@@ -124,12 +131,19 @@ $(document).ready(function(){
                         let non_record = [];
                         grid_view.click(function(e){
                             e.preventDefault();
+                            console.log(collected_data);
                             for(i = 0; i < collected_data.length; i++) {
-                                if (Object.keys(collected_data[i])[0] === "records") {
+                                if(collected_data[i] === {}){
+                                    console.log("Find one");
+                                    console.log(i);
+                                    collected_data.splice(i, 1);
+                                }
+                                else if (Object.keys(collected_data[i])[0] === "records") {
                                     record_flag = true;
                                     break;
                                 }
                             }
+                            console.log(collected_data);
                             if(!record_flag){
                                 alert("Please select boxs and change the label to <records>!");
                             }
@@ -148,7 +162,6 @@ $(document).ready(function(){
                                 let currentParent;
                                 let potential_child;
                                 let textName;
-                                console.log(record_dom);
                                 for(i = 0; i < record_dom.length; i++){
                                     currentParent = record_dom[i];
                                     for(j =0; j < non_record.length; j++){
