@@ -207,9 +207,66 @@ chrome.runtime.onConnect.addListener(function(port) {
 
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "table view"){
+            console.log("12/19/2017");
             console.log(msg.tb_output);
 
-            // Long add your code here!
+            /*
+             Code to create a popup window for table view, it needs to be run on background.js,
+             so web view may need to send a message to background.js and then background.js
+             will create that pop-up window
+             */
+            let data = msg.tb_output;
+            /*
+             Code to put data to chrome storage, again on background.js.
+             Please note that you should maintain the data array like we discussed
+             But it needs to be turned to the following format for table view to be able to read
+             */
+            let fieldNames = [];
+            let fieldNameFlags = [];
+            for (let j = 0; j < data.length; j++) {
+                for (let i in data[j]) {
+                    if (fieldNameFlags.indexOf(i)===-1) {
+                        fieldNames.push({'title':i,'sTitle':i});
+                        fieldNameFlags.push(i);
+                    }
+                }
+            }
+
+            let dataSet = [];
+            for (let j = 0; j < data.length; j++) {
+                dataSet[j] = Array.apply(null, Array(fieldNames.length)).map(function () {return ""});
+            }
+
+            for (let i = 0; i < dataSet.length; i++) {
+                for (let j = 0; j < dataSet[i].length; j++) {
+                    if (fieldNames[j]['title'] in data[i]) {
+                        dataSet[i][j]=data[i][fieldNames[j]['title']];
+                    }
+                }
+            }
+            // console.log("test");
+            // console.log(data);
+            // console.log(dataSet);
+            // console.log(fieldNames);
+
+            let query = '';
+
+            chrome.storage.local.set({"fieldNames": fieldNames});
+            // array [{'title': 'price', 'sTitle': 'price'},{'title': 'image', 'sTitle': 'image'}]
+            chrome.storage.local.set({"dataSet": dataSet});
+            // 2d array, e.g., [['$120','http://abc.com/1.png'], ['$150','http://abc.com/1.png']]
+            chrome.storage.local.set({"query": query});
+            // query name. If there is no query name, then write 'none'
+
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                console.log("creating popup...");
+                chrome.windows.create({
+                    type: 'popup',
+                    url: chrome.extension.getURL('app/contentScript/gridView/gridview.html')
+                }, function (newWindow) {
+                    console.log(newWindow);
+                });
+            });
         }
     });
 });
