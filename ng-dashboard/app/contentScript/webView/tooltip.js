@@ -228,7 +228,9 @@ function selectionHandler() {
     }
     selected_nodes.push(event.target);
     tooltip_node = event.target;
-    event.target.style.outline = '2px solid ' + tooltip_color;
+    event.target.style.outline = '3px solid ' + tooltip_color;
+    // event.target.style.zIndex = "3000";
+    // event.target.style.position = "relative";
     let field_label = ntc.name(rgb2hex(tooltip_color))[1];
     let event_target = event.target;
     let data_to_push = {};

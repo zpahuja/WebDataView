@@ -176,7 +176,7 @@ $(document).ready(function() {
                                         let temp;
                                         let fake = {};
                                         fake["prices"] = "sx-price-whole";
-                                        // fake["titles"] = "a-size-medium s-inline s-access-title a-text-normal";
+                                        fake["titles"] = "a-size-medium s-inline s-access-title a-text-normal";
                                         // fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
                                         let array = Object.values(fake);
                                         let dummy;
