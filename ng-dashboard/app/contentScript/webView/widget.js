@@ -125,10 +125,21 @@ $(document).ready(function(){
                         });
                         let widget_label_selector = ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe');
                         let grid_view = ContentFrame.findElementInContentFrame('#grid-view', '#webdataview-widget-iframe');
+                        let select_apply = ContentFrame.findElementInContentFrame('#select-apply', '#webdataview-widget-iframe');
                         let record_flag = false;
                         let tb_output = [];
                         let record_dom = [];
                         let non_record = [];
+                        select_apply.click(function(e){
+                            e.preventDefault();
+                            console.log("select_apply");
+                            for (let j=0; j < collected_data.length; j++) {
+                                let kval = Object.values(collected_data[j])[0];
+                                    kval.style.outline = '3px solid '+ fieldname_color[Object.keys(collected_data[j])[0]];
+                            }
+                        });
+
+
                         grid_view.click(function(e){
                             e.preventDefault();
                             console.log(collected_data);
@@ -157,7 +168,6 @@ $(document).ready(function(){
                                         // console.log(c.textContent);
                                     }
                                 }
-
                                 let pair = {};
                                 let currentParent;
                                 let potential_child;
