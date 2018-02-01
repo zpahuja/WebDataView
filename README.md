@@ -16,5 +16,5 @@ Web Data View does not create new problems, only makes what you have been doing 
 ## What
 Our solution creates data view, which allows users to interact with web pages as if interacting with data sources:
 * Web Data View allows users to do copy-and-paste while browsing the Web by wrapping itself as a Chrome extension
-* Web Data View allows users to specify their copy-and-paste intents through descriptive rules and directly on the pages
+* Web Data View allows users to specify their copy-and-paste intents through selecting descriptive rules
 * Web Data View allows users to crowdsource intents through a Wiki-style database of intents
