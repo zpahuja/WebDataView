@@ -131,11 +131,13 @@ $(document).ready(function(){
                         let record_dom = [];
                         let non_record = [];
                         select_apply.click(function(e){
+                            console.log(fieldname_color);
                             e.preventDefault();
                             console.log("select_apply");
                             for (let j=0; j < collected_data.length; j++) {
                                 let kval = Object.values(collected_data[j])[0];
-                                    kval.style.outline = '3px solid '+ fieldname_color[Object.keys(collected_data[j])[0]];
+                                console.log(kval);
+                                kval.style.outline = '3px solid '+ fieldname_color[Object.keys(collected_data[j])[0]];
                             }
                         });
 
