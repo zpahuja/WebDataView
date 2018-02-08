@@ -24,8 +24,11 @@ shuffle(COLORS);
 collected_data = [];
 fieldname_color = {};
 labels_list = [];
+let parent_collected = [];
 let cap_counter = 0;
+let mySet = new Set();
 
+console.log(mySet);
 class TestTooltip {
     constructor(referenceElement, color) {
         self.instance = new Tooltip(referenceElement, {
@@ -40,20 +43,25 @@ class TestTooltip {
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css', 'lib/bootstrap/css/bootstrap.3.3.7.min.css'],
             'js': ['app/contentScript/webView/tooltipHandler.js'],
-            'inlineCss':  {"width": "225px", "height": "40px", "z-index": 2147483647, "border": "none", "border-radius": 6}
+            'inlineCss':  {"width": "225px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
         });
-        let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: 100%; overflow: visible; ">' +
+        let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
             '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
             '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
             '<i class="fa fa-link fa-fw-lg" id="web-view-merge"></i>' +
             '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>' +
             '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"></i>' +
-            '<br><div id="cap_target" style="display: none;"><input type="checkbox" id="filter_class" name="subscribe" value="0">'+
+            '<br><div id="cap_target" style="display: none;">' +
+            '<input type="checkbox" id="filter_class" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by ClassName</label>' +
             '<br><input type="checkbox" id="filter_id" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by Id</label>' +
             '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
             '<label for="subscribeNews">Align Left</label>' +
+            '<br><input type="checkbox" id="filter_child" name="subscribe" value="0">' +
+            '<label for="subscribeNews">Remove Parent Element</label>' +
+            '<br><input type="checkbox" id="filter_fontsize" name="subscribe" value="0">'+
+            '<label for="subscribeNews">Filter by Fontsize</label>' +
             '<br><input type="checkbox" id="filter_height" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by Height</label>' +
             '<br><input type="checkbox" id="filter_width" name="subscribe" value="0">'+
@@ -64,7 +72,7 @@ class TestTooltip {
         // select similar
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
             e.preventDefault();
-            let stretch = "170px";
+            let stretch = "110px";
             let x = ContentFrame.findElementInContentFrame('#cap_target', '#webview-tooltip')[0];
             if (x.style.display === "none") {
                 x.style.display = "block";
@@ -78,11 +86,14 @@ class TestTooltip {
 
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
+                alert("This element has no Class attribute!");
                 return;
             }
             let cur = e.target;
             if (cur.value === "0") {  //Add model to collection
                 cur.value = "1";
+                mySet.add("filter_class");
+
                 if (cap_counter >= 1) { // has other models
                     let new_collect = [];
                     let targetclass = referenceElement.className;
@@ -117,6 +128,7 @@ class TestTooltip {
             }
             else{  //Take model off collection
                 cur.value = "0";
+                mySet.delete("filter_class");
                 let new_collect = [];
                 let targetclass = referenceElement.className;
                 for (let j=0; j < collected_data.length; j++) {
@@ -136,12 +148,14 @@ class TestTooltip {
         });
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {
             if(referenceElement.id === '' || referenceElement.id === undefined ){
+                alert("This element has no Id attribute!");
                 console.log("No Id Attr");
                 return;
             }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
+                mySet.add("filter_id");
                 if (cap_counter >= 1) { // has other models
                     let new_collect = [];
                     let targetid = referenceElement.id;
@@ -176,6 +190,7 @@ class TestTooltip {
             }
             else{  //Take model off collection
                 cur.value = "0";
+                mySet.delete("filter_id");
                 let new_collect = [];
                 let targetclass = referenceElement.id;
                 for (let j=0; j < collected_data.length; j++) {
@@ -198,6 +213,7 @@ class TestTooltip {
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
+                mySet.add("filter_left");
                 let target_left = jQuery(referenceElement).offset().left;
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -233,6 +249,7 @@ class TestTooltip {
             }
             else{  //Take model off collection
                 cur.value = "0";
+                mySet.delete("filter_left");
                 let new_collect = [];
                 let target_left = jQuery(referenceElement).offset().left;
                 for (let j=0; j < collected_data.length; j++) {
@@ -248,11 +265,105 @@ class TestTooltip {
                 collected_data = new_collect;
             }
         });
+        ContentFrame.findElementInContentFrame('#filter_child', '#webview-tooltip').click(function(e) {
+            let cur = e.target;
+            if(cur.value === "0"){  //Add model to collection
+                parent_collected = [];
+                cur.value = "1";
+                mySet.add("filter_child");
+                let new_collect = [];
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).children().length === 0){  //Has no children
+                        new_collect.push(collected_data[j]);
+                    }
+                    else{
+                        kval.style.outline = '0px';
+                        parent_collected.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_child");
+                for (let j=0; j < parent_collected.length; j++) {
+                    let kval = Object.values(parent_collected[j])[0];
+                    let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                    let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                    let data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = kval;
+                    collected_data.push(data_to_push);
+                    kval.style.outline = '3px dotted ' + tooltip_color;
+                }
+                // console.log(collected_data.length);
+            }
+        });
+        ContentFrame.findElementInContentFrame('#filter_fontsize', '#webview-tooltip').click(function(e) {
+            let cur = e.target;
+            if(cur.value === "0"){  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_fontsize");
+                let target_font = jQuery(referenceElement).css("font-size");
+                // console.log(jQuery(referenceElement));
+                // console.log(jQuery(referenceElement).css("font-size"));
+                // console.log(jQuery(referenceElement).children().length);
+                if(cap_counter>= 1){ // has other models
+                    let new_collect = [];
+                    for (let j=0; j < collected_data.length; j++) {
+                        let kval = Object.values(collected_data[j])[0];
+                        if(jQuery(kval).css("font-size") === target_font){
+                            new_collect.push(collected_data[j]);
+                        }
+                        else{
+                            kval.style.outline = '0px';
+                        }
+                    }
+                    collected_data = new_collect;
+                }
+                else{ // first models
+                    let similar_nodes = document.getElementsByTagName("*");
+                    for (let i = similar_nodes.length; i--;) {
+                        if(jQuery(similar_nodes[i]).css("font-size") === target_font){
+                            let unique = true;
+                            for (let j=0; j < collected_data.length; j++) {
+                                let kval = Object.values(collected_data[j])[0];
+                                if(kval === similar_nodes[i]){
+                                    unique = false;
+                                }
+                            }
+                            if(unique) {
+                                helper(referenceElement.className, similar_nodes[i]);
+                            }
+                        }
+                    }
+                }
+                cap_counter = cap_counter + 1;
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_fontsize");
+                let new_collect = [];
+                let target_font = jQuery(referenceElement).css("font-size");
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).css("font-size") === target_font){
+                        kval.style.outline = '0px';
+                    }
+                    else{
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                cap_counter = cap_counter - 1;
+                collected_data = new_collect;
+            }
+        });
         ContentFrame.findElementInContentFrame('#filter_height', '#webview-tooltip').click(function(e) {
 
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
+                mySet.add("filter_height");
                 let target_height = jQuery(referenceElement).height();
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -288,6 +399,7 @@ class TestTooltip {
             }
             else{  //Take model off collection
                 cur.value = "0";
+                mySet.delete("filter_height");
                 let new_collect = [];
                 let target_height = jQuery(referenceElement).height();
                 for (let j=0; j < collected_data.length; j++) {
@@ -308,6 +420,7 @@ class TestTooltip {
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
+                mySet.add("filter_width");
                 let target_width = jQuery(referenceElement).width();
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -343,6 +456,7 @@ class TestTooltip {
             }
             else{  //Take model off collection
                 cur.value = "0";
+                mySet.delete("filter_width");
                 let new_collect = [];
                 let target_width = jQuery(referenceElement).width();
                 for (let j=0; j < collected_data.length; j++) {
@@ -501,10 +615,48 @@ function helper(klassname, cur_node){
 }
 
 let css_store;
+let hover_target = ContentFrame.findElementInContentFrame('#hover_area', '#webview-note');
+
+function hover_callback(hover_message){
+    let hover_html = $.parseHTML('<p id="hover_area">' + hover_message + '</p>');
+    ContentFrame.findElementInContentFrame('#hover_area', '#webview-note').replaceWith(hover_html);
+}
+function greeting(name) {
+    let hover_message = "";
+    if(mySet.has("filter_class")){
+        hover_message = hover_message + " className: ";
+        hover_message = hover_message + name.attr('class');
+    }
+    if(mySet.has("filter_id")){
+        hover_message = hover_message + " id: ";
+        hover_message = hover_message + name.attr('id');
+    }
+    if(mySet.has("filter_left")){
+        hover_message = hover_message + " Left Pos: ";
+        hover_message = hover_message + name.offset().left;
+    }
+    if(mySet.has("filter_fontsize")){
+        hover_message = hover_message + " Fontsize: ";
+        hover_message = hover_message + name.css("font-size");
+    }
+    if(mySet.has("filter_height")){
+        hover_message = hover_message + " Height: ";
+        hover_message = hover_message + name.height();
+    }
+    if( mySet.has("filter_width")){
+        hover_message = hover_message + " Width: ";
+        hover_message = hover_message + name.width();
+    }
+    hover_callback(hover_message);
+}
+
 $('*').hover(
     function(e){
         css_store = $(this).css('border');
         $(this).css('border', '1px dotted black');
+        greeting($(this));
+        // let hover_html = $.parseHTML('<div id="hover_area"><span>' + hover_message + '</span></div>');
+        // hover_target.replaceWith(hover_html);
         e.preventDefault();
         e.stopPropagation();
         return false;

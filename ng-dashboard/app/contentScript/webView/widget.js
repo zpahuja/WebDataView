@@ -132,6 +132,7 @@ $(document).ready(function(){
                         let non_record = [];
                         select_apply.click(function(e){
                             console.log(fieldname_color);
+                            cap_counter = 0;
                             e.preventDefault();
                             console.log("select_apply");
                             for (let j=0; j < collected_data.length; j++) {
@@ -140,7 +141,6 @@ $(document).ready(function(){
                                 kval.style.outline = '3px solid '+ fieldname_color[Object.keys(collected_data[j])[0]];
                             }
                         });
-
 
                         grid_view.click(function(e){
                             e.preventDefault();
