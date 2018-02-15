@@ -133,6 +133,7 @@ $(document).ready(function(){
                         select_apply.click(function(e){
                             console.log(fieldname_color);
                             cap_counter = 0;
+                            mySet.clear();
                             e.preventDefault();
                             console.log("select_apply");
                             for (let j=0; j < collected_data.length; j++) {

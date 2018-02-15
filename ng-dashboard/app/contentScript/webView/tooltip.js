@@ -614,54 +614,52 @@ function helper(klassname, cur_node){
     cur_node.style.outline = '3px dotted ' + tooltip_color;
 }
 
-let css_store;
-let hover_target = ContentFrame.findElementInContentFrame('#hover_area', '#webview-note');
+let css_title = null;
 
-function hover_callback(hover_message){
-    let hover_html = $.parseHTML('<p id="hover_area">' + hover_message + '</p>');
-    ContentFrame.findElementInContentFrame('#hover_area', '#webview-note').replaceWith(hover_html);
-}
 function greeting(name) {
     let hover_message = "";
     if(mySet.has("filter_class")){
         hover_message = hover_message + " className: ";
         hover_message = hover_message + name.attr('class');
+        hover_message = hover_message + "\n";
     }
     if(mySet.has("filter_id")){
         hover_message = hover_message + " id: ";
         hover_message = hover_message + name.attr('id');
+        hover_message = hover_message + "\n";
     }
     if(mySet.has("filter_left")){
         hover_message = hover_message + " Left Pos: ";
         hover_message = hover_message + name.offset().left;
+        hover_message = hover_message + "\n";
     }
     if(mySet.has("filter_fontsize")){
         hover_message = hover_message + " Fontsize: ";
         hover_message = hover_message + name.css("font-size");
+        hover_message = hover_message + "\n";
     }
     if(mySet.has("filter_height")){
         hover_message = hover_message + " Height: ";
         hover_message = hover_message + name.height();
+        hover_message = hover_message + "\n";
     }
     if( mySet.has("filter_width")){
         hover_message = hover_message + " Width: ";
         hover_message = hover_message + name.width();
+        hover_message = hover_message + "\n";
     }
-    hover_callback(hover_message);
+    name.prop('title', hover_message);
 }
 
 $('*').hover(
     function(e){
-        css_store = $(this).css('border');
-        $(this).css('border', '1px dotted black');
+        css_title = $(this).prop('title');
         greeting($(this));
-        // let hover_html = $.parseHTML('<div id="hover_area"><span>' + hover_message + '</span></div>');
-        // hover_target.replaceWith(hover_html);
         e.preventDefault();
         e.stopPropagation();
         return false;
     },function(e){
-        $(this).css('border', css_store);
+        $(this).prop('title', css_title);
         e.preventDefault();
         e.stopPropagation();
         return false;
