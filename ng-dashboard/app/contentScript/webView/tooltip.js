@@ -177,7 +177,6 @@ class TestTooltip {
             console.log(q.execute());
             console.log("---------------");
             console.log(q.toJSON());
-
         });
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {
             if(referenceElement.id === '' || referenceElement.id === undefined ){
