@@ -52,89 +52,12 @@ class Query {
   }
 
   /**
-   * prepend to body of iFrame
-   * @param {string} jQuerySelector jQuery selector of iFrame
-   * @param {string} HTML html to prepend to body tag
+   * convert to JSON
    */
-  static prepend(jQuerySelector, HTML) {
-    Query.find(jQuerySelector).prepend(HTML);
+  toJSON() {
+    return JSON.stringify(this);
   }
 
-  /**
-   * find element in all Query iFrames
-   * @param {string} elementSelector jQuery selector of element to find
-   * @returns {Array} jQuery element corresponding to body tag within iFrame
-   */
-  static findElements(elementSelector) {
-    return $('content-frame-default-iframe').contents().find(elementSelector);
-  }
-
-  /**
-   * rewrite element in all Query iFrames
-   * @param {string} elementSelector jQuery selector of element to rewrite
-   * @param {string} HTML new html of element to rewrite
-   */
-  static rewriteElements(elementSelector, HTML) {
-    Query.findElements(elementSelector).html(HTML);
-  }
-
-  /**
-   * append to element in all Query iFrames
-   * @param {string} elementSelector jQuery selector of element to append to
-   * @param {string} HTML html to append to element
-   */
-  static appendElements(elementSelector, HTML) {
-    Query.findElements(elementSelector).append(HTML);
-  }
-
-  /**
-   * prepend to element in all Query iFrames
-   * @param {string} elementSelector jQuery selector of element to prepend to
-   * @param {string} HTML html to prepend to element
-   */
-  static prependElements(elementSelector, HTML) {
-    Query.findElements(elementSelector).prepend(HTML);
-  }
-
-  /**
-   * find element in a specific Query
-   * @param {string} elementSelector jQuery selector of element to find
-   * @param {string} jQuerySelector jQuery selector of iFrame
-   * @returns {Array} jQuery element corresponding to element within iFrame
-   */
-  static findElementInQuery(elementSelector, jQuerySelector) {
-    return $(jQuerySelector).contents().find(elementSelector);
-  }
-
-  /**
-   * rewrite element in a specific Query
-   * @param {string} elementSelector jQuery selector of element to rewrite
-   * @param {string} jQuerySelector jQuery selector of iFrame
-   * @param {string} HTML html
-   */
-  static rewriteElementInQuery(elementSelector, jQuerySelector, HTML) {
-    Query.findElementInQuery(elementSelector, jQuerySelector).html(HTML);
-  }
-
-  /**
-   * append HTML to element in a specific Query
-   * @param {string} elementSelector jQuery selector of element to append
-   * @param {string} jQuerySelector jQuery selector of iFrame
-   * @param {string} HTML html
-   */
-  static appendElementInQuery(elementSelector, jQuerySelector, HTML) {
-    Query.findElementInQuery(elementSelector, jQuerySelector).append(HTML);
-  }
-
-  /**
-   * prepend HTML to element in a specific Query
-   * @param {string} elementSelector jQuery selector of element to prepend
-   * @param {string} jQuerySelector jQuery selector of iFrame
-   * @param {string} HTML html
-   */
-  static prependElementInQuery(elementSelector, jQuerySelector, HTML) {
-    Query.findElementInQuery(elementSelector, jQuerySelector).prepend(HTML);
-  }
 }
 
 // How will you conjunct?
