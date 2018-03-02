@@ -1,0 +1,28 @@
+.webdataview #webdataview-floating-widget {
+    all: initial;
+    position: fixed;
+    width: 50%;
+    min-width: 250px;
+    height: 60px;
+    left: 25%;
+    top: 10%;
+    border-radius: 8px;
+    margin: auto;
+    z-index: 2147483647;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 15px;
+    -webkit-transition: box-shadow 0.5s ease-in-out;
+    cursor: move;
+}
+
+.webdataview #webdataview-floating-widget:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 12px 12px 38px;
+}
+
+.webdataview #webdataview-widget-iframe {
+    all: initial;
+    position: absolute;
+    height: 35px;
+    margin: auto 20px;
+    cursor: default;
+}

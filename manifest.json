@@ -1,0 +1,65 @@
+{
+  "manifest_version": 2,
+  "name": "Web Data View",
+  "description": "Copy-Paste data from web pages",
+  "short_name": "WDV",
+  "version": "0.1",
+
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/logo/logo_grayscale_16.png",
+      "19": "assets/logo/logo_grayscale_19.png",
+      "38": "assets/logo/logo_grayscale_38.png",
+      "48": "assets/logo/logo_color_48.png",
+      "128": "assets/logo/logo_color_128.png"
+    }
+  },
+
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "activeTab",
+    "storage",
+    "*://*.com/*"
+  ],
+
+  "web_accessible_resources": [
+    "app/contentScript/*",
+    "lib/*",
+    "assets/*"
+  ],
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+
+  // add any library here if it must always be executed upon every page load even before extension icon is clicked
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "lib/jquery/jquery-3.1.1.min.js",
+      "lib/jquery/jquery-ui.min.js",
+      "app/contentScript/webView/contentFrame/contentFrame.js",
+      "lib/ntc.js",
+      "lib/mousetrap.min.js",
+      "lib/jquery/jquery.scrollstop.min.js",
+      "lib/popper/popper.js"
+    ],
+    "css": [
+      "app/contentScript/webView/contentFrame/contentFrame.css",
+      "assets/css/content-frame-external.css"
+    ],
+    "all_frames": false
+  }],
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "Command+E"
+      }
+    }
+  }
+}
