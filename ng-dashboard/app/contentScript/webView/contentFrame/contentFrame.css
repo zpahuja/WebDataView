@@ -1,4 +1,4 @@
-iframe.periphery-default-iframe {
+iframe.periphery-default-iframe, tooltip{
     -webkit-animation-delay: initial;
     -webkit-animation-direction: initial;
     -webkit-animation-duration: initial;
@@ -70,7 +70,6 @@ iframe.periphery-default-iframe {
     -webkit-tap-highlight-color: initial;
     -webkit-text-combine: initial;
     -webkit-text-decorations-in-effect: initial;
-    -webkit-text-emphasis-color: initial;
     -webkit-text-emphasis-position: initial;
     -webkit-text-emphasis-style: initial;
     -webkit-text-fill-color: initial;

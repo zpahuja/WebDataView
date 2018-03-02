@@ -21,10 +21,10 @@
   },
 
   "permissions": [
+    "storage",
     "tabs",
     "<all_urls>",
     "activeTab",
-    "storage",
     "*://*.com/*",
     "http://localhost/*"
   ],

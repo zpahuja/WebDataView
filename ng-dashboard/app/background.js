@@ -116,14 +116,18 @@ function tabController(tabId, tabAction, callback) {
         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewUtilities.js"}, function() {
             chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewMessagePassingHandler.js"}, function () {
                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
-                    chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
-                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
-                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
-                                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
-                                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
-                                        if (chrome.runtime.lastError) {
-                                            console.error(chrome.runtime.lastError.message);
-                                        }
+                    chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/notation.js"}, function () {
+                        chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/query.js"}, function () {
+                            chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
+                                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
+                                    chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
+                                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
+                                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
+                                                if (chrome.runtime.lastError) {
+                                                    console.error(chrome.runtime.lastError.message);
+                                                }
+                                            });
+                                        });
                                     });
                                 });
                             });
@@ -180,7 +184,8 @@ chrome.runtime.onConnect.addListener(function(port) {
         else if (msg.answer == "leave"){
             console.log("leave reached!!!");
             console.log("in backgroundjs: " + msg.domain_name);
-            socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
+            // socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
+            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
             // port.postMessage({question: "I don't get it."});
         }
         else if (msg.answer == "pre check"){

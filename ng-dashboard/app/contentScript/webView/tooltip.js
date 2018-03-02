@@ -27,7 +27,7 @@ labels_list = [];
 let parent_collected = [];
 let cap_counter = 0;
 let mySet = new Set();
-
+chrome.storage.sync.set({'value': []});
 console.log(mySet);
 class TestTooltip {
     constructor(referenceElement, color) {
@@ -42,9 +42,9 @@ class TestTooltip {
             'id':'webview-tooltip',
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css', 'lib/bootstrap/css/bootstrap.3.3.7.min.css'],
-            'js': ['app/contentScript/webView/tooltipHandler.js'],
+        'js': ['app/contentScript/webView/tooltipHandler.js'],
             'inlineCss':  {"width": "225px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
-        });
+    });
         let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
             '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
             '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
@@ -53,7 +53,7 @@ class TestTooltip {
             '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"></i>' +
             '<br><div id="cap_target" style="display: none;">' +
             '<input type="checkbox" id="filter_class" name="subscribe" value="0">'+
-            '<label for="subscribeNews">Filter by ClassName</label>' +
+            '<label for="subscr ibeNews">Filter by ClassName</label>' +
             '<br><input type="checkbox" id="filter_id" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by Id</label>' +
             '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
@@ -69,6 +69,19 @@ class TestTooltip {
             '</div>'+
             '</div>');
         cf.body.append(tooltip_html);
+
+        // window.onbeforeunload = function(e) {
+        //     e.preventDefault();
+        //     chrome.storage.sync.get("value", function(items) {
+        //         if (!chrome.runtime.error) {
+        //
+        //             let array = items["value"];
+        //             alert(array);
+        //             port.postMessage({answer: "leave", domain_name: location.hostname, capa: array});
+        //         }
+        //     });
+        //
+        // };
         // select similar
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
             e.preventDefault();
@@ -84,66 +97,85 @@ class TestTooltip {
             }
         });
 
+        // ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
+        //     if (referenceElement.className === '' || referenceElement.className === undefined) {
+        //         alert("This element has no Class attribute!");
+        //         return;
+        //     }
+        //     let cur = e.target;
+        //     if (cur.value === "0") {  //Add model to collection
+        //         cur.value = "1";
+        //         mySet.add("filter_class");
+        //
+        //         chrome.storage.sync.get("value", function(items) {
+        //             if (!chrome.runtime.error) {
+        //                 let array = items["value"];
+        //                 array[array.length] = "filter_class";
+        //                 chrome.storage.sync.set({'value': array});
+        //             }
+        //         });
+        //
+        //         if (cap_counter >= 1) { // has other models
+        //             let new_collect = [];
+        //             let targetclass = referenceElement.className;
+        //             for (let j=0; j < collected_data.length; j++) {
+        //                 let kval = Object.values(collected_data[j])[0];
+        //                 if(kval.className === targetclass){
+        //                     new_collect.push(collected_data[j]);
+        //                 }
+        //                 else{
+        //                     kval.style.outline = '0px';
+        //                 }
+        //             }
+        //             collected_data = new_collect;
+        //             console.log(collected_data.length);
+        //         }
+        //         else { // first models
+        //             let similar_nodes = $('.' + referenceElement.className).get();
+        //             for (let i = 0; i < similar_nodes.length; i++) {
+        //                 let unique = true;
+        //                 for (let j = 0; j < collected_data.length; j++) {
+        //                     let kval = Object.values(collected_data[j])[0];
+        //                     if (kval === similar_nodes[i]) {
+        //                         unique = false;
+        //                     }
+        //                 }
+        //                 if (unique) {
+        //                     helper(referenceElement.className, similar_nodes[i]);
+        //                 }
+        //             }
+        //         }
+        //         cap_counter = cap_counter + 1;
+        //     }
+        //     else{  //Take model off collection
+        //         cur.value = "0";
+        //         mySet.delete("filter_class");
+        //         let new_collect = [];
+        //         let targetclass = referenceElement.className;
+        //         for (let j=0; j < collected_data.length; j++) {
+        //             let kval = Object.values(collected_data[j])[0];
+        //             if(kval.className === targetclass){
+        //                 kval.style.outline = '0px';
+        //             }
+        //             else{
+        //                 new_collect.push(collected_data[j]);
+        //             }
+        //         }
+        //         collected_data = new_collect;
+        //         console.log(collected_data.length);
+        //         cap_counter = cap_counter - 1;
+        //     }
+        //
+        // });
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
                 alert("This element has no Class attribute!");
                 return;
             }
-            let cur = e.target;
-            if (cur.value === "0") {  //Add model to collection
-                cur.value = "1";
-                mySet.add("filter_class");
-
-                if (cap_counter >= 1) { // has other models
-                    let new_collect = [];
-                    let targetclass = referenceElement.className;
-                    for (let j=0; j < collected_data.length; j++) {
-                        let kval = Object.values(collected_data[j])[0];
-                        if(kval.className === targetclass){
-                            new_collect.push(collected_data[j]);
-                        }
-                        else{
-                            kval.style.outline = '0px';
-                        }
-                    }
-                    collected_data = new_collect;
-                    console.log(collected_data.length);
-                }
-                else { // first models
-                    let similar_nodes = $('.' + referenceElement.className).get();
-                    for (let i = 0; i < similar_nodes.length; i++) {
-                        let unique = true;
-                        for (let j = 0; j < collected_data.length; j++) {
-                            let kval = Object.values(collected_data[j])[0];
-                            if (kval === similar_nodes[i]) {
-                                unique = false;
-                            }
-                        }
-                        if (unique) {
-                            helper(referenceElement.className, similar_nodes[i]);
-                        }
-                    }
-                }
-                cap_counter = cap_counter + 1;
-            }
-            else{  //Take model off collection
-                cur.value = "0";
-                mySet.delete("filter_class");
-                let new_collect = [];
-                let targetclass = referenceElement.className;
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(kval.className === targetclass){
-                        kval.style.outline = '0px';
-                    }
-                    else{
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
-                console.log(collected_data.length);
-                cap_counter = cap_counter - 1;
-            }
+            console.log("testing zubin's library");
+            console.log(referenceElement.className);
+            let q = new Query({"class":referenceElement.className });
+            q.highlightSelectedElements("red");
 
         });
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {
@@ -156,6 +188,7 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_id");
+
                 if (cap_counter >= 1) { // has other models
                     let new_collect = [];
                     let targetid = referenceElement.id;
@@ -214,6 +247,15 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_left");
+
+                chrome.storage.sync.get("value", function(items) {
+                    if (!chrome.runtime.error) {
+                        let array = items["value"];
+                        array[array.length] = "filter_left";
+                        chrome.storage.sync.set({'value': array});
+                    }
+                });
+
                 let target_left = jQuery(referenceElement).offset().left;
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -271,6 +313,15 @@ class TestTooltip {
                 parent_collected = [];
                 cur.value = "1";
                 mySet.add("filter_child");
+
+                chrome.storage.sync.get("value", function(items) {
+                    if (!chrome.runtime.error) {
+                        let array = items["value"];
+                        array[array.length] = "filter_child";
+                        chrome.storage.sync.set({'value': array});
+                    }
+                });
+
                 let new_collect = [];
                 for (let j=0; j < collected_data.length; j++) {
                     let kval = Object.values(collected_data[j])[0];
@@ -304,6 +355,16 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_fontsize");
+
+                chrome.storage.sync.get("value", function(items) {
+                    if (!chrome.runtime.error) {
+                        let array = items["value"];
+                        array[array.length] = "filter_fontsize";
+                        chrome.storage.sync.set({'value': array});
+                    }
+                });
+
+
                 let target_font = jQuery(referenceElement).css("font-size");
                 // console.log(jQuery(referenceElement));
                 // console.log(jQuery(referenceElement).css("font-size"));
@@ -364,6 +425,15 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_height");
+
+                chrome.storage.sync.get("value", function(items) {
+                    if (!chrome.runtime.error) {
+                        let array = items["value"];
+                        array[array.length] = "filter_height";
+                        chrome.storage.sync.set({'value': array});
+                    }
+                });
+
                 let target_height = jQuery(referenceElement).height();
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -421,6 +491,16 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_width");
+
+                chrome.storage.sync.get("value", function(items) {
+                    if (!chrome.runtime.error) {
+                        let array = items["value"];
+                        array[array.length] = "filter_width";
+                        console.log(array)
+                        chrome.storage.sync.set({'value': array});
+                    }
+                });
+
                 let target_width = jQuery(referenceElement).width();
                 if(cap_counter>= 1){ // has other models
                     let new_collect = [];
@@ -615,7 +695,7 @@ function helper(klassname, cur_node){
 }
 
 let css_title = null;
-
+let css_store = null;
 function greeting(name) {
     let hover_message = "";
     if(mySet.has("filter_class")){
@@ -654,12 +734,15 @@ function greeting(name) {
 $('*').hover(
     function(e){
         css_title = $(this).prop('title');
+        css_store = $(this).css('border');
+        $(this).css('border', '1px dotted black');
         greeting($(this));
         e.preventDefault();
         e.stopPropagation();
         return false;
     },function(e){
         $(this).prop('title', css_title);
+        $(this).css('border', css_store);
         e.preventDefault();
         e.stopPropagation();
         return false;

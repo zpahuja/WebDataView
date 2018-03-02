@@ -237,10 +237,15 @@ $(document).ready(function() {
 
                                 window.onbeforeunload = function(e) {
                                     e.preventDefault();
-                                    if($username !== undefined) {
-                                        port.postMessage({answer: "leave", username: $username, domain_name: location.hostname});
-                                        // socket.emit('leave', {username: $username, domain_name: location.hostname});
-                                    }
+                                    // if($username !== undefined) {
+                                    //     port.postMessage({answer: "leave", username: $username, domain_name: location.hostname});
+                                    // }
+                                    chrome.storage.sync.get("value", function(items) {
+                                        if (!chrome.runtime.error) {
+                                            let array = items["value"];
+                                            port.postMessage({answer: "leave", domain_name: location.hostname, capa: array});
+                                        }
+                                    });
                                 };
 
                                 ContentFrame.findElementInContentFrame('#userForm','#webview-query').submit(function(e){
