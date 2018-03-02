@@ -172,10 +172,11 @@ class TestTooltip {
                 alert("This element has no Class attribute!");
                 return;
             }
-            console.log("testing zubin's library");
-            console.log(referenceElement.className);
             let q = new Query({"class":referenceElement.className });
             q.highlightSelectedElements("red");
+            console.log(q.execute());
+            console.log("---------------");
+            console.log(q.toJSON());
 
         });
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {

@@ -23,8 +23,10 @@
 class Query {
     constructor(query) {
         if (query.jQuerySelector) {
-            this.class = query.class;
             this.jQuerySelector = query.jQuerySelector;
+        }
+        if (query.class) {
+            this.class = query.class;
         }
     }
 
@@ -32,14 +34,16 @@ class Query {
      * execute query and return list of matches
      */
     execute() {
+
         if (this.class) {
             if (!this.jQuerySelector) {
                 this.jQuerySelector = "";
             }
-            this.jQuerySelector = (this.class).concat(this.jQuerySelector);
+            this.jQuerySelector = ".".concat(this.class, this.jQuerySelector);
         }
         if (this.jQuerySelector) {
             // console.log($(this.jQuerySelector).toArray());
+            console.log(this.jQuerySelector);
             return $(this.jQuerySelector).toArray();
         }
     }
@@ -48,6 +52,9 @@ class Query {
      * highlights elements that match query
      */
     highlightSelectedElements(color) {
+        if (!color) {
+            color = "red";
+        }
         let matches = this.execute();
         for (var i = 0; i < matches.length; i++) {
             let element = matches[i];
