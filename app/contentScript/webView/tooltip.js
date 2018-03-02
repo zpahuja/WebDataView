@@ -431,6 +431,9 @@ function shuffle(a) {
 }
 
 
-let q = new Query({
-  "jQuerySelector": ".s-item__title"
-}).highlightSelectedElements();
+var q = new Query({
+  "class": "r"
+});
+
+q.highlightSelectedElements("red");
+console.log(q.toJSON());

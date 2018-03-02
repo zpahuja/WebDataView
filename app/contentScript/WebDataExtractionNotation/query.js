@@ -19,6 +19,14 @@
  * @param {Object} query.position
  * @param {Function} query.function
  * @param {Object} query.bool
+ * @example
+ * const example_query = new Query({
+ *    'class': 'price-class',
+ *    'jQuerySelector': ".price-class",
+ *  });
+ * example_query.execute();
+ * example_query.highlightSelectedElements("blue");
+ * example_query.toJSON();
  */
 class Query {
   constructor(query) {
@@ -28,6 +36,8 @@ class Query {
     if (query.class) {
       this.class = query.class;
     }
+
+    this.attrs = ["class", "id", "tag", "XPath", "jQuerySelector", "css", "RegExp", "contains", "position", "function", "bool"];
   }
 
   /**
@@ -42,8 +52,6 @@ class Query {
       this.jQuerySelector = ".".concat(this.class, this.jQuerySelector);
     }
     if (this.jQuerySelector) {
-      // console.log($(this.jQuerySelector).toArray());
-      console.log(this.jQuerySelector);
       return $(this.jQuerySelector).toArray();
     }
   }
@@ -68,7 +76,15 @@ class Query {
    * convert to JSON
    */
   toJSON() {
-    return JSON.stringify(this);
+    let j = {}
+    for (let i = 0; i < this.attrs.length; i++) {
+      let attr = this.attrs[i];
+      let val = this[attr];
+      if (val) {
+        j[attr] = val;
+      }
+    }
+    return JSON.stringify(j);
   }
 
 }

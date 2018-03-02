@@ -72,10 +72,40 @@
                 
                 <li><a
                   href='#query'
-                  class="">
+                  class=" toggle-sibling">
                   Query
-                  
+                  <span class='icon'>▸</span>
                 </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#queryexecute'
+                        class='regular pre-open'>
+                        #execute
+                      </a></li>
+                      
+                      <li><a
+                        href='#queryhighlightselectedelements'
+                        class='regular pre-open'>
+                        #highlightSelectedElements
+                      </a></li>
+                      
+                      <li><a
+                        href='#querytojson'
+                        class='regular pre-open'>
+                        #toJSON
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -722,39 +752,21 @@ and enables crowd-sourcing for web data extraction.</p>
   <td class='break-word'><span></span></td>
 </tr>
 
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>query.position.above</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>query.function</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
   </td>
   <td class='break-word'><span></span></td>
 </tr>
 
 
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>query.position.below</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>query.bool</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
   </td>
   <td class='break-word'><span></span></td>
 </tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>query.position.leftOf</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>query.position.rightOf</span> <code class='quiet'>Notation</code>
-  </td>
-  <td class='break-word'><span></span></td>
-</tr>
-
-
-  
 
 
               
@@ -773,8 +785,177 @@ and enables crowd-sourcing for web data extraction.</p>
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> example_query = <span class="hljs-keyword">new</span> Query({
+   <span class="hljs-string">'class'</span>: <span class="hljs-string">'price-class'</span>,
+   <span class="hljs-string">'jQuerySelector'</span>: <span class="hljs-string">".price-class"</span>,
+ });
+example_query.execute();
+example_query.highlightSelectedElements(<span class="hljs-string">"blue"</span>);
+example_query.toJSON();</pre>
+    
+  
 
   
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='queryexecute'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>execute()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>execute query and return list of matches</p>
+
+
+  <div class='pre p1 fill-light mt0'>execute()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='queryhighlightselectedelements'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>highlightSelectedElements(color)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>highlights elements that match query</p>
+
+
+  <div class='pre p1 fill-light mt0'>highlightSelectedElements(color: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>color</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='querytojson'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>toJSON()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>convert to JSON</p>
+
+
+  <div class='pre p1 fill-light mt0'>toJSON()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
 
   
 

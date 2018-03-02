@@ -115,41 +115,39 @@ function tabController(tabId, tabAction, callback) {
     });
 
     // web view scripts
-    setTimeout(function() {
-      alert("Waited 5s");
+
+
+    chrome.tabs.executeScript(null, {
+      file: "app/contentScript/webView/webViewUtilities.js"
+    }, function() {
       chrome.tabs.executeScript(null, {
-        file: "app/contentScript/webView/webViewUtilities.js"
+        file: "app/contentScript/webView/webViewMessagePassingHandler.js"
       }, function() {
         chrome.tabs.executeScript(null, {
-          file: "app/contentScript/webView/webViewMessagePassingHandler.js"
+          file: "app/contentScript/webView/widget.js"
         }, function() {
           chrome.tabs.executeScript(null, {
-            file: "app/contentScript/webView/widget.js"
+            file: "lib/popper/tooltip.js"
           }, function() {
             chrome.tabs.executeScript(null, {
-              file: "lib/popper/tooltip.js"
+              file: "app/contentScript/WebDataExtractionNotation/query.js"
             }, function() {
               chrome.tabs.executeScript(null, {
-                file: "app/contentScript/WebDataExtractionNotation/query.js"
+                file: "app/contentScript/webView/tooltip.js"
               }, function() {
                 chrome.tabs.executeScript(null, {
-                  file: "app/contentScript/webView/tooltip.js"
+                  file: "app/contentScript/webView/webViewController.js"
                 }, function() {
-                  chrome.tabs.executeScript(null, {
-                    file: "app/contentScript/webView/webViewController.js"
-                  }, function() {
-                    if (chrome.runtime.lastError) {
-                      console.error(chrome.runtime.lastError.message);
-                    }
-                  });
+                  if (chrome.runtime.lastError) {
+                    console.error(chrome.runtime.lastError.message);
+                  }
                 });
               });
             });
           });
         });
       });
-
-    }, 5000);
+    });
 
     // TODO grid view scripts
     // chrome.tabs.executeScript(null, {file: "lib/jquery/jquery.dataTables.min.js"});
