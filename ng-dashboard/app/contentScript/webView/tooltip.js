@@ -167,14 +167,31 @@ class TestTooltip {
         //     }
         //
         // });
+
+        function helper(klassname, cur_node){
+            selected_nodes.push(cur_node);
+            let tooltip_color = "rgb" + COLORS[class_to_color_idx[klassname]]; // classname to color
+            let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+            let data_to_push = {};  //dic label name ->
+            data_to_push[field_label] = cur_node;
+            fieldname_color[field_label] = tooltip_color;
+            collected_data.push(data_to_push);
+            cur_node.style.outline = '3px dotted ' + tooltip_color;
+        }
+
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
                 alert("This element has no Class attribute!");
                 return;
             }
-            let q = new Query({"jQuerySelector": "#".concat(referenceElement.id)});
-            q.class = 
+            // let q = new Query({"jQuerySelector": "#".concat(referenceElement.id)});
+            let q = new Query({"class": referenceElement.className});
+            q.label = "adsf";
+
             q.highlightSelectedElements("red");
+
+
+
             console.log(q.execute());
             console.log("---------------");
             console.log(q.toJSON());
@@ -683,17 +700,6 @@ let class_to_color_idx = {};
 let TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
 let prev;
 document.addEventListener("click", selectionHandler);
-
-function helper(klassname, cur_node){
-    selected_nodes.push(cur_node);
-    let tooltip_color = "rgb" + COLORS[class_to_color_idx[klassname]]; // classname to color
-    let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-    let data_to_push = {};  //dic label name ->
-    data_to_push[field_label] = cur_node;
-    fieldname_color[field_label] = tooltip_color;
-    collected_data.push(data_to_push);
-    cur_node.style.outline = '3px dotted ' + tooltip_color;
-}
 
 let css_title = null;
 let css_store = null;
