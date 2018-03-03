@@ -172,7 +172,8 @@ class TestTooltip {
                 alert("This element has no Class attribute!");
                 return;
             }
-            let q = new Query({"class":referenceElement.className });
+            let q = new Query({"jQuerySelector": "#".concat(referenceElement.id)});
+            q.class = 
             q.highlightSelectedElements("red");
             console.log(q.execute());
             console.log("---------------");
