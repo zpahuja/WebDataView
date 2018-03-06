@@ -27,8 +27,9 @@ labels_list = [];
 let parent_collected = [];
 let cap_counter = 0;
 let mySet = new Set();
+let tooltip_color =  null;
+let cur_query = new Query({});
 chrome.storage.sync.set({'value': []});
-console.log(mySet);
 class TestTooltip {
     constructor(referenceElement, color) {
         self.instance = new Tooltip(referenceElement, {
@@ -97,105 +98,54 @@ class TestTooltip {
             }
         });
 
-        // ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
-        //     if (referenceElement.className === '' || referenceElement.className === undefined) {
-        //         alert("This element has no Class attribute!");
-        //         return;
-        //     }
-        //     let cur = e.target;
-        //     if (cur.value === "0") {  //Add model to collection
-        //         cur.value = "1";
-        //         mySet.add("filter_class");
-        //
-        //         chrome.storage.sync.get("value", function(items) {
-        //             if (!chrome.runtime.error) {
-        //                 let array = items["value"];
-        //                 array[array.length] = "filter_class";
-        //                 chrome.storage.sync.set({'value': array});
-        //             }
-        //         });
-        //
-        //         if (cap_counter >= 1) { // has other models
-        //             let new_collect = [];
-        //             let targetclass = referenceElement.className;
-        //             for (let j=0; j < collected_data.length; j++) {
-        //                 let kval = Object.values(collected_data[j])[0];
-        //                 if(kval.className === targetclass){
-        //                     new_collect.push(collected_data[j]);
-        //                 }
-        //                 else{
-        //                     kval.style.outline = '0px';
-        //                 }
-        //             }
-        //             collected_data = new_collect;
-        //             console.log(collected_data.length);
-        //         }
-        //         else { // first models
-        //             let similar_nodes = $('.' + referenceElement.className).get();
-        //             for (let i = 0; i < similar_nodes.length; i++) {
-        //                 let unique = true;
-        //                 for (let j = 0; j < collected_data.length; j++) {
-        //                     let kval = Object.values(collected_data[j])[0];
-        //                     if (kval === similar_nodes[i]) {
-        //                         unique = false;
-        //                     }
-        //                 }
-        //                 if (unique) {
-        //                     helper(referenceElement.className, similar_nodes[i]);
-        //                 }
-        //             }
-        //         }
-        //         cap_counter = cap_counter + 1;
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete("filter_class");
-        //         let new_collect = [];
-        //         let targetclass = referenceElement.className;
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(kval.className === targetclass){
-        //                 kval.style.outline = '0px';
-        //             }
-        //             else{
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //         }
-        //         collected_data = new_collect;
-        //         console.log(collected_data.length);
-        //         cap_counter = cap_counter - 1;
-        //     }
-        //
-        // });
-
-        function helper(klassname, cur_node){
-            selected_nodes.push(cur_node);
-            let tooltip_color = "rgb" + COLORS[class_to_color_idx[klassname]]; // classname to color
-            let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-            let data_to_push = {};  //dic label name ->
-            data_to_push[field_label] = cur_node;
-            fieldname_color[field_label] = tooltip_color;
-            collected_data.push(data_to_push);
-            cur_node.style.outline = '3px dotted ' + tooltip_color;
-        }
-
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
                 alert("This element has no Class attribute!");
                 return;
             }
-            // let q = new Query({"jQuerySelector": "#".concat(referenceElement.id)});
-            let q = new Query({"class": referenceElement.className});
-            q.label = "adsf";
+            let cur = e.target;
+            if (cur.value === "0") {  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_class");
 
-            q.highlightSelectedElements("red");
+                // chrome.storage.sync.get("value", function(items) {
+                //     if (!chrome.runtime.error) {
+                //         let array = items["value"];
+                //         array[array.length] = "filter_class";
+                //         chrome.storage.sync.set({'value': array});
+                //     }
+                // });
+                let target_class = referenceElement.className;
+                cur_query.class = target_class;
+                tooltip_color = "rgb" + COLORS[class_to_color_idx[target_class]]; // classname to color
+                cur_query.highlightSelectedElements(tooltip_color);
+                let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                }
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_class");
+                cur_query.class = false;
+                cur_query.highlightSelectedElements();
+                let new_collect = [];
+                let target_class = referenceElement.className;
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(kval.className !== target_class){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
+                console.log(collected_data.length);
+            }
+        });
 
-
-
-            console.log(q.execute());
-            console.log("---------------");
-            console.log(q.toJSON());
-            });
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {
             if(referenceElement.id === '' || referenceElement.id === undefined ){
                 alert("This element has no Id attribute!");
@@ -207,55 +157,23 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_id");
 
-                if (cap_counter >= 1) { // has other models
-                    let new_collect = [];
-                    let targetid = referenceElement.id;
-                    for (let j=0; j < collected_data.length; j++) {
-                        let kval = Object.values(collected_data[j])[0];
-                        if(kval.className === targetid){
-                            new_collect.push(collected_data[j]);
-                        }
-                        else{
-                            kval.style.outline = '0px';
-                        }
-                    }
-                    collected_data = new_collect;
-                    console.log(collected_data.length);
-                }
-                else { // first models
-                    let similar_nodes = $('.' + referenceElement.id).get();
-                    for (let i = 0; i < similar_nodes.length; i++) {
-                        let unique = true;
-                        for (let j = 0; j < collected_data.length; j++) {
-                            let kval = Object.values(collected_data[j])[0];
-                            if (kval === similar_nodes[i]) {
-                                unique = false;
-                            }
-                        }
-                        if (unique) {
-                            helper(referenceElement.className, similar_nodes[i]);
-                        }
-                    }
-                }
-                cap_counter = cap_counter + 1;
+
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_id");
+                cur_query.id = false;
+                cur_query.removeSelectedElements();
                 let new_collect = [];
-                let targetclass = referenceElement.id;
+                let target_class = referenceElement.className;
                 for (let j=0; j < collected_data.length; j++) {
                     let kval = Object.values(collected_data[j])[0];
-                    if(kval.className === targetclass){
-                        kval.style.outline = '0px';
-                    }
-                    else{
+                    if(kval.className !== target_class){
                         new_collect.push(collected_data[j]);
                     }
                 }
                 collected_data = new_collect;
                 console.log(collected_data.length);
-                cap_counter = cap_counter - 1;
             }
 
         });
@@ -574,45 +492,10 @@ class TestTooltip {
 
         ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {
 
-            let similar_nodes = $('.' + referenceElement.className).get();
-            for (let i = 0; i < similar_nodes.length; i++) {
-                selected_nodes.push(similar_nodes[i]);
-                let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                // console.log(referenceElement.className);
-                // console.log(tooltip_color);
-                similar_nodes[i].style.outline = '3px dotted ' + tooltip_color;
-                let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                let data_to_push = {};  //dic label name ->
-                data_to_push[field_label] = similar_nodes[i];
-                // console.log(similar_nodes[i]);
-                // console.log(typeof similar_nodes[i]);
-                // console.log(field_label);
-                // console.log(typeof field_label);
-                collected_data.push(data_to_push);
-            }
-            // console.log(collected_data.length);
         });
         // delete selected nodes
         ContentFrame.findElementInContentFrame('#web-view-remove', '#webview-tooltip').click(function() {
-            for (let i = 0; i < selected_nodes.length; i++) {
-                selected_nodes[i].style.outline = "none";
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    // keys.forEach(function(key) {
-                    //     if (collected_data[j][key] == selected_nodes[i]) {
-                    //         // delete collected_data[j][key];
-                    //
-                    //     }
-                    //
-                    // });
-                    if(kval === selected_nodes[i]){
-                        collected_data.splice(j, 1);
-                    }
 
-                }
-            }
-            selected_nodes = [];
-            self.instance.hide();
         });
         // assign
         ContentFrame.findElementInContentFrame('#web-view-assign-label', '#webview-tooltip').click(function() {
@@ -700,6 +583,17 @@ let class_to_color_idx = {};
 let TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
 let prev;
 document.addEventListener("click", selectionHandler);
+
+function helper(klassname, cur_node){
+    selected_nodes.push(cur_node);
+    let tooltip_color = "rgb" + COLORS[class_to_color_idx[klassname]]; // classname to color
+    let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+    let data_to_push = {};  //dic label name ->
+    data_to_push[field_label] = cur_node;
+    fieldname_color[field_label] = tooltip_color;
+    collected_data.push(data_to_push);
+    cur_node.style.outline = '3px dotted ' + tooltip_color;
+}
 
 let css_title = null;
 let css_store = null;

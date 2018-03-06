@@ -30,7 +30,7 @@ let cfq = new ContentFrame({
     'id':'webview-query',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "375px", "height": "575px", "position": "fixed", "right": "10px", "top": "1px", "z-index": 2147483647, "border-radius": 6, "background": "transparent"}
+    'inlineCss': {"width": "375px", "height": "575px", "position": "fixed", "right": "10px", "top": "1px", "z-index": 2147483647, "border-radius": 6, "background": "transparent", "display": "none"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");

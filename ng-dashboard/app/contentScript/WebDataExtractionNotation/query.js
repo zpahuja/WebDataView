@@ -67,7 +67,30 @@ class Query {
         for (var i = 0; i < matches.length; i++) {
             let element = matches[i];
             if (typeof element != 'undefined') {
+                element.style.outline = '2px dotted ' + color;
+            }
+        }
+    }
+
+    applySelectedElements(color) {
+        if (!color) {
+            color = "red";
+        }
+        let matches = this.execute();
+        for (var i = 0; i < matches.length; i++) {
+            let element = matches[i];
+            if (typeof element != 'undefined') {
                 element.style.outline = '2px solid ' + color;
+            }
+        }
+    }
+
+    removeSelectedElements() {
+        let matches = this.execute();
+        for (var i = 0; i < matches.length; i++) {
+            let element = matches[i];
+            if (typeof element != 'undefined') {
+                element.style.outline = "none";
             }
         }
     }
@@ -76,7 +99,7 @@ class Query {
      * convert to JSON
      */
     toJSON() {
-        let j = {}
+        let j = {};
         for (let i = 0; i < this.attrs.length; i++) {
             let attr = this.attrs[i];
             let val = this[attr];
