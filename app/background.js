@@ -133,14 +133,18 @@ function tabController(tabId, tabAction, callback) {
               file: "app/contentScript/WebDataExtractionNotation/query.js"
             }, function() {
               chrome.tabs.executeScript(null, {
-                file: "app/contentScript/webView/tooltip.js"
+                file: "app/contentScript/WebDataExtractionNotation/notation.js"
               }, function() {
                 chrome.tabs.executeScript(null, {
-                  file: "app/contentScript/webView/webViewController.js"
+                  file: "app/contentScript/webView/tooltip.js"
                 }, function() {
-                  if (chrome.runtime.lastError) {
-                    console.error(chrome.runtime.lastError.message);
-                  }
+                  chrome.tabs.executeScript(null, {
+                    file: "app/contentScript/webView/webViewController.js"
+                  }, function() {
+                    if (chrome.runtime.lastError) {
+                      console.error(chrome.runtime.lastError.message);
+                    }
+                  });
                 });
               });
             });

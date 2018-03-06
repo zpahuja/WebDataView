@@ -431,9 +431,37 @@ function shuffle(a) {
 }
 
 
-var q = new Query({
-  "class": "r"
-});
+// var q = new Query({
+//   "class": "r"
+// });
+//
+// q.highlightSelectedElements("red");
+// console.log(q.toJSON());
 
-q.highlightSelectedElements("red");
-console.log(q.toJSON());
+var n = new WebDataExtractionNotation([{
+    'label': 'title',
+    'query': {
+      "jQuerySelector": ".r"
+    }
+  },
+  {
+    'label': 'url',
+    'query': {
+      "jQuerySelector": "._Rm"
+    }
+  }
+]);
+
+console.log(n.extract());
+console.log(n.toJSON());
+
+// WebDataExtractionNotation([{
+// 'label': 'label_name',
+// 'query': q1.toJSON()
+// },
+//
+// {
+// 'label': 'label_name2',
+// 'query': q2.toJSON()
+// }]
+// )
