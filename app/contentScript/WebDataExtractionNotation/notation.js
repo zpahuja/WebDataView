@@ -74,9 +74,9 @@ class WebDataExtractionNotation {
 
     // add label and color using color pallette
     for (var label in data) {
-      let color = this.colors[this.color_index];
+      let color = "rgb" + this.colors[this.color_index];
       this.color_index += 1;
-      this.appendLabel2Widget(ntc.name(rgb2hex(color))[1], color);
+      this.appendLabel2Widget(label, color);
     };
 
     return data;
@@ -94,16 +94,16 @@ class WebDataExtractionNotation {
       });
 
       // toggle fields
-      // for (let i = 0; i < collected_data.length; i++) {
-      //   let field_label = ntc.name(rgb2hex(labelColor))[1];
-      //   if (field_label in collected_data[i]) {
-      //     if (circle_fill_color == "rgb(255, 255, 255)") {
-      //       collected_data[i][field_label].style.outline = "none";
-      //     } else {
-      //       collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
-      //     }
-      //   }
-      // }
+      for (let i = 0; i < collected_data.length; i++) {
+        let field_label = ntc.name(rgb2hex(labelColor))[1];
+        if (field_label in collected_data[i]) {
+          if (circle_fill_color == "rgb(255, 255, 255)") {
+            collected_data[i][field_label].style.outline = "none";
+          } else {
+            collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
+          }
+        }
+      }
     });
 
   };
@@ -123,7 +123,20 @@ class WebDataExtractionNotation {
   }
 
   // changeLabelName
-  //
+  changeLabelName(oldLabelName, newLabelName) {
+    if (oldLabelName !== newLabelName) {
+      // change matched elements
+      Object.defineProperty(this.data, newLabelName,
+        Object.getOwnPropertyDescriptor(this.data, oldLabelName));
+      delete(this.data)[oldLabelName];
+
+      // change notation-query
+      Object.defineProperty(this.notations, newLabelName,
+        Object.getOwnPropertyDescriptor(this.notations, oldLabelName));
+      delete(this.notations)[oldLabelName];
+    }
+  }
+
   // highlightLabel
 
   toJSON() {
