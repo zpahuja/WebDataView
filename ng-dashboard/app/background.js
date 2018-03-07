@@ -115,9 +115,9 @@ function tabController(tabId, tabAction, callback) {
 
         chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewUtilities.js"}, function() {
             chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewMessagePassingHandler.js"}, function () {
-                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
-                    chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/notation.js"}, function () {
-                        chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/query.js"}, function () {
+                chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/notation.js"}, function () {
+                    chrome.tabs.executeScript(null, {file: "app/contentScript/WebDataExtractionNotation/query.js"}, function () {
+                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/widget.js"}, function () {
                             chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
                                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
                                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {

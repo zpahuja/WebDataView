@@ -20,6 +20,7 @@ let widget_iframe_cf = new ContentFrame({
 });
 let widget_iframe = widget_iframe_cf.body;
 let port_tb = chrome.runtime.connect({name: "tbtb"});
+chrome.storage.local.set({'value': []});
 
 /**
  * add scripts to widget <head> tag
@@ -135,9 +136,19 @@ $(document).ready(function(){
                             e.preventDefault();
                             console.log("select_apply");
                             cur_query.applySelectedElements(tooltip_color);
-                            console.log(cur_query.toJSON());
 
-
+                            let n = {'label':field_label};
+                            n['query'] = JSON.parse(cur_query.toJSON());
+                            cur_web_noti = new WebDataExtractionNotation(n);
+                            chrome.storage.local.get("value", function(items) {
+                                if (!chrome.runtime.error) {
+                                    let array = items["value"];
+                                    array[array.length] = JSON.stringify(cur_web_noti.toJSON()[0]);
+                                    console.log(array);
+                                    chrome.storage.local.set({'value': array});
+                                }
+                            });
+                            console.log(collected_data.length);
                             tooltip_color = null;
                             cur_query = new Query({});
                         });

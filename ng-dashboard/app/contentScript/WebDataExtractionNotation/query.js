@@ -49,7 +49,7 @@ class Query {
             if (!this.jQuerySelector) {
                 this.jQuerySelector = "";
             }
-            this.jQuerySelector = ".".concat(this.class, this.jQuerySelector);
+            this.jQuerySelector = ".".concat(($.trim(this.class)).replace(/\s+/g, "."), this.jQuerySelector);
         }
         if (this.jQuerySelector) {
             return $(this.jQuerySelector).toArray();
@@ -107,6 +107,7 @@ class Query {
                 j[attr] = val;
             }
         }
+        // // return j;
         return JSON.stringify(j);
     }
 
