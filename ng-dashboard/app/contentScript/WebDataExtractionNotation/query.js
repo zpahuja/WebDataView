@@ -36,6 +36,9 @@ class Query {
         if (query.class) {
             this.class = query.class;
         }
+        if (query.css) {
+            this.css = query.css;
+        }
 
         this.attrs = ["class", "id", "tag", "XPath", "jQuerySelector", "css", "RegExp", "contains", "position", "function", "bool"];
     }
@@ -44,15 +47,38 @@ class Query {
      * execute query and return list of matches
      */
     execute() {
+        let matches = undefined;
 
         if (this.class) {
-            if (!this.jQuerySelector) {
-                this.jQuerySelector = "";
+            if (!matches) {
+                matches = $("*");
             }
-            this.jQuerySelector = ".".concat(($.trim(this.class)).replace(/\s+/g, "."), this.jQuerySelector);
+            let classjQuerySelector = ".".concat(($.trim(this.class)).replace(/\s+/g, "."));
+            matches = matches.filter(classjQuerySelector);
         }
+
         if (this.jQuerySelector) {
-            return $(this.jQuerySelector).toArray();
+            if (!matches) {
+                matches = $("*");
+            }
+            matches = matches.filter(this.jQuerySelector);
+        }
+
+        if (this.css) {
+            if (!matches) {
+                matches = $("*");
+            }
+            matches = matches.filter(function() {
+                let retVal = true;
+                for (let prop in this.css) {
+                    retVal = retVal && this.style[prop] == this.css[prop];
+                }
+                return retVal;
+            });
+        }
+
+        if (matches) {
+            return matches.toArray();
         }
     }
 
@@ -99,7 +125,7 @@ class Query {
      * convert to JSON
      */
     toJSON() {
-        let j = {};
+        let j = {}
         for (let i = 0; i < this.attrs.length; i++) {
             let attr = this.attrs[i];
             let val = this[attr];
@@ -107,7 +133,6 @@ class Query {
                 j[attr] = val;
             }
         }
-        // // return j;
         return JSON.stringify(j);
     }
 

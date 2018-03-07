@@ -971,7 +971,6 @@ appendLabel2Widget = function(labelName, labelColor) {
                     for(let i = 0; i < array.length; i++){
                         let cur_json = JSON.parse(array[i]);
                         if(cur_json.label === label_name){
-                            console.log("wtf");
                             console.log(cur_web_noti.toJSON());
                             console.log(cur_web_noti);
                             console.log(label_name, input_label);
