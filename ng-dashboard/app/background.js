@@ -104,7 +104,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
  * @param tabAction
  */
 
-
 function tabController(tabId, tabAction, callback) {
     // initiate controller
     if (tabAction == TAB_ACTION.INIT) {
@@ -171,9 +170,6 @@ chrome.runtime.onConnect.addListener(function(port) {
         else if (msg.answer == "send message") {
             console.log("send message reached!!!");
             socket.emit('send message', {username: msg.username, message: msg.message, domain_name: msg.domain_name});
-
-            // port.postMessage({question: "Madame who?"});
-
         }
         else if (msg.answer == "send message by desc"){
             console.log("send message by desc reached!!!");
@@ -185,6 +181,8 @@ chrome.runtime.onConnect.addListener(function(port) {
             console.log("leave reached!!!");
             console.log("in backgroundjs: " + msg.domain_name);
             // socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
+            console.log(msg.capa);
+            console.log(typeof(msg.capa));
             socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
             // port.postMessage({question: "I don't get it."});
         }
@@ -206,14 +204,17 @@ chrome.runtime.onConnect.addListener(function(port) {
         console.log(data);
         port.postMessage({question: "feedback", data: data});
     });
+
+    socket.on('tooltip_feedback', function(data) {
+        console.log(data);
+        port.postMessage({question: "tooltip_feedback", data: data});
+    });
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
 
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "table view"){
-            console.log("12/19/2017");
-            console.log(msg.tb_output);
 
             /*
              Code to create a popup window for table view, it needs to be run on background.js,

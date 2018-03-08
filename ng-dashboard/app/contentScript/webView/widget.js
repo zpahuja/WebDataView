@@ -132,9 +132,9 @@ $(document).ready(function(){
                         let record_dom = [];
                         let non_record = [];
                         select_apply.click(function(e){
-                            mySet.clear();
                             e.preventDefault();
-                            console.log("select_apply");
+                            mySet.clear();
+                            console.log("Select_Apply");
                             cur_query.applySelectedElements(tooltip_color);
 
                             let n = {'label':field_label};
@@ -144,18 +144,15 @@ $(document).ready(function(){
                                 if (!chrome.runtime.error) {
                                     let array = items["value"];
                                     array[array.length] = JSON.stringify(cur_web_noti.toJSON()[0]);
-                                    console.log(array);
                                     chrome.storage.local.set({'value': array});
                                 }
                             });
-                            console.log(collected_data.length);
                             tooltip_color = null;
                             cur_query = new Query({});
                         });
 
                         grid_view.click(function(e){
                             e.preventDefault();
-                            console.log(collected_data);
                             for(i = 0; i < collected_data.length; i++) {
                                 if(collected_data[i] === {}){
                                     console.log("Find one");
@@ -167,7 +164,6 @@ $(document).ready(function(){
                                     break;
                                 }
                             }
-                            console.log(collected_data);
                             if(!record_flag){
                                 alert("Please select boxs and change the label to <records>!");
                             }
@@ -200,10 +196,14 @@ $(document).ready(function(){
                                         pair = {};
                                     }
                                 }
-                                console.log(tb_output);
                                 port_tb.postMessage({answer: "table view", tb_output: tb_output});
-
-
+                                // chrome.storage.sync.get("value", function(items) {
+                                //     if (!chrome.runtime.error) {
+                                //         let array = items["value"];
+                                //         console.log(array);
+                                //         // port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
+                                //     }
+                                // });
                             }
                         });
                         // set widget label width

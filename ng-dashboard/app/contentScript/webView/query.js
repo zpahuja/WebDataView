@@ -37,8 +37,7 @@ let cfq = new ContentFrame({
 });
 
 let cfq_iframe = cfq.body;
-let port = chrome.runtime.connect({name: "knockknock"});
-setTimeout(function(){port.postMessage({answer: "pre check", domain_name: location.href});}, 1000);
+// let port = chrome.runtime.connect({name: "knockknock"});
 
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
 //     '<div class="webdataview" id="iframe-fullsize-container">' +

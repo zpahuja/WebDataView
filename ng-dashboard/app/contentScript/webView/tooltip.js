@@ -31,6 +31,9 @@ let mySet = new Set();
 let tooltip_color =  null;
 let cur_query = new Query({});
 let cur_web_noti = null;
+let port = chrome.runtime.connect({name: "knockknock"});
+setTimeout(function(){port.postMessage({answer: "pre check", domain_name: location.href});}, 1000);
+
 class TestTooltip {
     constructor(referenceElement, color) {
         self.instance = new Tooltip(referenceElement, {
@@ -74,18 +77,24 @@ class TestTooltip {
             '</div>');
         cf.body.append(tooltip_html);
 
+        // chrome.storage.sync.get("value", function(items) {
+        //     if (!chrome.runtime.error) {
+        //         let array = items["value"];
+        //         console.log(array);
+        //         port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
+        //     }
+        // });
         window.onbeforeunload = function(e) {
+            console.log("adsfasdf");
             e.preventDefault();
             chrome.storage.sync.get("value", function(items) {
                 if (!chrome.runtime.error) {
                     let array = items["value"];
-                    // alert(array);
-                    port.postMessage({answer: "leave", domain_name: location.hostname, capa: array});
+                    port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
                 }
             });
-
         };
-        // select similar
+
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
             e.preventDefault();
             let stretch = "110px";
@@ -204,7 +213,8 @@ class TestTooltip {
                 mySet.add("filter_fontsize");
                 let target_font = jQuery(referenceElement).css("font-size");
                 console.log(target_font);
-                cur_query.css = {"font-size": target_font};
+                cur_query.css = {"fontSize": target_font};
+                console.log(cur_query);
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
@@ -946,7 +956,6 @@ appendLabel2Widget = function(labelName, labelColor) {
                 }
             }
             collected_data = new_collect;
-            console.log(collected_data.length);
             chrome.storage.local.get("value", function(items) {
                 if (!chrome.runtime.error) {
                     let array = items["value"];
@@ -972,7 +981,6 @@ appendLabel2Widget = function(labelName, labelColor) {
         let change_action = ContentFrame.findElementInContentFrame('#label_change','#'+labelId);
         change_action.click(function(e) {
             e.preventDefault();
-            console.log(collected_data);
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
             input_label = input_label.get(0).value;
             let old = current.target.innerHTML;
@@ -1005,13 +1013,15 @@ appendLabel2Widget = function(labelName, labelColor) {
                             new_array.push(JSON.stringify(cur_json))
                         }
                     }
+                    // console.log(new_array);
                     chrome.storage.local.set({'value': new_array});
+                    console.log(JSON.parse(new_array[0])[0]);
+                    let new_noti = new WebDataExtractionNotation(JSON.parse(new_array[0])[0]);
+                    console.log(new_noti.matchquery());
                 }
             });
         });
     });
-
-
 };
 
 /**

@@ -68,10 +68,16 @@ class Query {
             if (!matches) {
                 matches = $("*");
             }
+            var queryCSS = this.css;
             matches = matches.filter(function() {
-                let retVal = true;
-                for (let prop in this.css) {
-                    retVal = retVal && this.style[prop] == this.css[prop];
+                let retVal = false;
+                let firstProp = true;
+                console.log(queryCSS);
+                for (let prop in queryCSS) {
+                    console.log(prop, 'element prop: ', this.style[prop], 'query prop: ', queryCSS[prop]);
+                    console.log(this.style);
+                    if (firstProp) { firstProp = false; retVal = true; }
+                    retVal = retVal && this.style[prop] == queryCSS[prop];
                 }
                 return retVal;
             });
