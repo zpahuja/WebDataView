@@ -60,6 +60,8 @@ class TestTooltip {
             '<label for="subscribeNews">Filter by Id</label>' +
             '<br><input type="checkbox" id="filter_fontsize" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by Fontsize</label>' +
+            '<br><input type="checkbox" id="filter_fontcolor" name="subscribe" value="0">'+
+            '<label for="subscribeNews">Filter by Fontcolor</label>' +
             // '<br><input type="checkbox" id="filter_child" name="subscribe" value="0">' +
             // '<label for="subscribeNews">Remove Parent Element</label>' +
             // '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
@@ -201,6 +203,27 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_fontsize");
                 let target_font = jQuery(referenceElement).css("font-size");
+                console.log(target_font);
+                cur_query.css = {"font-size": target_font};
+                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                cur_query.highlightSelectedElements(tooltip_color);
+                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                fieldname_color[field_label] = tooltip_color;
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_fontsize");
+
+            }
+        });
+        ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').click(function(e) {
+            let cur = e.target;
+            if(cur.value === "0"){  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_fontcolor");
+                let target_color = jQuery(referenceElement).css("color");
+                console.log(target_color);
+                cur_query.css = {"color": target_color};
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
@@ -581,6 +604,11 @@ function greeting(name) {
     if(mySet.has("filter_fontsize")){
         hover_message = hover_message + " Fontsize: ";
         hover_message = hover_message + name.css("font-size");
+        hover_message = hover_message + "\n";
+    }
+    if(mySet.has("filter_fontcolor")){
+        hover_message = hover_message + " Fontcolor: ";
+        hover_message = hover_message + name.css("color");
         hover_message = hover_message + "\n";
     }
     // if(mySet.has("filter_left")){
@@ -966,16 +994,14 @@ appendLabel2Widget = function(labelName, labelColor) {
             chrome.storage.local.get("value", function(items) {
                 if (!chrome.runtime.error) {
                     let array = items["value"];
-                    // console.log(array);
                     let new_array = [];
                     for(let i = 0; i < array.length; i++){
                         let cur_json = JSON.parse(array[i]);
                         if(cur_json.label === label_name){
-                            console.log(cur_web_noti.toJSON());
-                            console.log(cur_web_noti);
-                            console.log(label_name, input_label);
                             cur_web_noti.changeLabelName(label_name, input_label);
-                            console.log(cur_web_noti.toJSON());
+                            new_array.push(JSON.stringify(cur_web_noti.toJSON()))
+                        }
+                        else{
                             new_array.push(JSON.stringify(cur_json))
                         }
                     }

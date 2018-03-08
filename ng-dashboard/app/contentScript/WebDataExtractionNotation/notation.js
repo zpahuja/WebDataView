@@ -22,12 +22,14 @@
  *    'id': 'price',
  *    'class': 'price-class',
  *    'tag': ["div"],
- *    'css': [ {"background-color":"rgb(255,0,0)"},
+ *    'css': {"color":"rgb(0, 102, 192)"},
  *    'regex': "^\S+@\S+$",
  *    'function': function() {}
  *  }
  * ]);
  * example_notation.extract();
+ * q = new Query
+ * q.css = {"color":"rgb(0, 102, 192)"}
  */
 
 class WebDataExtractionNotation {
@@ -126,9 +128,9 @@ class WebDataExtractionNotation {
     changeLabelName(oldLabelName, newLabelName) {
         if (oldLabelName !== newLabelName) {
             // change matched elements
-            Object.defineProperty(this.data, newLabelName,
-                Object.getOwnPropertyDescriptor(this.data, oldLabelName));
-            delete(this.data)[oldLabelName];
+            // Object.defineProperty(this.data, newLabelName,
+            //     Object.getOwnPropertyDescriptor(this.data, oldLabelName));
+            // delete(this.data)[oldLabelName];
 
             // change notation-query
             Object.defineProperty(this.notations, newLabelName,
