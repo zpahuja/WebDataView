@@ -29,117 +29,117 @@
  * example_query.toJSON();
  */
 class Query {
-    constructor(query) {
-        if (query.jQuerySelector) {
-            this.jQuerySelector = query.jQuerySelector;
-        }
-        if (query.class) {
-            this.class = query.class;
-        }
-        if (query.css) {
-            this.css = query.css;
-        }
-
-        this.attrs = ["class", "id", "tag", "XPath", "jQuerySelector", "css", "RegExp", "contains", "position", "function", "bool"];
+  constructor(query) {
+    if (query.jQuerySelector) {
+      this.jQuerySelector = query.jQuerySelector;
+    }
+    if (query.class) {
+      this.class = query.class;
+    }
+    if (query.css) {
+      this.css = query.css;
     }
 
-    /**
-     * execute query and return list of matches
-     */
-    execute() {
-        let matches = undefined;
+    this.attrs = ["class", "id", "tag", "XPath", "jQuerySelector", "css", "RegExp", "contains", "position", "function", "bool"];
+  }
 
-        if (this.class) {
-            if (!matches) {
-                matches = $("*");
-            }
-            let classjQuerySelector = ".".concat(($.trim(this.class)).replace(/\s+/g, "."));
-            matches = matches.filter(classjQuerySelector);
-        }
+  /**
+   * execute query and return list of matches
+   */
+  execute() {
+    let matches = undefined;
 
-        if (this.jQuerySelector) {
-            if (!matches) {
-                matches = $("*");
-            }
-            matches = matches.filter(this.jQuerySelector);
-        }
-
-        if (this.css) {
-            if (!matches) {
-                matches = $("*");
-            }
-            var queryCSS = this.css;
-            matches = matches.filter(function() {
-                let retVal = false;
-                let firstProp = true;
-                console.log(queryCSS);
-                for (let prop in queryCSS) {
-                    console.log(prop, 'element prop: ', this.style[prop], 'query prop: ', queryCSS[prop]);
-                    console.log(this.style);
-                    if (firstProp) { firstProp = false; retVal = true; }
-                    retVal = retVal && this.style[prop] == queryCSS[prop];
-                }
-                return retVal;
-            });
-        }
-
-        if (matches) {
-            return matches.toArray();
-        }
+    if (this.class) {
+      if (!matches) {
+        matches = $("*");
+      }
+      let classjQuerySelector = ".".concat(($.trim(this.class)).replace(/\s+/g, "."));
+      matches = matches.filter(classjQuerySelector);
     }
 
-    /**
-     * highlights elements that match query
-     */
-    highlightSelectedElements(color) {
-        if (!color) {
-            color = "red";
-        }
-        let matches = this.execute();
-        for (var i = 0; i < matches.length; i++) {
-            let element = matches[i];
-            if (typeof element != 'undefined') {
-                element.style.outline = '2px dotted ' + color;
-            }
-        }
+    if (this.jQuerySelector) {
+      if (!matches) {
+        matches = $("*");
+      }
+      matches = matches.filter(this.jQuerySelector);
     }
 
-    applySelectedElements(color) {
-        if (!color) {
-            color = "red";
+    if (this.css) {
+      if (!matches) {
+        matches = $("*");
+      }
+      var queryCSS = this.css;
+      matches = matches.filter(function() {
+        let retVal = false;
+        let firstProp = true;
+        for (let prop in queryCSS) {
+          if (firstProp) {
+            firstProp = false;
+            retVal = true;
+          }
+          retVal = retVal && $(this).css(prop) == queryCSS[prop];
         }
-        let matches = this.execute();
-        for (var i = 0; i < matches.length; i++) {
-            let element = matches[i];
-            if (typeof element != 'undefined') {
-                element.style.outline = '2px solid ' + color;
-            }
-        }
+        return retVal;
+      });
     }
 
-    removeSelectedElements() {
-        let matches = this.execute();
-        for (var i = 0; i < matches.length; i++) {
-            let element = matches[i];
-            if (typeof element != 'undefined') {
-                element.style.outline = "none";
-            }
-        }
+    if (matches) {
+      return matches.toArray();
     }
+  }
 
-    /**
-     * convert to JSON
-     */
-    toJSON() {
-        let j = {}
-        for (let i = 0; i < this.attrs.length; i++) {
-            let attr = this.attrs[i];
-            let val = this[attr];
-            if (val) {
-                j[attr] = val;
-            }
-        }
-        return JSON.stringify(j);
+  /**
+   * highlights elements that match query
+   */
+  highlightSelectedElements(color) {
+    if (!color) {
+      color = "red";
     }
+    let matches = this.execute();
+    for (var i = 0; i < matches.length; i++) {
+      let element = matches[i];
+      if (typeof element != 'undefined') {
+        element.style.outline = '2px dotted ' + color;
+      }
+    }
+  }
+
+  applySelectedElements(color) {
+    if (!color) {
+      color = "red";
+    }
+    let matches = this.execute();
+    for (var i = 0; i < matches.length; i++) {
+      let element = matches[i];
+      if (typeof element != 'undefined') {
+        element.style.outline = '2px solid ' + color;
+      }
+    }
+  }
+
+  removeSelectedElements() {
+    let matches = this.execute();
+    for (var i = 0; i < matches.length; i++) {
+      let element = matches[i];
+      if (typeof element != 'undefined') {
+        element.style.outline = "none";
+      }
+    }
+  }
+
+  /**
+   * convert to JSON
+   */
+  toJSON() {
+    let j = {}
+    for (let i = 0; i < this.attrs.length; i++) {
+      let attr = this.attrs[i];
+      let val = this[attr];
+      if (val) {
+        j[attr] = val;
+      }
+    }
+    return JSON.stringify(j);
+  }
 
 }
