@@ -72,12 +72,12 @@ class Query {
             matches = matches.filter(function() {
                 let retVal = false;
                 let firstProp = true;
-                console.log(queryCSS);
                 for (let prop in queryCSS) {
-                    console.log(prop, 'element prop: ', this.style[prop], 'query prop: ', queryCSS[prop]);
-                    console.log(this.style);
-                    if (firstProp) { firstProp = false; retVal = true; }
-                    retVal = retVal && this.style[prop] == queryCSS[prop];
+                    if (firstProp) {
+                        firstProp = false;
+                        retVal = true;
+                    }
+                    retVal = retVal && $(this).css(prop) == queryCSS[prop];
                 }
                 return retVal;
             });
