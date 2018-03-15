@@ -123,39 +123,46 @@ $(document).ready(function() {
                                     else if (msg.question === "feedback"){
                                         let data = msg.data;
                                         let stored_query = data.output;
+                                        console.log("In Feedback!!!");
                                         console.log(stored_query);
                                         let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
                                         let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
                                         let noti_reject = ContentFrame.findElementInContentFrame('#note_reject', '#webview-note');
                                         let question_html;
                                         if(data.output.length !== 0 && notification_flag){
-                                            question_html = $.parseHTML('<p id="question"><b>There are existing query models with the current url, would you like to see it?</b></p>');
+                                            question_html = $.parseHTML('<p id="question"><b>There are existing models with the current url, would you like to see it?</b></p>');
                                             noti_question.replaceWith(question_html);
                                             noti_reject.css('visibility','hidden');
                                             let accept_html = $.parseHTML(' <button type="button" class="btn btn-success" id="note_result">Show Me</button>&nbsp;&nbsp;&nbsp;');
                                             noti_accept.replaceWith(accept_html);
                                         }
                                         else{
-                                            question_html = $.parseHTML('<p id="question"><b>There is no query model, please write your own.Would you like to get notification in the future?</b></p>');
+                                            question_html = $.parseHTML('<p id="question"><b>There is no model, please write your own.Would you like to get notification in the future?</b></p>');
                                             noti_question.replaceWith(question_html);
                                         }
                                         function dynamicEvent() {
                                             let index_pos = parseInt((this.id).slice(-1));
-                                            // console.log(stored_query[index_pos].query_text);
-                                            let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
-                                            ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
+                                            new_model = stored_query[index_pos].model_text;
+                                            console.log("new_model!!!");
+                                            for(let i = 0; i < new_model.length; i++){
+                                                console.log(new_model[i]);
+                                                let new_web_noti = new WebDataExtractionNotation(new_model[i]);
+                                                console.log(new_web_noti.matchquery()['price']);
+                                            }
+                                            // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
+                                            // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
 
                                         }
                                         ContentFrame.findElementInContentFrame('#note_result', '#webview-note').click(function(e) {
                                             e.preventDefault();
-                                            console.log("fck happening");
+                                            console.log("note_result");
                                             ContentFrame.findElementInContentFrame('#question', '#webview-note').css('display', 'none');
                                             for(i = 0; i < stored_query.length; i++) {
                                                 let li = document.createElement('li');
                                                 li.id = 'pop' + i;
-                                                li.innerHTML = '<li><b>' + stored_query[i].query_name + ': &nbsp;&nbsp;&nbsp;</b><button type="button" class="btn btn-success"  style="background-color: #f92672 !important;">populate</button></li>';
+                                                li.innerHTML = '<li><b>' + stored_query[i].model_name + ': &nbsp;&nbsp;&nbsp;</b><button type="button" class="btn btn-success"  style="background-color: #f92672 !important;">populate</button></li>';
                                                 ContentFrame.findElementInContentFrame('#query_pair', '#webview-note').append(li);
-                                                console.log(stored_query[i].query_name);
+                                                console.log(stored_query[i].model_name);
                                                 li.onclick = dynamicEvent;
                                             }
 

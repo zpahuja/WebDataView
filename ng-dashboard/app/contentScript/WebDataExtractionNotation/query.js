@@ -92,6 +92,7 @@ class Query {
      * highlights elements that match query
      */
     highlightSelectedElements(color) {
+        $('*').css('outline', 'none');
         if (!color) {
             color = "red";
         }

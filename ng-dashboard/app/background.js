@@ -176,16 +176,15 @@ chrome.runtime.onConnect.addListener(function(port) {
             socket.emit('send message by desc', {username: msg.username, message: msg.message, name:msg.name, domain_name: msg.domain_name});
             // port.postMessage({question: "I don't get it."});
         }
-
-        else if (msg.answer == "leave"){
-            console.log("leave reached!!!");
-            console.log("in backgroundjs: " + msg.domain_name);
-            // socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
-            console.log(msg.capa);
-            console.log(typeof(msg.capa));
-            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
-            // port.postMessage({question: "I don't get it."});
-        }
+        // else if (msg.answer == "leave"){
+        //     console.log("leave reached!!!");
+        //     console.log("in backgroundjs: " + msg.domain_name);
+        //     // socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
+        //     console.log(msg.capa);
+        //     console.log(typeof(msg.capa));
+        //     socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
+        //     // port.postMessage({question: "I don't get it."});
+        // }
         else if (msg.answer == "pre check"){
             console.log("Pre check point!!!");   // Send domain to server and return stored result!
             socket.emit('pre check', {domain_name: msg.domain_name});
@@ -273,6 +272,11 @@ chrome.runtime.onConnect.addListener(function(port) {
                     console.log(newWindow);
                 });
             });
+        }
+        else if (msg.answer == "leave"){
+            console.log("leave reached!!!");
+            console.log(msg.capa);
+            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
         }
     });
 });

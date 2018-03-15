@@ -197,13 +197,14 @@ $(document).ready(function(){
                                     }
                                 }
                                 port_tb.postMessage({answer: "table view", tb_output: tb_output});
-                                // chrome.storage.sync.get("value", function(items) {
-                                //     if (!chrome.runtime.error) {
-                                //         let array = items["value"];
-                                //         console.log(array);
-                                //         // port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
-                                //     }
-                                // });
+                                chrome.storage.local.get("value", function(items) {
+                                    if (!chrome.runtime.error) {
+                                        let array = items["value"];
+                                        console.log(array);
+                                        console.log(JSON.parse(array));
+                                        port_tb.postMessage({answer: "leave", domain_name: location.href, capa: JSON.parse(array)});
+                                    }
+                                });
                             }
                         });
                         // set widget label width

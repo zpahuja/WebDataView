@@ -47,7 +47,7 @@ class TestTooltip {
             'id':'webview-tooltip',
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css', 'lib/bootstrap/css/bootstrap.3.3.7.min.css'],
-        'js': ['app/contentScript/webView/tooltipHandler.js'],
+            'js': ['app/contentScript/webView/tooltipHandler.js'],
             'inlineCss':  {"width": "225px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
     });
         let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
@@ -85,7 +85,6 @@ class TestTooltip {
         //     }
         // });
         window.onbeforeunload = function(e) {
-            console.log("adsfasdf");
             e.preventDefault();
             chrome.storage.sync.get("value", function(items) {
                 if (!chrome.runtime.error) {
@@ -128,6 +127,7 @@ class TestTooltip {
                 // });
                 let target_class = referenceElement.className;
                 cur_query.class = target_class;
+                console.log(cur_query);
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[target_class]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
@@ -212,9 +212,7 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_fontsize");
                 let target_font = jQuery(referenceElement).css("font-size");
-                console.log(target_font);
                 cur_query.css = {"fontSize": target_font};
-                console.log(cur_query);
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
@@ -232,14 +230,12 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_fontcolor");
                 let target_color = jQuery(referenceElement).css("color");
-                console.log(target_color);
                 cur_query.css = {"color": target_color};
+                console.log(cur_query);
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
                 fieldname_color[field_label] = tooltip_color;
-
-
             }
             else{  //Take model off collection
                 cur.value = "0";
@@ -974,7 +970,6 @@ appendLabel2Widget = function(labelName, labelColor) {
         let close_action = ContentFrame.findElementInContentFrame('#label_close', '#'+labelId);
         close_action.click(function(e) {
             e.preventDefault();
-            console.log(close_action.get(0));
             $('#'+labelId).remove();
         });
 
