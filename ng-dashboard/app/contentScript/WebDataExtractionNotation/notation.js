@@ -44,6 +44,9 @@ class WebDataExtractionNotation {
 
         for (let i = 0; i < notation.length; i++) {
             let label = notation[i]['label'];
+            if (typeof(notation[i]['query']) === 'string') {
+                notation[i]['query'] = JSON.parse(notation[i]['query']);
+            }
             let query = notation[i]['query'];
             this.notations[label] = new Query(query);
         }

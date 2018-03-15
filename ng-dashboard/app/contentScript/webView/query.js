@@ -146,8 +146,12 @@ $(document).ready(function() {
                                             console.log("new_model!!!");
                                             for(let i = 0; i < new_model.length; i++){
                                                 console.log(new_model[i]);
+                                                console.log(typeof(new_model[i]));
                                                 let new_web_noti = new WebDataExtractionNotation(new_model[i]);
-                                                console.log(new_web_noti.matchquery()['price']);
+                                                console.log(new_web_noti);
+                                                new_web_noti.extract();
+                                                console.log(new_web_noti.matchquery());
+                                                new_web_noti.notations['Price'].highlightSelectedElements();
                                             }
                                             // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
                                             // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);

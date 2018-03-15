@@ -144,6 +144,8 @@ $(document).ready(function(){
                                 if (!chrome.runtime.error) {
                                     let array = items["value"];
                                     array[array.length] = JSON.stringify(cur_web_noti.toJSON()[0]);
+                                    console.log(array);
+                                    // array[array.length] = cur_web_noti.toJSON()[0];
                                     chrome.storage.local.set({'value': array});
                                 }
                             });
@@ -200,9 +202,12 @@ $(document).ready(function(){
                                 chrome.storage.local.get("value", function(items) {
                                     if (!chrome.runtime.error) {
                                         let array = items["value"];
-                                        console.log(array);
-                                        console.log(JSON.parse(array));
-                                        port_tb.postMessage({answer: "leave", domain_name: location.href, capa: JSON.parse(array)});
+                                        let new_array = []
+                                        for(let j = 0; j < array.length; j++){
+                                            new_array.push(JSON.parse(array[j])[0]);
+                                        }
+                                        console.log(new_array);
+                                        port_tb.postMessage({answer: "leave", domain_name: location.href, capa: new_array});
                                     }
                                 });
                             }
