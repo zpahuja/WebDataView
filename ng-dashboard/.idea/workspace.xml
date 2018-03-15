@@ -2,8 +2,9 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/app/contentScript/webView/tooltip.js" line="127" />
-    <bookmark url="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js" line="24" />
     <bookmark url="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js" line="46" />
+    <bookmark url="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js" line="24" />
+    <bookmark url="file://$PROJECT_DIR$/app/contentScript/webView/query.js" line="125" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6301bb8-3799-49a8-9759-f3ff7e88f178" name="Default" comment="" />
@@ -23,8 +24,8 @@
       <file leaf-file-name="query.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/query.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="93" column="29" lean-forward="false" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="29" />
+            <state relative-caret-position="438">
+              <caret line="107" column="25" lean-forward="false" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -33,8 +34,8 @@
       <file leaf-file-name="notation.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1500">
-              <caret line="87" column="5" lean-forward="true" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
+            <state relative-caret-position="374">
+              <caret line="148" column="7" lean-forward="true" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -43,34 +44,47 @@
       <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/background.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1225">
-              <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+            <state relative-caret-position="350">
+              <caret line="203" column="45" lean-forward="false" selection-start-line="203" selection-start-column="37" selection-end-line="203" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="query.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/contentScript/webView/query.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="499">
-              <caret line="153" column="108" lean-forward="false" selection-start-line="153" selection-start-column="108" selection-end-line="153" selection-end-column="108" />
+            <state relative-caret-position="313">
+              <caret line="127" column="96" lean-forward="false" selection-start-line="127" selection-start-column="96" selection-end-line="127" selection-end-column="96" />
               <folding>
-                <marker date="1521144935410" expanded="true" signature="5119:5135" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="5177:5207" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="5216:5222" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="5800:5852" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="7837:7843" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="7843:7849" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="7849:7855" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="10571:10577" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="10577:10583" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="10583:10589" ph=" " />
-                <marker date="1521144935410" expanded="true" signature="10647:10684" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="17962:18061" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="18828:18927" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="19597:19678" ph="..." />
-                <marker date="1521144935410" expanded="true" signature="21101:21182" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="5119:5135" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="5177:5207" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="5216:5222" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="5800:5852" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="8004:8010" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="8010:8016" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="8016:8022" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="11290:11296" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="11296:11302" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="11302:11308" ph=" " />
+                <marker date="1521149650779" expanded="true" signature="11366:11403" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="18681:18780" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="19547:19646" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="20316:20397" ph="..." />
+                <marker date="1521149650779" expanded="true" signature="21820:21901" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notification.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,11 +102,25 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="notification.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1521149654619" expanded="true" signature="3683:3697" ph="..." />
+                <marker date="1521149654619" expanded="true" signature="4337:4351" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="tooltip.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/contentScript/webView/tooltip.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="143" column="57" lean-forward="false" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="57" />
+            <state relative-caret-position="2225">
+              <caret line="132" column="27" lean-forward="false" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="27" />
               <folding>
                 <element signature="e#8360#10273#0" expanded="false" />
                 <marker date="1521132502557" expanded="true" signature="2458:2569" ph="..." />
@@ -122,10 +150,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>m</find>
-      <find>PARSE</find>
-      <find>parse</find>
-      <find>cur_web_noti</find>
       <find>knockkn</find>
       <find>send message</find>
       <find>tbtb</find>
@@ -143,7 +167,6 @@
       <find>pre</find>
       <find>$feedback</find>
       <find>pre-check</find>
-      <find>feedback</find>
       <find>query_text</find>
       <find>pre_c</find>
       <find>pre_chec</find>
@@ -152,6 +175,11 @@
       <find>highlight</find>
       <find>highlightSelectedElements</find>
       <find>extr</find>
+      <find>extract</find>
+      <find>label2color</find>
+      <find>highlightLabel</find>
+      <find>feedback</find>
+      <find>webview-note</find>
     </findStrings>
     <replaceStrings>
       <replace>height()</replace>
@@ -167,7 +195,6 @@
         <option value="$PROJECT_DIR$/assets/css/content-frame-internal.css" />
         <option value="$PROJECT_DIR$/app/contentScript/webView/contentFrame/contentFrame-extra.css" />
         <option value="$PROJECT_DIR$/app/contentScript/webView/widget.html" />
-        <option value="$PROJECT_DIR$/app/contentScript/webView/notification.html" />
         <option value="$PROJECT_DIR$/lib/popper/tooltip.js" />
         <option value="$PROJECT_DIR$/app/contentScript/webView/contentFrame/contentFrame.css" />
         <option value="$PROJECT_DIR$/manifest.json" />
@@ -176,9 +203,11 @@
         <option value="$PROJECT_DIR$/app/contentScript/webView/tooltip.js" />
         <option value="$PROJECT_DIR$/app/contentScript/webView/widget.js" />
         <option value="$PROJECT_DIR$/app/background.js" />
-        <option value="$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js" />
         <option value="$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/query.js" />
+        <option value="$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js" />
+        <option value="$PROJECT_DIR$/app/contentScript/webView/notification.html" />
         <option value="$PROJECT_DIR$/app/contentScript/webView/query.js" />
+        <option value="$PROJECT_DIR$/app/contentScript/webView/notification.js" />
       </list>
     </option>
   </component>
@@ -453,13 +482,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168362000" />
+    <option name="totallyTimeSpent" value="173127000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.175" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -804,13 +833,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/css/content-frame-internal.css" />
-    <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/contentScript/webView/tooltipHandler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -843,14 +865,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/manifest.json" />
-    <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1290">
-          <caret line="11" column="48" lean-forward="true" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/contentScript/webView/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
@@ -869,18 +883,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="148" column="7" lean-forward="true" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/query.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="107" column="25" lean-forward="false" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1225">
-          <caret line="161" column="0" lean-forward="true" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+        <state relative-caret-position="350">
+          <caret line="203" column="45" lean-forward="false" selection-start-line="203" selection-start-column="37" selection-end-line="203" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/contentScript/webView/tooltip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
-          <caret line="143" column="57" lean-forward="false" selection-start-line="143" selection-start-column="47" selection-end-line="143" selection-end-column="57" />
+        <state relative-caret-position="2225">
+          <caret line="132" column="27" lean-forward="false" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="27" />
           <folding>
             <element signature="e#8360#10273#0" expanded="false" />
             <marker date="1521132502557" expanded="true" signature="2458:2569" ph="..." />
@@ -897,6 +927,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/contentScript/webView/widget.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1455">
@@ -907,42 +948,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/notation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1500">
-          <caret line="87" column="5" lean-forward="true" selection-start-line="87" selection-start-column="5" selection-end-line="87" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/contentScript/WebDataExtractionNotation/query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="93" column="29" lean-forward="false" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/contentScript/webView/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="153" column="108" lean-forward="false" selection-start-line="153" selection-start-column="108" selection-end-line="153" selection-end-column="108" />
+        <state relative-caret-position="313">
+          <caret line="127" column="96" lean-forward="false" selection-start-line="127" selection-start-column="96" selection-end-line="127" selection-end-column="96" />
           <folding>
-            <marker date="1521144935410" expanded="true" signature="5119:5135" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="5177:5207" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="5216:5222" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="5800:5852" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="7837:7843" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="7843:7849" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="7849:7855" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="10571:10577" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="10577:10583" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="10583:10589" ph=" " />
-            <marker date="1521144935410" expanded="true" signature="10647:10684" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="17962:18061" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="18828:18927" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="19597:19678" ph="..." />
-            <marker date="1521144935410" expanded="true" signature="21101:21182" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="5119:5135" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="5177:5207" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="5216:5222" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="5800:5852" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="8004:8010" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="8010:8016" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="8016:8022" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="11290:11296" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="11296:11302" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="11302:11308" ph=" " />
+            <marker date="1521149650779" expanded="true" signature="11366:11403" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="18681:18780" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="19547:19646" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="20316:20397" ph="..." />
+            <marker date="1521149650779" expanded="true" signature="21820:21901" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/contentScript/webView/notification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="28" column="49" lean-forward="false" selection-start-line="28" selection-start-column="49" selection-end-line="28" selection-end-column="49" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1521149654619" expanded="true" signature="3683:3697" ph="..." />
+            <marker date="1521149654619" expanded="true" signature="4337:4351" ph="..." />
           </folding>
         </state>
       </provider>

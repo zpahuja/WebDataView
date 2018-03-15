@@ -123,8 +123,10 @@ $(document).ready(function() {
                                     else if (msg.question === "feedback"){
                                         let data = msg.data;
                                         let stored_query = data.output;
-                                        console.log("In Feedback!!!");
-                                        console.log(stored_query);
+                                        let k = (145+(stored_query.length-2)*25).toString() + 'px';
+                                        // console.log(ContentFrame.findElements('#webview-note'));
+                                        // ContentFrame.findElements('#webview-note').css('height', k);
+
                                         let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
                                         let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
                                         let noti_reject = ContentFrame.findElementInContentFrame('#note_reject', '#webview-note');
@@ -145,13 +147,19 @@ $(document).ready(function() {
                                             new_model = stored_query[index_pos].model_text;
                                             console.log("new_model!!!");
                                             for(let i = 0; i < new_model.length; i++){
-                                                console.log(new_model[i]);
-                                                console.log(typeof(new_model[i]));
+                                                cur_query = new_model[i].query;
+                                                cur_label = new_model[i].label;
                                                 let new_web_noti = new WebDataExtractionNotation(new_model[i]);
-                                                console.log(new_web_noti);
                                                 new_web_noti.extract();
-                                                console.log(new_web_noti.matchquery());
-                                                new_web_noti.notations['Price'].highlightSelectedElements();
+                                                let dom_list = new_web_noti.matchquery();
+                                                let tooltip_color = new_web_noti.label2color[cur_label];
+                                                console.log(tooltip_color);   //print color here
+                                                new_web_noti.notations[cur_label].applySelectedElements(tooltip_color);
+                                                for(let j = 0; j < dom_list.length; j++){
+                                                    data_to_push = {};  //dic label name ->
+                                                    data_to_push[cur_label] = dom_list[j];
+                                                    collected_data.push(data_to_push);
+                                                }
                                             }
                                             // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
                                             // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
