@@ -202,7 +202,7 @@ $(document).ready(function(){
                                 chrome.storage.local.get("value", function(items) {
                                     if (!chrome.runtime.error) {
                                         let array = items["value"];
-                                        let new_array = []
+                                        let new_array = [];
                                         for(let j = 0; j < array.length; j++){
                                             new_array.push(JSON.parse(array[j])[0]);
                                         }

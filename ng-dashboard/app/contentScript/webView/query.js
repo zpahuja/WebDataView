@@ -124,8 +124,8 @@ $(document).ready(function() {
                                         let data = msg.data;
                                         let stored_query = data.output;
                                         let k = (145+(stored_query.length-2)*25).toString() + 'px';
-                                        // console.log(ContentFrame.findElements('#webview-note'));
-                                        // ContentFrame.findElements('#webview-note').css('height', k);
+                                        // console.log( ContentFrame.findElementInContentFrame('#webview-note', '#webview-note'));
+                                        // ContentFrame.findElementInContentFrame('#webview-note', '#webview-note').css('height', k);
 
                                         let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
                                         let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
@@ -151,16 +151,17 @@ $(document).ready(function() {
                                                 cur_label = new_model[i].label;
                                                 let new_web_noti = new WebDataExtractionNotation(new_model[i]);
                                                 new_web_noti.extract();
-                                                let dom_list = new_web_noti.matchquery();
+                                                let dom_list = new_web_noti.matchquery()[cur_label];
                                                 let tooltip_color = new_web_noti.label2color[cur_label];
-                                                console.log(tooltip_color);   //print color here
                                                 new_web_noti.notations[cur_label].applySelectedElements(tooltip_color);
                                                 for(let j = 0; j < dom_list.length; j++){
+                                                    console.log("lol");
                                                     data_to_push = {};  //dic label name ->
                                                     data_to_push[cur_label] = dom_list[j];
                                                     collected_data.push(data_to_push);
                                                 }
                                             }
+                                            console.log(collected_data);
                                             // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
                                             // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
 
