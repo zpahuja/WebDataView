@@ -145,17 +145,22 @@ $(document).ready(function() {
                                         function dynamicEvent() {
                                             let index_pos = parseInt((this.id).slice(-1));
                                             new_model = stored_query[index_pos].model_text;
-                                            console.log("new_model!!!");
+                                            console.log(new_model);
+                                            chrome.storage.local.get("value", function(items) {
+                                                if (!chrome.runtime.error) {
+                                                    chrome.storage.local.set({'value': new_model});
+                                                }
+                                            });
                                             for(let i = 0; i < new_model.length; i++){
                                                 cur_query = new_model[i].query;
                                                 cur_label = new_model[i].label;
                                                 let new_web_noti = new WebDataExtractionNotation(new_model[i]);
                                                 new_web_noti.extract();
                                                 let dom_list = new_web_noti.matchquery()[cur_label];
+                                                // new_web_noti.changeLabelName();
                                                 let tooltip_color = new_web_noti.label2color[cur_label];
                                                 new_web_noti.notations[cur_label].applySelectedElements(tooltip_color);
                                                 for(let j = 0; j < dom_list.length; j++){
-                                                    console.log("lol");
                                                     data_to_push = {};  //dic label name ->
                                                     data_to_push[cur_label] = dom_list[j];
                                                     collected_data.push(data_to_push);
@@ -168,14 +173,12 @@ $(document).ready(function() {
                                         }
                                         ContentFrame.findElementInContentFrame('#note_result', '#webview-note').click(function(e) {
                                             e.preventDefault();
-                                            console.log("note_result");
                                             ContentFrame.findElementInContentFrame('#question', '#webview-note').css('display', 'none');
                                             for(i = 0; i < stored_query.length; i++) {
                                                 let li = document.createElement('li');
                                                 li.id = 'pop' + i;
                                                 li.innerHTML = '<li><b>' + stored_query[i].model_name + ': &nbsp;&nbsp;&nbsp;</b><button type="button" class="btn btn-success"  style="background-color: #f92672 !important;">populate</button></li>';
                                                 ContentFrame.findElementInContentFrame('#query_pair', '#webview-note').append(li);
-                                                console.log(stored_query[i].model_name);
                                                 li.onclick = dynamicEvent;
                                             }
 

@@ -67,6 +67,10 @@ class TestTooltip {
             '<label for="subscribeNews">Filter by Fontcolor</label>' +
             '<br><input type="checkbox" id="filter_backcolor" name="subscribe" value="0">'+
             '<label for="subscribeNews">Filter by Background-color</label>' +
+            '<br><input type="checkbox" id="filter_style" name="subscribe" value="0">'+
+            '<label for="subscribeNews">Filter by Font-style</label>' +
+            '<br><input type="checkbox" id="filter_weight" name="subscribe" value="0">'+
+            '<label for="subscribeNews">Filter by Font-weight</label>' +
             // '<br><input type="checkbox" id="filter_child" name="subscribe" value="0">' +
             // '<label for="subscribeNews">Remove Parent Element</label>' +
             // '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
@@ -129,7 +133,6 @@ class TestTooltip {
                 // });
                 let target_class = referenceElement.className;
                 cur_query.class = target_class;
-                console.log(cur_query);
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[target_class]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
@@ -217,9 +220,11 @@ class TestTooltip {
                 cur_query.css = {"fontSize": target_font};
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
+
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
                 fieldname_color[field_label] = tooltip_color;
                 let dom_elements = cur_query.execute();
+
                 let data_to_push = null;
                 for(let i = 0; i < dom_elements.length; i++){
                     data_to_push = {};  //dic label name ->
@@ -230,22 +235,18 @@ class TestTooltip {
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_fontsize");
-                cur_query.css = {"fontSize": null};
-                cur_query.removeSelectedElements();
+                delete cur_query.css["fontSize"];
+                cur_query.highlightSelectedElements(tooltip_color);
+                // cur_query.removeSelectedElements();
                 let new_collect = [];
                 let target_font = jQuery(referenceElement).css("font-size");
-                console.log(target_font);
                 for (let j=0; j < collected_data.length; j++) {
                     let kval = Object.values(collected_data[j])[0];
-                    console.log(kval.style.fontSize);
-
-                    if(kval.style.fontSize !== target_font){
+                    if(jQuery(kval).css("font-size") !== target_font){
                         new_collect.push(collected_data[j]);
                     }
                 }
                 collected_data = new_collect;
-                console.log("dsfasdfasdfasdf::::;");
-                console.log(collected_data);
             }
         });
         ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').click(function(e) {
@@ -253,16 +254,36 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_fontcolor");
-                let target_color = jQuery(referenceElement).css("color");
-                cur_query.css = {"color": target_color};
+                let target_fontcolor = jQuery(referenceElement).css("color");
+                cur_query.css = {"color": target_fontcolor};
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
                 fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                    collected_data.push(data_to_push);
+                }
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_fontcolor");
+                delete cur_query.css["color"];
+                cur_query.highlightSelectedElements(tooltip_color);
+                // cur_query.removeSelectedElements();
+                let new_collect = [];
+                let target_font = jQuery(referenceElement).css("color");
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).css("color") !== target_font){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
             }
         });
 
@@ -271,16 +292,113 @@ class TestTooltip {
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_backcolor");
-                let target_color = jQuery(referenceElement).css("background-color");
-                cur_query.css = {"background-color": target_color};
+                let target_backcolor = jQuery(referenceElement).css("background-color");
+                cur_query.css = {"background-color": target_backcolor};
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
                 cur_query.highlightSelectedElements(tooltip_color);
                 field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
                 fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                    collected_data.push(data_to_push);
+                }
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_backcolor");
+                delete cur_query.css["background-color"];
+                cur_query.highlightSelectedElements(tooltip_color);
+                // cur_query.removeSelectedElements();
+                let new_collect = [];
+                let target_font = jQuery(referenceElement).css("background-color");
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).css("background-color") !== target_font){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
+            }
+        });
+
+        ContentFrame.findElementInContentFrame('#filter_style', '#webview-tooltip').click(function(e) {
+            let cur = e.target;
+            if(cur.value === "0"){  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_style");
+                let target_style = jQuery(referenceElement).css("font-style");
+                cur_query.css = {"font-style": target_style};
+                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                cur_query.highlightSelectedElements(tooltip_color);
+                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                    collected_data.push(data_to_push);
+                }
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_style");
+                delete cur_query.css["font-style"];
+                cur_query.highlightSelectedElements(tooltip_color);
+                // cur_query.removeSelectedElements();
+                let new_collect = [];
+                let target_font = jQuery(referenceElement).css("font-style");
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).css("font-style") !== target_font){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
+            }
+        });
+
+        ContentFrame.findElementInContentFrame('#filter_weight', '#webview-tooltip').click(function(e) {
+            let cur = e.target;
+            if(cur.value === "0"){  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_weight");
+                let target_weight = jQuery(referenceElement).css("font-weight");
+                console.log(target_weight);
+                cur_query.css = {"font-weight": target_weight};
+                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                cur_query.highlightSelectedElements(tooltip_color);
+                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                    collected_data.push(data_to_push);
+                }
+            }
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_weight");
+                delete cur_query.css["font-weight"];
+                cur_query.highlightSelectedElements(tooltip_color);
+                // cur_query.removeSelectedElements();
+                let new_collect = [];
+                let target_font = jQuery(referenceElement).css("font-weight");
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(jQuery(kval).css("font-weight") !== target_font){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
             }
         });
 
@@ -1034,23 +1152,24 @@ appendLabel2Widget = function(labelName, labelColor) {
                     collected_data[i] = new_pair;
                 }
             }
+            if(input_label === "records"){return;}
+
             chrome.storage.local.get("value", function(items) {
-                if (!chrome.runtime.error) {
+                if (!chrome.runtime.error){
                     let array = items["value"];
                     let new_array = [];
                     for(let i = 0; i < array.length; i++){
-                        let cur_json = JSON.parse(array[i]);
+                        let cur_json = array[i];
+                        console.log(typeof(cur_json));
                         if(cur_json.label === label_name){
                             cur_web_noti.changeLabelName(label_name, input_label);
                             new_array.push(JSON.stringify(cur_web_noti.toJSON()))
                         }
                         else{
-                            new_array.push(JSON.stringify(cur_json))
+                            new_array.push(cur_json);
                         }
                     }
-                    // console.log(new_array);
                     chrome.storage.local.set({'value': new_array});
-                    console.log(JSON.parse(new_array[0])[0]);
                     let new_noti = new WebDataExtractionNotation(JSON.parse(new_array[0])[0]);
                     console.log(new_noti.matchquery());
                 }

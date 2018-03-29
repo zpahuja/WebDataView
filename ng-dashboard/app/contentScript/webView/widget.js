@@ -136,15 +136,16 @@ $(document).ready(function(){
                             mySet.clear();
                             console.log("Select_Apply");
                             cur_query.applySelectedElements(tooltip_color);
-
                             let n = {'label':field_label};
                             n['query'] = JSON.parse(cur_query.toJSON());
                             cur_web_noti = new WebDataExtractionNotation(n);
                             chrome.storage.local.get("value", function(items) {
                                 if (!chrome.runtime.error) {
                                     let array = items["value"];
-                                    array[array.length] = JSON.stringify(cur_web_noti.toJSON()[0]);
-                                    console.log(array);
+                                    // console.log(typeof(cur_web_noti.toJSON()[0])['query']);
+                                    let output = cur_web_noti.toJSON()[0];
+                                    output['query'] = JSON.parse((cur_web_noti.toJSON()[0])['query']);
+                                    array[array.length] = output;
                                     // array[array.length] = cur_web_noti.toJSON()[0];
                                     chrome.storage.local.set({'value': array});
                                 }
@@ -204,10 +205,23 @@ $(document).ready(function(){
                                         let array = items["value"];
                                         let new_array = [];
                                         for(let j = 0; j < array.length; j++){
-                                            new_array.push(JSON.parse(array[j])[0]);
+                                            if(typeof(array[j]) === 'string'){
+                                                let currentout = JSON.parse(array[j])[0]
+                                                currentout["query"] = JSON.parse(currentout["query"]);
+                                                new_array.push(currentout);
+                                            }
+                                            else{
+                                                new_array.push(JSON.parse(JSON.stringify(array[j])));
+                                            }
                                         }
                                         console.log(new_array);
                                         port_tb.postMessage({answer: "leave", domain_name: location.href, capa: new_array});
+                                        // chrome.storage.local.clear(function() {
+                                        //     let error = chrome.runtime.lastError;
+                                        //     if (error) {
+                                        //         console.error(error);
+                                        //     }
+                                        // });
                                     }
                                 });
                             }
