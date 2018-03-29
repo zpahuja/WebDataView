@@ -92,7 +92,7 @@
         html: false,
         placement: 'top',
         title: '',
-        template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+        template: '<div class="popper-tooltip" role="popper-tooltip"><div class="popper-tooltip-arrow"></div><div class="popper-tooltip-inner"></div></div>',
         trigger: 'hover focus',
         offset: 0
     };
@@ -101,35 +101,35 @@
         /**
          * Create a new Tooltip.js instance
          * @class Tooltip
-         * @param {HTMLElement} reference - The DOM node used as reference of the tooltip (it can be a jQuery element).
+         * @param {HTMLElement} reference - The DOM node used as reference of the popper-tooltip (it can be a jQuery element).
          * @param {Object} options
          * @param {String} options.placement=bottom
          *      Placement of the popper accepted values: `top(-start, -end), right(-start, -end), bottom(-start, -end),
          *      left(-start, -end)`
-         * @param {HTMLElement|String|false} options.container=false - Append the tooltip to a specific element.
+         * @param {HTMLElement|String|false} options.container=false - Append the popper-tooltip to a specific element.
          * @param {Number|Object} options.delay=0
-         *      Delay showing and hiding the tooltip (ms) - does not apply to manual trigger type.
+         *      Delay showing and hiding the popper-tooltip (ms) - does not apply to manual trigger type.
          *      If a number is supplied, delay is applied to both hide/show.
          *      Object structure is: `{ show: 500, hide: 100 }`
-         * @param {Boolean} options.html=false - Insert HTML into the tooltip. If false, the content will inserted with `innerText`.
+         * @param {Boolean} options.html=false - Insert HTML into the popper-tooltip. If false, the content will inserted with `innerText`.
          * @param {String|PlacementFunction} options.placement='top' - One of the allowed placements, or a function returning one of them.
-         * @param {String} [options.template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>']
-         *      Base HTML to used when creating the tooltip.
-         *      The tooltip's `title` will be injected into the `.tooltip-inner` or `.tooltip__inner`.
-         *      `.tooltip-arrow` or `.tooltip__arrow` will become the tooltip's arrow.
-         *      The outermost wrapper element should have the `.tooltip` class.
+         * @param {String} [options.template='<div class="popper-tooltip" role="popper-tooltip"><div class="popper-tooltip-arrow"></div><div class="popper-tooltip-inner"></div></div>']
+         *      Base HTML to used when creating the popper-tooltip.
+         *      The popper-tooltip's `title` will be injected into the `.popper-tooltip-inner` or `.tooltip__inner`.
+         *      `.popper-tooltip-arrow` or `.tooltip__arrow` will become the popper-tooltip's arrow.
+         *      The outermost wrapper element should have the `.popper-tooltip` class.
          * @param {String|HTMLElement|TitleFunction} options.title='' - Default title value if `title` attribute isn't present.
          * @param {String} [options.trigger='hover focus']
-         *      How tooltip is triggered - click, hover, focus, manual.
+         *      How popper-tooltip is triggered - click, hover, focus, manual.
          *      You may pass multiple triggers; separate them with a space. `manual` cannot be combined with any other trigger.
          * @param {HTMLElement} options.boundariesElement
-         *      The element used as boundaries for the tooltip. For more information refer to Popper.js'
+         *      The element used as boundaries for the popper-tooltip. For more information refer to Popper.js'
          *      [boundariesElement docs](https://popper.js.org/popper-documentation.html)
-         * @param {Number|String} options.offset=0 - Offset of the tooltip relative to its reference. For more information refer to Popper.js'
+         * @param {Number|String} options.offset=0 - Offset of the popper-tooltip relative to its reference. For more information refer to Popper.js'
          *      [offset docs](https://popper.js.org/popper-documentation.html)
          * @param {Object} options.popperOptions={} - Popper options, will be passed directly to popper instance. For more information refer to Popper.js'
          *      [options docs](https://popper.js.org/popper-documentation.html)
-         * @return {Object} instance - The generated tooltip instance
+         * @return {Object} instance - The generated popper-tooltip instance
          */
         function Tooltip(reference, options) {
             classCallCheck(this, Tooltip);
@@ -162,7 +162,7 @@
         //
 
         /**
-         * Reveals an element's tooltip. This is considered a "manual" triggering of the tooltip.
+         * Reveals an element's popper-tooltip. This is considered a "manual" triggering of the popper-tooltip.
          * Tooltips with zero-length titles are never displayed.
          * @method Tooltip#show
          * @memberof Tooltip
@@ -170,21 +170,21 @@
 
 
         /**
-         * Hides an elementâ€™s tooltip. This is considered a â€œmanualâ€ triggering of the tooltip.
+         * Hides an elementâ€™s popper-tooltip. This is considered a â€œmanualâ€ triggering of the popper-tooltip.
          * @method Tooltip#hide
          * @memberof Tooltip
          */
 
 
         /**
-         * Hides and destroys an elementâ€™s tooltip.
+         * Hides and destroys an elementâ€™s popper-tooltip.
          * @method Tooltip#dispose
          * @memberof Tooltip
          */
 
 
         /**
-         * Toggles an elementâ€™s tooltip. This is considered a â€œmanualâ€ triggering of the tooltip.
+         * Toggles an elementâ€™s popper-tooltip. This is considered a â€œmanualâ€ triggering of the popper-tooltip.
          * @method Tooltip#toggle
          * @memberof Tooltip
          */
@@ -204,7 +204,7 @@
 
 
             /**
-             * Creates a new tooltip node
+             * Creates a new popper-tooltip node
              * @memberof Tooltip
              * @private
              * @param {HTMLElement} reference
@@ -214,18 +214,18 @@
              * @return {HTMLelement} tooltipNode
              */
             value: function _create(reference, template, title, allowHtml) {
-                // create tooltip element
+                // create popper-tooltip element
                 var tooltipGenerator = window.document.createElement('div');
                 tooltipGenerator.innerHTML = template.trim();
                 var tooltipNode = tooltipGenerator.childNodes[0];
 
-                // add unique ID to our tooltip (needed for accessibility reasons)
+                // add unique ID to our popper-tooltip (needed for accessibility reasons)
                 tooltipNode.id = 'tooltip_' + Math.random().toString(36).substr(2, 10);
 
                 // set initial `aria-hidden` state to `false` (it's visible!)
                 tooltipNode.setAttribute('aria-hidden', 'false');
 
-                // add title to tooltip
+                // add title to popper-tooltip
                 var titleNode = tooltipGenerator.querySelector(this.innerSelector);
                 if (title.nodeType === 1) {
                     // if title is a node, append it only if allowHtml is true
@@ -239,7 +239,7 @@
                     allowHtml ? titleNode.innerHTML = title : titleNode.innerText = title;
                 }
 
-                // return the generated tooltip node
+                // return the generated popper-tooltip node
                 return tooltipNode;
             }
         }, {
@@ -262,18 +262,18 @@
                 // get title
                 var title = reference.getAttribute('title') || options.title;
 
-                // don't show tooltip if no title is defined
+                // don't show popper-tooltip if no title is defined
                 if (!title) {
                     return this;
                 }
 
-                // create tooltip node
+                // create popper-tooltip node
                 var tooltipNode = this._create(reference, options.template, title, options.html);
 
                 // Add `aria-describedby` to our reference element for accessibility reasons
                 reference.setAttribute('aria-describedby', tooltipNode.id);
 
-                // append tooltip to container
+                // append popper-tooltip to container
                 var container = this._findContainer(options.container, reference);
 
                 this._append(tooltipNode, container);
@@ -356,10 +356,10 @@
             }
 
             /**
-             * Append tooltip to container
+             * Append popper-tooltip to container
              * @memberof Tooltip
              * @private
-             * @param {HTMLElement} tooltip
+             * @param {HTMLElement} popper-tooltip
              * @param {HTMLElement|String|false} container
              */
 
@@ -393,7 +393,7 @@
                     }
                 });
 
-                // schedule show tooltip
+                // schedule show popper-tooltip
                 directEvents.forEach(function (event) {
                     var func = function func(evt) {
                         if (_this2._isOpen === true) {
@@ -406,7 +406,7 @@
                     reference.addEventListener(event, func);
                 });
 
-                // schedule hide tooltip
+                // schedule hide popper-tooltip
                 oppositeEvents.forEach(function (event) {
                     var func = function func(evt) {
                         if (evt.usedByTooltip === true) {
@@ -445,11 +445,11 @@
                     }
 
                     // if we are hiding because of a mouseleave, we must check that the new
-                    // reference isn't the tooltip, because in this case we don't want to hide it
+                    // reference isn't the popper-tooltip, because in this case we don't want to hide it
                     if (evt.type === 'mouseleave') {
                         var isSet = _this4._setTooltipNodeEvent(evt, reference, delay, options);
 
-                        // if we set the new event, don't hide the tooltip yet
+                        // if we set the new event, don't hide the popper-tooltip yet
                         // the new event will take care to hide it if necessary
                         if (isSet) {
                             return;
@@ -467,7 +467,7 @@
      * Placement function, its context is the Tooltip instance.
      * @memberof Tooltip
      * @callback PlacementFunction
-     * @param {HTMLElement} tooltip - tooltip DOM node.
+     * @param {HTMLElement} popper-tooltip - popper-tooltip DOM node.
      * @param {HTMLElement} reference - reference DOM node.
      * @return {String} placement - One of the allowed placement options.
      */
@@ -503,8 +503,8 @@
             }
         };
 
-        this.arrowSelector = '.tooltip-arrow, .tooltip__arrow';
-        this.innerSelector = '.tooltip-inner, .tooltip__inner';
+        this.arrowSelector = '.popper-tooltip-arrow, .tooltip__arrow';
+        this.innerSelector = '.popper-tooltip-inner, .tooltip__inner';
         this._events = [];
 
         this._setTooltipNodeEvent = function (evt, reference, delay, options) {
@@ -518,13 +518,13 @@
 
                 // If the new reference is not the reference element
                 if (!reference.contains(relatedreference2)) {
-                    // Schedule to hide tooltip
+                    // Schedule to hide popper-tooltip
                     _this5._scheduleHide(reference, options.delay, options, evt2);
                 }
             };
 
             if (_this5._tooltipNode.contains(relatedreference)) {
-                // listen to mouseleave on the tooltip element to be able to hide the tooltip
+                // listen to mouseleave on the popper-tooltip element to be able to hide the popper-tooltip
                 _this5._tooltipNode.addEventListener(evt.type, callback);
                 return true;
             }
@@ -536,4 +536,4 @@
     return Tooltip;
 
 })));
-//# sourceMappingURL=tooltip.js.map
+//# sourceMappingURL=popper-tooltip.js.map

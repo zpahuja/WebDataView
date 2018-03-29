@@ -40,7 +40,8 @@ class TestTooltip {
             title: '<div id="webview-popper-container"></div>',
             trigger: "click",
             placement: "auto-top",
-            html: true
+            html: true,
+            container: 'body',
         });
         self.instance.show();
         let cf = new ContentFrame({

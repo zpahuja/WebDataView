@@ -1,4 +1,5 @@
-iframe.periphery-default-iframe, tooltip{
+.popper-tooltip{
+    all: initial;
     -webkit-animation-delay: initial;
     -webkit-animation-direction: initial;
     -webkit-animation-duration: initial;
