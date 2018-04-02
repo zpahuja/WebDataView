@@ -176,15 +176,11 @@ chrome.runtime.onConnect.addListener(function(port) {
             socket.emit('send message by desc', {username: msg.username, message: msg.message, name:msg.name, domain_name: msg.domain_name});
             // port.postMessage({question: "I don't get it."});
         }
-        // else if (msg.answer == "leave"){
-        //     console.log("leave reached!!!");
-        //     console.log("in backgroundjs: " + msg.domain_name);
-        //     // socket.emit('leave', {username: msg.username, domain_name: msg.domain_name});
-        //     console.log(msg.capa);
-        //     console.log(typeof(msg.capa));
-        //     socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
-        //     // port.postMessage({question: "I don't get it."});
-        // }
+        else if (msg.answer == "leave"){
+            console.log("leave reached!!!");
+            console.log(msg.capa);
+            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
+        }
         else if (msg.answer == "pre check"){
             console.log("Pre check point!!!");   // Send domain to server and return stored result!
             socket.emit('pre check', {domain_name: msg.domain_name});
@@ -201,7 +197,9 @@ chrome.runtime.onConnect.addListener(function(port) {
 
     socket.on('feedback', function(data) {
         console.log(data);
+        console.log(port.name);
         port.postMessage({question: "feedback", data: data});
+        console.log(data);
     });
 
     socket.on('tooltip_feedback', function(data) {
@@ -214,7 +212,6 @@ chrome.runtime.onConnect.addListener(function(port) {
 
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "table view"){
-
             /*
              Code to create a popup window for table view, it needs to be run on background.js,
              so web view may need to send a message to background.js and then background.js
@@ -273,11 +270,11 @@ chrome.runtime.onConnect.addListener(function(port) {
                 });
             });
         }
-        else if (msg.answer == "leave"){
-            console.log("leave reached!!!");
-            console.log(msg.capa);
-            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
-        }
+        // else if (msg.answer == "leave"){
+        //     console.log("leave reached!!!");
+        //     console.log(msg.capa);
+        //     socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
+        // }
     });
 });
 

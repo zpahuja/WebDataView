@@ -32,8 +32,8 @@ let tooltip_color =  null;
 let cur_query = new Query({});
 let cur_web_noti = null;
 let port = chrome.runtime.connect({name: "knockknock"});
+// port.postMessage({answer: "pre check", domain_name: location.href});
 setTimeout(function(){port.postMessage({answer: "pre check", domain_name: location.href});}, 1000);
-
 class TestTooltip {
     constructor(referenceElement, color) {
         self.instance = new Tooltip(referenceElement, {
@@ -100,6 +100,73 @@ class TestTooltip {
                 }
             });
         };
+
+        port.onMessage.addListener(function(msg) {
+            if (msg.question === "feedback"){
+                let data = msg.data;
+                let stored_query = data.output;
+                let k = (145+(stored_query.length-2)*25).toString() + 'px';
+                // console.log( ContentFrame.findElementInContentFrame('#webview-note', '#webview-note'));
+                // ContentFrame.findElementInContentFrame('#webview-note', '#webview-note').css('height', k);
+
+                let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
+                let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
+                let noti_reject = ContentFrame.findElementInContentFrame('#note_reject', '#webview-note');
+                let question_html;
+                if(data.output.length !== 0){
+                    question_html = $.parseHTML('<p id="question"><b>There are existing models with the current url, would you like to see it?</b></p>');
+                    noti_question.replaceWith(question_html);
+                    noti_reject.css('visibility','hidden');
+                    let accept_html = $.parseHTML(' <button type="button" class="btn btn-success" id="note_result">Show Me</button>&nbsp;&nbsp;&nbsp;');
+                    noti_accept.replaceWith(accept_html);
+                }
+                else{
+                    question_html = $.parseHTML('<p id="question"><b>There is no model, please write your own.Would you like to get notification in the future?</b></p>');
+                    noti_question.replaceWith(question_html);
+                }
+                function dynamicEvent() {
+                    let index_pos = parseInt((this.id).slice(-1));
+                    new_model = stored_query[index_pos].model_text;
+                    console.log(new_model);
+                    chrome.storage.local.get("value", function(items) {
+                        if (!chrome.runtime.error) {
+                            chrome.storage.local.set({'value': new_model});
+                        }
+                    });
+                    for(let i = 0; i < new_model.length; i++){
+                        cur_query = new_model[i].query;   //query text
+                        cur_label = new_model[i].label;   //query labels
+                        let new_web_noti = new WebDataExtractionNotation(new_model[i]);
+                        new_web_noti.extract();
+                        let dom_list = new_web_noti.matchquery()[cur_label];
+                        // new_web_noti.changeLabelName();
+                        let tooltip_color = new_web_noti.label2color[cur_label];
+                        new_web_noti.notations[cur_label].applySelectedElements(tooltip_color);
+                        for(let j = 0; j < dom_list.length; j++){
+                            data_to_push = {};  //dic label name ->
+                            data_to_push[cur_label] = dom_list[j];
+                            collected_data.push(data_to_push);
+                        }
+                    }
+                    console.log(collected_data);
+                    // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
+                    // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
+
+                }
+                ContentFrame.findElementInContentFrame('#note_result', '#webview-note').click(function(e) {
+                    e.preventDefault();
+                    ContentFrame.findElementInContentFrame('#question', '#webview-note').css('display', 'none');
+                    for(i = 0; i < stored_query.length; i++) {
+                        let li = document.createElement('li');
+                        li.id = 'pop' + i;
+                        li.innerHTML = '<li><b>' + stored_query[i].model_name + ': &nbsp;&nbsp;&nbsp;</b><button type="button" class="btn btn-success"  style="background-color: #f92672 !important;">populate</button></li>';
+                        ContentFrame.findElementInContentFrame('#query_pair', '#webview-note').append(li);
+                        li.onclick = dynamicEvent;
+                    }
+
+                });
+            }
+        });
 
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
             e.preventDefault();
@@ -1034,7 +1101,7 @@ function rgb2hex(rgb){
         ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
-appendLabel2Widget = function(labelName, labelColor) {
+ appendLabel2Widget = function(labelName, labelColor) {
     labels_list.push(labelName);
     let labelId = labelColor.substring(4, labelColor.length - 1).replace(',','-').replace(',','-');
     ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').append('' +
@@ -1084,6 +1151,7 @@ appendLabel2Widget = function(labelName, labelColor) {
             '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete">Delete</button>'+
             '<button style="display: inline-block" type="button" class="btn btn-info" id="label_change">Change</button><br>' +
             '<button style="display: inline-block" type="button" class="btn btn-danger" id="label_close">Close</i></button>' +
+            '<button style="display: inline-block" type="button" class="btn btn-success" id="label_records">Records</i></button>' +
             '</div>'+
             '</div>');
 
@@ -1131,6 +1199,27 @@ appendLabel2Widget = function(labelName, labelColor) {
             e.preventDefault();
             $('#'+labelId).remove();
         });
+        let records_action = ContentFrame.findElementInContentFrame('#label_records', '#'+labelId);
+        records_action.click(function(e) {
+            e.preventDefault();
+            let input_label = "records";
+            let old = current.target.innerHTML;
+            let first = old.substring(0, old.lastIndexOf(">")+1);
+            current.target.innerHTML = first + input_label;
+
+            for(i = 0; i < labels_list.length; i++){
+                if(labels_list[i] === label_name){
+                    labels_list[i] = input_label;
+                }
+            }
+            for(i = 0; i < collected_data.length; i++){
+                if(Object.keys(collected_data[i])[0] === label_name){
+                    let new_pair = {};
+                    new_pair[input_label] = Object.values(collected_data[i])[0];
+                    collected_data[i] = new_pair;
+                }
+            }
+        });
 
         let change_action = ContentFrame.findElementInContentFrame('#label_change','#'+labelId);
         change_action.click(function(e) {
@@ -1153,7 +1242,7 @@ appendLabel2Widget = function(labelName, labelColor) {
                     collected_data[i] = new_pair;
                 }
             }
-            if(input_label === "records"){return;}
+            // if(input_label === "records"){return;}
 
             chrome.storage.local.get("value", function(items) {
                 if (!chrome.runtime.error){
@@ -1161,7 +1250,6 @@ appendLabel2Widget = function(labelName, labelColor) {
                     let new_array = [];
                     for(let i = 0; i < array.length; i++){
                         let cur_json = array[i];
-                        console.log(typeof(cur_json));
                         if(cur_json.label === label_name){
                             cur_web_noti.changeLabelName(label_name, input_label);
                             new_array.push(JSON.stringify(cur_web_noti.toJSON()))

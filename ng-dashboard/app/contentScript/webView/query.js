@@ -25,6 +25,7 @@
 let web_data_view_query = document.createElement('div');
 web_data_view_query.id = 'webdataview-floating-query';
 document.body.appendChild(web_data_view_query);
+// let port = chrome.runtime.connect({name: "query"});
 
 let cfq = new ContentFrame({
     'id':'webview-query',
@@ -35,7 +36,7 @@ let cfq = new ContentFrame({
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
 });
-
+let show_me_flag = false;
 let cfq_iframe = cfq.body;
 // let port = chrome.runtime.connect({name: "knockknock"});
 
@@ -131,7 +132,7 @@ $(document).ready(function() {
                                         let noti_accept = ContentFrame.findElementInContentFrame('#note_accept', '#webview-note');
                                         let noti_reject = ContentFrame.findElementInContentFrame('#note_reject', '#webview-note');
                                         let question_html;
-                                        if(data.output.length !== 0 && notification_flag){
+                                        if(data.output.length !== 0){
                                             question_html = $.parseHTML('<p id="question"><b>There are existing models with the current url, would you like to see it?</b></p>');
                                             noti_question.replaceWith(question_html);
                                             noti_reject.css('visibility','hidden');
@@ -145,12 +146,12 @@ $(document).ready(function() {
                                         function dynamicEvent() {
                                             let index_pos = parseInt((this.id).slice(-1));
                                             new_model = stored_query[index_pos].model_text;
-                                            console.log(new_model);
                                             chrome.storage.local.get("value", function(items) {
                                                 if (!chrome.runtime.error) {
                                                     chrome.storage.local.set({'value': new_model});
                                                 }
                                             });
+
                                             for(let i = 0; i < new_model.length; i++){
                                                 cur_query = new_model[i].query;
                                                 cur_label = new_model[i].label;
@@ -173,6 +174,10 @@ $(document).ready(function() {
                                         }
                                         ContentFrame.findElementInContentFrame('#note_result', '#webview-note').click(function(e) {
                                             e.preventDefault();
+                                            if(show_me_flag === false){
+                                                show_me_flag = true;
+                                            }
+                                            else{return;}
                                             ContentFrame.findElementInContentFrame('#question', '#webview-note').css('display', 'none');
                                             for(i = 0; i < stored_query.length; i++) {
                                                 let li = document.createElement('li');
