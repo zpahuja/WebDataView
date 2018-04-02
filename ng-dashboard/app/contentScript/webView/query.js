@@ -151,7 +151,6 @@ $(document).ready(function() {
                                                     chrome.storage.local.set({'value': new_model});
                                                 }
                                             });
-
                                             for(let i = 0; i < new_model.length; i++){
                                                 cur_query = new_model[i].query;
                                                 cur_label = new_model[i].label;

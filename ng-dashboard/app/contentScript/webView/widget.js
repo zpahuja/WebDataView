@@ -206,7 +206,7 @@ $(document).ready(function(){
                                         let new_array = [];
                                         for(let j = 0; j < array.length; j++){
                                             if(typeof(array[j]) === 'string'){
-                                                let currentout = JSON.parse(array[j])[0]
+                                                let currentout = JSON.parse(array[j])[0];
                                                 currentout["query"] = JSON.parse(currentout["query"]);
                                                 new_array.push(currentout);
                                             }

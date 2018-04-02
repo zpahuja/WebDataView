@@ -1219,6 +1219,26 @@ function rgb2hex(rgb){
                     collected_data[i] = new_pair;
                 }
             }
+
+            chrome.storage.local.get("value", function(items) {
+                if (!chrome.runtime.error){
+                    let array = items["value"];
+                    let new_array = [];
+                    for(let i = 0; i < array.length; i++){
+                        let cur_json = array[i];
+                        if(cur_json.label === label_name){
+                            cur_web_noti.changeLabelName(label_name, input_label);
+                            new_array.push(JSON.stringify(cur_web_noti.toJSON()))
+                        }
+                        else{
+                            new_array.push(cur_json);
+                        }
+                    }
+                    chrome.storage.local.set({'value': new_array});
+                    let new_noti = new WebDataExtractionNotation(JSON.parse(new_array[0])[0]);
+                    console.log(new_noti.matchquery());
+                }
+            });
         });
 
         let change_action = ContentFrame.findElementInContentFrame('#label_change','#'+labelId);
