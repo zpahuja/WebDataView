@@ -166,6 +166,12 @@ class TestTooltip {
 
                 });
             }
+            else if(msg.question === "no_connection"){
+                let noti_question = ContentFrame.findElementInContentFrame('#question', '#webview-note');
+                let question_html;
+                question_html = $.parseHTML('<p id="question"><b>There is NO connection to server!</b></p>');
+                noti_question.replaceWith(question_html);
+            }
         });
 
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
@@ -1202,6 +1208,10 @@ function rgb2hex(rgb){
         let records_action = ContentFrame.findElementInContentFrame('#label_records', '#'+labelId);
         records_action.click(function(e) {
             e.preventDefault();
+
+            records_html = $.parseHTML('<input type="text" name="searchTxt" id="searchTxt" maxlength="10" value="records" />');
+            noti_records = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
+            noti_records.replaceWith(records_html);
             let input_label = "records";
             let old = current.target.innerHTML;
             let first = old.substring(0, old.lastIndexOf(">")+1);
