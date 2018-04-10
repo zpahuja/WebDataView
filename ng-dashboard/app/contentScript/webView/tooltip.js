@@ -49,10 +49,10 @@ class TestTooltip {
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css', 'lib/bootstrap/css/bootstrap.3.3.7.min.css'],
             'js': ['app/contentScript/webView/tooltipHandler.js'],
-            'inlineCss':  {"width": "225px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
+            'inlineCss':  {"width": "195px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
     });
         let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
-            '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
+            // '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
             '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
             '<i class="fa fa-link fa-fw-lg" id="web-view-merge"></i>' +
             '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>' +
@@ -84,13 +84,6 @@ class TestTooltip {
             '</div>');
         cf.body.append(tooltip_html);
 
-        // chrome.storage.sync.get("value", function(items) {
-        //     if (!chrome.runtime.error) {
-        //         let array = items["value"];
-        //         console.log(array);
-        //         port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
-        //     }
-        // });
         window.onbeforeunload = function(e) {
             e.preventDefault();
             chrome.storage.sync.get("value", function(items) {
@@ -187,6 +180,43 @@ class TestTooltip {
 
             }
         });
+        // function helper(e, referenceElement, set_property, css_property){
+        //     let cur = e.target;
+        //     if(cur.value === "0"){  //Add model to collection
+        //         cur.value = "1";
+        //         mySet.add(set_property);
+        //         let target = jQuery(referenceElement).css(css_property);
+        //         cur_query.css = {set_property: target};
+        //         tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+        //         cur_query.highlightSelectedElements(tooltip_color);
+        //         field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+        //         fieldname_color[field_label] = tooltip_color;
+        //         let dom_elements = cur_query.execute();
+        //
+        //         let data_to_push = null;
+        //         for(let i = 0; i < dom_elements.length; i++){
+        //             data_to_push = {};  //dic label name ->
+        //             data_to_push[field_label] = dom_elements[i];
+        //             collected_data.push(data_to_push);
+        //         }
+        //     }
+        //     else{  //Take model off collection
+        //         cur.value = "0";
+        //         mySet.delete(set_property);
+        //         delete cur_query.css[css_property];
+        //         cur_query.highlightSelectedElements(tooltip_color);
+        //         // cur_query.removeSelectedElements();
+        //         let new_collect = [];
+        //         let target_font = jQuery(referenceElement).css(css_property);
+        //         for (let j=0; j < collected_data.length; j++) {
+        //             let kval = Object.values(collected_data[j])[0];
+        //             if(jQuery(kval).css(css_property) !== target_font){
+        //                 new_collect.push(collected_data[j]);
+        //             }
+        //         }
+        //         collected_data = new_collect;
+        //     }
+        // }
 
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
@@ -198,13 +228,6 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_class");
 
-                // chrome.storage.sync.get("value", function(items) {
-                //     if (!chrome.runtime.error) {
-                //         let array = items["value"];
-                //         array[array.length] = "filter_class";
-                //         chrome.storage.sync.set({'value': array});
-                //     }
-                // });
                 let target_class = referenceElement.className;
                 cur_query.class = target_class;
                 tooltip_color = "rgb" + COLORS[class_to_color_idx[target_class]]; // classname to color
@@ -218,10 +241,8 @@ class TestTooltip {
                     data_to_push[field_label] = dom_elements[i];
                     collected_data.push(data_to_push);
                 }
-
-                // console.log(n.toJSON());
-                // console.log(n.matchquery()['label_name']);
             }
+
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_class");
@@ -264,8 +285,8 @@ class TestTooltip {
                     data_to_push[field_label] = dom_elements[i];
                     collected_data.push(data_to_push);
                 }
-
             }
+
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_id");
@@ -282,10 +303,10 @@ class TestTooltip {
                 collected_data = new_collect;
                 console.log(collected_data.length);
             }
-
         });
 
         ContentFrame.findElementInContentFrame('#filter_fontsize', '#webview-tooltip').click(function(e) {
+            // helper(e, referenceElement, "filter_fontsize", "font-size");
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -324,6 +345,7 @@ class TestTooltip {
             }
         });
         ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').click(function(e) {
+            // helper(e, referenceElement, "filter_fontcolor", "color");
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -476,256 +498,9 @@ class TestTooltip {
             }
         });
 
-        // ContentFrame.findElementInContentFrame('#filter_left', '#webview-tooltip').click(function(e) {
-        //
-        //     let cur = e.target;
-        //     if(cur.value === "0"){  //Add model to collection
-        //         cur.value = "1";
-        //         mySet.add("filter_left");
-        //
-        //         chrome.storage.sync.get("value", function(items) {
-        //             if (!chrome.runtime.error) {
-        //                 let array = items["value"];
-        //                 array[array.length] = "filter_left";
-        //                 chrome.storage.sync.set({'value': array});
-        //             }
-        //         });
-        //
-        //         let target_left = jQuery(referenceElement).offset().left;
-        //         if(cap_counter>= 1){ // has other models
-        //             let new_collect = [];
-        //             for (let j=0; j < collected_data.length; j++) {
-        //                 let kval = Object.values(collected_data[j])[0];
-        //                 if(jQuery(kval).offset().left >= target_left * 0.995 && jQuery(kval).offset().left <= target_left * 1.005){
-        //                     new_collect.push(collected_data[j]);
-        //                 }
-        //                 else{
-        //                     kval.style.outline = '0px';
-        //                 }
-        //             }
-        //             collected_data = new_collect;
-        //         }
-        //         else{ // first models
-        //             let similar_nodes = document.getElementsByTagName("*");
-        //             for (let i = similar_nodes.length; i--;) {
-        //                 if(jQuery(similar_nodes[i]).offset().left >= target_left * 0.995 && jQuery(similar_nodes[i]).offset().left <= target_left * 1.005){
-        //                     let unique = true;
-        //                     for (let j=0; j < collected_data.length; j++) {
-        //                         let kval = Object.values(collected_data[j])[0];
-        //                         if(kval === similar_nodes[i]){
-        //                             unique = false;
-        //                         }
-        //                     }
-        //                     if(unique) {
-        //                         helper(referenceElement.className, similar_nodes[i]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         cap_counter = cap_counter + 1;
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete("filter_left");
-        //         let new_collect = [];
-        //         let target_left = jQuery(referenceElement).offset().left;
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(jQuery(kval).offset().left >= target_left * 0.99 && jQuery(kval).offset().left <= target_left * 1.01){
-        //                 kval.style.outline = '0px';
-        //             }
-        //             else{
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //         }
-        //         cap_counter = cap_counter - 1;
-        //         collected_data = new_collect;
-        //     }
-        // });
-        // ContentFrame.findElementInContentFrame('#filter_child', '#webview-tooltip').click(function(e) {
-        //     let cur = e.target;
-        //     if(cur.value === "0"){  //Add model to collection
-        //         parent_collected = [];
-        //         cur.value = "1";
-        //         mySet.add("filter_child");
-        //
-        //         chrome.storage.sync.get("value", function(items) {
-        //             if (!chrome.runtime.error) {
-        //                 let array = items["value"];
-        //                 array[array.length] = "filter_child";
-        //                 chrome.storage.sync.set({'value': array});
-        //             }
-        //         });
-        //
-        //         let new_collect = [];
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(jQuery(kval).children().length === 0){  //Has no children
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //             else{
-        //                 kval.style.outline = '0px';
-        //                 parent_collected.push(collected_data[j]);
-        //             }
-        //         }
-        //         collected_data = new_collect;
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete("filter_child");
-        //         for (let j=0; j < parent_collected.length; j++) {
-        //             let kval = Object.values(parent_collected[j])[0];
-        //             let tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-        //             let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-        //             let data_to_push = {};  //dic label name ->
-        //             data_to_push[field_label] = kval;
-        //             collected_data.push(data_to_push);
-        //             kval.style.outline = '3px dotted ' + tooltip_color;
-        //         }
-        //         // console.log(collected_data.length);
-        //     }
-        // });
-        // ContentFrame.findElementInContentFrame('#filter_height', '#webview-tooltip').click(function(e) {
-        //
-        //     let cur = e.target;
-        //     if(cur.value === "0"){  //Add model to collection
-        //         cur.value = "1";
-        //         mySet.add("filter_height");
-        //
-        //         chrome.storage.sync.get("value", function(items) {
-        //             if (!chrome.runtime.error) {
-        //                 let array = items["value"];
-        //                 array[array.length] = "filter_height";
-        //                 chrome.storage.sync.set({'value': array});
-        //             }
-        //         });
-        //
-        //         let target_height = jQuery(referenceElement).height();
-        //         if(cap_counter>= 1){ // has other models
-        //             let new_collect = [];
-        //             for (let j=0; j < collected_data.length; j++) {
-        //                 let kval = Object.values(collected_data[j])[0];
-        //                 if(jQuery(kval).height() === target_height){
-        //                     new_collect.push(collected_data[j]);
-        //                 }
-        //                 else{
-        //                     kval.style.outline = '0px';
-        //                 }
-        //             }
-        //             collected_data = new_collect;
-        //         }
-        //         else{ // first models
-        //             let similar_nodes = document.getElementsByTagName("*");
-        //             for (let i = similar_nodes.length; i--;) {
-        //                 if(jQuery(similar_nodes[i]).height() === target_height){
-        //                     let unique = true;
-        //                     for (let j=0; j < collected_data.length; j++) {
-        //                         let kval = Object.values(collected_data[j])[0];
-        //                         if(kval === similar_nodes[i]){
-        //                             unique = false;
-        //                         }
-        //                     }
-        //                     if(unique) {
-        //                         helper(referenceElement.className, similar_nodes[i]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         cap_counter = cap_counter + 1;
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete("filter_height");
-        //         let new_collect = [];
-        //         let target_height = jQuery(referenceElement).height();
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(jQuery(kval).height() === target_height){
-        //                 kval.style.outline = '0px';
-        //             }
-        //             else{
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //         }
-        //         cap_counter = cap_counter - 1;
-        //         collected_data = new_collect;
-        //     }
-        // });
-        // ContentFrame.findElementInContentFrame('#filter_width', '#webview-tooltip').click(function(e) {
-        //
-        //     let cur = e.target;
-        //     if(cur.value === "0"){  //Add model to collection
-        //         cur.value = "1";
-        //         mySet.add("filter_width");
-        //
-        //         chrome.storage.sync.get("value", function(items) {
-        //             if (!chrome.runtime.error) {
-        //                 let array = items["value"];
-        //                 array[array.length] = "filter_width";
-        //                 console.log(array)
-        //                 chrome.storage.sync.set({'value': array});
-        //             }
-        //         });
-        //
-        //         let target_width = jQuery(referenceElement).width();
-        //         if(cap_counter>= 1){ // has other models
-        //             let new_collect = [];
-        //             for (let j=0; j < collected_data.length; j++) {
-        //                 let kval = Object.values(collected_data[j])[0];
-        //                 if(jQuery(kval).width() === target_width){
-        //                     new_collect.push(collected_data[j]);
-        //                 }
-        //                 else{
-        //                     kval.style.outline = '0px';
-        //                 }
-        //             }
-        //             collected_data = new_collect;
-        //         }
-        //         else{ // first models
-        //             let similar_nodes = document.getElementsByTagName("*");
-        //             for (let i = similar_nodes.length; i--;) {
-        //                 if(jQuery(similar_nodes[i]).width() === target_width){
-        //                     let unique = true;
-        //                     for (let j=0; j < collected_data.length; j++) {
-        //                         let kval = Object.values(collected_data[j])[0];
-        //                         if(kval === similar_nodes[i]){
-        //                             unique = false;
-        //                         }
-        //                     }
-        //                     if(unique) {
-        //                         helper(referenceElement.className, similar_nodes[i]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         cap_counter = cap_counter + 1;
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete("filter_width");
-        //         let new_collect = [];
-        //         let target_width = jQuery(referenceElement).width();
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(jQuery(kval).width() === target_width){
-        //                 kval.style.outline = '0px';
-        //             }
-        //             else{
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //         }
-        //         cap_counter = cap_counter - 1;
-        //         collected_data = new_collect;
-        //     }
-        // });
-
-
-        ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {
-
-        });
+        ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {});
         // delete selected nodes
         ContentFrame.findElementInContentFrame('#web-view-remove', '#webview-tooltip').click(function() {
-
         });
         // assign
         ContentFrame.findElementInContentFrame('#web-view-assign-label', '#webview-tooltip').click(function() {
@@ -776,21 +551,6 @@ class TestTooltip {
                     }
                 }
             });
-            /*
-             for (let i = 0; i < selected_nodes.length; i++) {
-             selected_nodes[i].style.outline = "none";
-             for (let j=0; j < collected_data.length; j++) {
-             let keys = Object.keys(collected_data[j]);
-             keys.forEach(function(key) {
-             if (collected_data[j][key] == selected_nodes[i]) {
-             delete collected_data[j][key];
-             }
-             });
-             }
-             }
-             selected_nodes = [];
-             self.instance.hide();
-             */
         });
     }
 
@@ -813,17 +573,6 @@ let class_to_color_idx = {};
 let TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
 let prev;
 document.addEventListener("click", selectionHandler);
-
-function helper(klassname, cur_node){
-    selected_nodes.push(cur_node);
-    let tooltip_color = "rgb" + COLORS[class_to_color_idx[klassname]]; // classname to color
-    let field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-    let data_to_push = {};  //dic label name ->
-    data_to_push[field_label] = cur_node;
-    fieldname_color[field_label] = tooltip_color;
-    collected_data.push(data_to_push);
-    cur_node.style.outline = '3px dotted ' + tooltip_color;
-}
 
 let css_title = null;
 let css_store = null;
@@ -849,21 +598,6 @@ function greeting(name) {
         hover_message = hover_message + name.css("color");
         hover_message = hover_message + "\n";
     }
-    // if(mySet.has("filter_left")){
-    //     hover_message = hover_message + " Left Pos: ";
-    //     hover_message = hover_message + name.offset().left;
-    //     hover_message = hover_message + "\n";
-    // }
-    // if(mySet.has("filter_height")){
-    //     hover_message = hover_message + " Height: ";
-    //     hover_message = hover_message + name.height();
-    //     hover_message = hover_message + "\n";
-    // }
-    // if( mySet.has("filter_width")){
-    //     hover_message = hover_message + " Width: ";
-    //     hover_message = hover_message + name.width();
-    //     hover_message = hover_message + "\n";
-    // }
     name.prop('title', hover_message);
 }
 
