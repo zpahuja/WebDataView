@@ -257,6 +257,11 @@ class TestTooltip {
         });
 
         ContentFrame.findElementInContentFrame('#filter_fontsize', '#webview-tooltip').click(function(e) {
+            if(jQuery(referenceElement).css("font-size") === '' || jQuery(referenceElement).css("font-size") === undefined ){
+                alert("This element has no Font-Size attribute!");
+                ContentFrame.findElementInContentFrame('#filter_fontsize', '#webview-tooltip').attr("disabled","true");
+                return;
+            }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -274,6 +279,11 @@ class TestTooltip {
         });
 
         ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').click(function(e) {
+            if(jQuery(referenceElement).css("color") === '' || jQuery(referenceElement).css("color") === undefined ){
+                alert("This element has no Font-Color attribute!");
+                ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').attr("disabled","true");
+                return;
+            }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -291,6 +301,11 @@ class TestTooltip {
         });
 
         ContentFrame.findElementInContentFrame('#filter_backcolor', '#webview-tooltip').click(function(e) {
+            if(jQuery(referenceElement).css("background-color") === '' || jQuery(referenceElement).css("background-color") === undefined ){
+                alert("This element has no Background-Color attribute!");
+                ContentFrame.findElementInContentFrame('#filter_backcolor', '#webview-tooltip').attr("disabled","true");
+                return;
+            }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -308,6 +323,11 @@ class TestTooltip {
         });
 
         ContentFrame.findElementInContentFrame('#filter_style', '#webview-tooltip').click(function(e) {
+            if(jQuery(referenceElement).css("font-style") === '' || jQuery(referenceElement).css("font-style") === undefined ){
+                alert("This element has no Font-Style attribute!");
+                ContentFrame.findElementInContentFrame('#filter_style', '#webview-tooltip').attr("disabled","true");
+                return;
+            }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
@@ -325,6 +345,11 @@ class TestTooltip {
         });
 
         ContentFrame.findElementInContentFrame('#filter_weight', '#webview-tooltip').click(function(e) {
+            if(jQuery(referenceElement).css("font-weight") === '' || jQuery(referenceElement).css("font-weight") === undefined ){
+                alert("This element has no Font-Weight attribute!");
+                ContentFrame.findElementInContentFrame('#filter_weight', '#webview-tooltip').attr("disabled","true");
+                return;
+            }
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
