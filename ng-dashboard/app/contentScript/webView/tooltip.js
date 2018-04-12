@@ -54,7 +54,6 @@ class TestTooltip {
         let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
             // '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
             '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
-            '<i class="fa fa-link fa-fw-lg" id="web-view-merge"></i>' +
             '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>' +
             '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"></i>' +
             '<br><div id="cap_target" style="display: none;">' +
@@ -212,6 +211,7 @@ class TestTooltip {
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
                 alert("This element has no Class attribute!");
+                ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').attr("disabled","true");
                 return;
             }
             let cur = e.target;
@@ -235,7 +235,7 @@ class TestTooltip {
         ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').click(function(e) {
             if(referenceElement.id === '' || referenceElement.id === undefined ){
                 alert("This element has no Id attribute!");
-                console.log("No Id Attr");
+                ContentFrame.findElementInContentFrame('#filter_id', '#webview-tooltip').attr("disabled","true");
                 return;
             }
             let cur = e.target;
@@ -341,9 +341,33 @@ class TestTooltip {
             }
         });
 
-        ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function() {});
-        // delete selected nodes
-        ContentFrame.findElementInContentFrame('#web-view-remove', '#webview-tooltip').click(function() {
+        ContentFrame.findElementInContentFrame('#web-view-select-similar', '#webview-tooltip').click(function(e) {
+            if (referenceElement.className === '' || referenceElement.className === undefined) {
+                alert("This element has no Class attribute!");
+                return;
+            }
+            let cur = e.target;
+            if (cur.value === "0") {  //Add model to collection
+                cur.value = "1";
+                mySet.add("filter_class");
+
+                let target_class = referenceElement.className;
+                cur_query.class = target_class;
+                helper(referenceElement, cur_query, 0);
+            }
+
+            else{  //Take model off collection
+                cur.value = "0";
+                mySet.delete("filter_class");
+                cur_query.class = false;
+                helper(referenceElement, cur_query, 1);
+            }
+
+        });
+
+        ContentFrame.findElementInContentFrame('#web-view-remove', '#webview-tooltip').click(function(e) {
+            helper(referenceElement, cur_query, 1);
+            self.instance.hide();
         });
         // assign
         ContentFrame.findElementInContentFrame('#web-view-assign-label', '#webview-tooltip').click(function() {
@@ -367,7 +391,11 @@ class TestTooltip {
                 if (labels_list.indexOf(assigned_color_label_name) == -1) {
                     appendLabel2Widget(assigned_color_label_name, assigned_color_label_name);
                 }
-                let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + assigned_color + '; width: 100%; height: 100%"><i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> <i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i><i class="fa fa-link fa-fw-lg" id="web-view-merge"></i><i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i></div>');
+                let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + assigned_color + '; width: 100%; height: 100%">' +
+                    '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
+                    '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>' +
+                    '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"></i>' +
+                    '</div>');
                 cf.iframe.css({"height":"40px"});
                 cf.body.empty();
                 cf.body.append(tooltip_html);
@@ -413,7 +441,7 @@ let alignSelectionWithClusterClassFlag = false;
 let used_col_idx = 0;
 let class_to_color_idx = {};
 
-let TOOLTIP_IDS_ARRAY = ["web-view-assign-label", "web-view-select-similar", "web-view-merge", "web-view-remove"];
+let TOOLTIP_IDS_ARRAY = ["web-view-select-similar", "web-view-remove"];
 let prev;
 document.addEventListener("click", selectionHandler);
 
