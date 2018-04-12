@@ -97,10 +97,12 @@ class Query {
             color = "red";
         }
         let matches = this.execute();
-        for (var i = 0; i < matches.length; i++) {
-            let element = matches[i];
-            if (typeof element != 'undefined') {
-                element.style.outline = '2px dotted ' + color;
+        if(matches !== undefined){
+            for (var i = 0; i < matches.length; i++) {
+                let element = matches[i];
+                if (typeof element != 'undefined') {
+                    element.style.outline = '2px dotted ' + color;
+                }
             }
         }
     }

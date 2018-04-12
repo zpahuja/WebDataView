@@ -180,43 +180,34 @@ class TestTooltip {
 
             }
         });
-        // function helper(e, referenceElement, set_property, css_property){
-        //     let cur = e.target;
-        //     if(cur.value === "0"){  //Add model to collection
-        //         cur.value = "1";
-        //         mySet.add(set_property);
-        //         let target = jQuery(referenceElement).css(css_property);
-        //         cur_query.css = {set_property: target};
-        //         tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-        //         cur_query.highlightSelectedElements(tooltip_color);
-        //         field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-        //         fieldname_color[field_label] = tooltip_color;
-        //         let dom_elements = cur_query.execute();
-        //
-        //         let data_to_push = null;
-        //         for(let i = 0; i < dom_elements.length; i++){
-        //             data_to_push = {};  //dic label name ->
-        //             data_to_push[field_label] = dom_elements[i];
-        //             collected_data.push(data_to_push);
-        //         }
-        //     }
-        //     else{  //Take model off collection
-        //         cur.value = "0";
-        //         mySet.delete(set_property);
-        //         delete cur_query.css[css_property];
-        //         cur_query.highlightSelectedElements(tooltip_color);
-        //         // cur_query.removeSelectedElements();
-        //         let new_collect = [];
-        //         let target_font = jQuery(referenceElement).css(css_property);
-        //         for (let j=0; j < collected_data.length; j++) {
-        //             let kval = Object.values(collected_data[j])[0];
-        //             if(jQuery(kval).css(css_property) !== target_font){
-        //                 new_collect.push(collected_data[j]);
-        //             }
-        //         }
-        //         collected_data = new_collect;
-        //     }
-        // }
+
+        function helper(referenceElement, cur_query, flag_val){
+            if(flag_val === 0){
+                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
+                cur_query.highlightSelectedElements(tooltip_color);
+                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
+                fieldname_color[field_label] = tooltip_color;
+                let dom_elements = cur_query.execute();
+                let data_to_push = null;
+                for(let i = 0; i < dom_elements.length; i++){
+                    data_to_push = {};  //dic label name ->
+                    data_to_push[field_label] = dom_elements[i];
+                    collected_data.push(data_to_push);
+                }
+            }
+            else{
+                cur_query.highlightSelectedElements(tooltip_color);
+                let new_collect = [];
+                let target_class = referenceElement.className;
+                for (let j=0; j < collected_data.length; j++) {
+                    let kval = Object.values(collected_data[j])[0];
+                    if(kval.className !== target_class){
+                        new_collect.push(collected_data[j]);
+                    }
+                }
+                collected_data = new_collect;
+            }
+        }
 
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
@@ -230,34 +221,14 @@ class TestTooltip {
 
                 let target_class = referenceElement.className;
                 cur_query.class = target_class;
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[target_class]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
 
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_class");
                 cur_query.class = false;
-                cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_class = referenceElement.className;
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(kval.className !== target_class){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
-                console.log(collected_data.length);
+                helper(referenceElement, cur_query, 1);
             }
         });
 
@@ -274,112 +245,48 @@ class TestTooltip {
 
                 let target_id = referenceElement.id;
                 cur_query.id = target_id;
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
 
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_id");
                 cur_query.id = false;
-                cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_id = referenceElement.id;
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(kval.id !== target_id){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
-                console.log(collected_data.length);
+                helper(referenceElement, cur_query, 1);
             }
         });
 
         ContentFrame.findElementInContentFrame('#filter_fontsize', '#webview-tooltip').click(function(e) {
-            // helper(e, referenceElement, "filter_fontsize", "font-size");
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_fontsize");
                 let target_font = jQuery(referenceElement).css("font-size");
                 cur_query.css = {"fontSize": target_font};
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_fontsize");
                 delete cur_query.css["fontSize"];
-                cur_query.highlightSelectedElements(tooltip_color);
-                // cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_font = jQuery(referenceElement).css("font-size");
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(jQuery(kval).css("font-size") !== target_font){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
+                helper(referenceElement, cur_query, 1);
             }
         });
+
         ContentFrame.findElementInContentFrame('#filter_fontcolor', '#webview-tooltip').click(function(e) {
-            // helper(e, referenceElement, "filter_fontcolor", "color");
             let cur = e.target;
             if(cur.value === "0"){  //Add model to collection
                 cur.value = "1";
                 mySet.add("filter_fontcolor");
                 let target_fontcolor = jQuery(referenceElement).css("color");
                 cur_query.css = {"color": target_fontcolor};
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_fontcolor");
                 delete cur_query.css["color"];
-                cur_query.highlightSelectedElements(tooltip_color);
-                // cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_font = jQuery(referenceElement).css("color");
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(jQuery(kval).css("color") !== target_font){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
+                helper(referenceElement, cur_query, 1);
             }
         });
 
@@ -390,34 +297,13 @@ class TestTooltip {
                 mySet.add("filter_backcolor");
                 let target_backcolor = jQuery(referenceElement).css("background-color");
                 cur_query.css = {"background-color": target_backcolor};
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_backcolor");
                 delete cur_query.css["background-color"];
-                cur_query.highlightSelectedElements(tooltip_color);
-                // cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_font = jQuery(referenceElement).css("background-color");
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(jQuery(kval).css("background-color") !== target_font){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
+                helper(referenceElement, cur_query, 1);
             }
         });
 
@@ -428,34 +314,13 @@ class TestTooltip {
                 mySet.add("filter_style");
                 let target_style = jQuery(referenceElement).css("font-style");
                 cur_query.css = {"font-style": target_style};
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_style");
                 delete cur_query.css["font-style"];
-                cur_query.highlightSelectedElements(tooltip_color);
-                // cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_font = jQuery(referenceElement).css("font-style");
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(jQuery(kval).css("font-style") !== target_font){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
+                helper(referenceElement, cur_query, 1);
             }
         });
 
@@ -465,36 +330,14 @@ class TestTooltip {
                 cur.value = "1";
                 mySet.add("filter_weight");
                 let target_weight = jQuery(referenceElement).css("font-weight");
-                console.log(target_weight);
                 cur_query.css = {"font-weight": target_weight};
-                tooltip_color = "rgb" + COLORS[class_to_color_idx[referenceElement.className]]; // classname to color
-                cur_query.highlightSelectedElements(tooltip_color);
-                field_label = ntc.name(rgb2hex(tooltip_color))[1]; //any color -> close name to it
-                fieldname_color[field_label] = tooltip_color;
-                let dom_elements = cur_query.execute();
-
-                let data_to_push = null;
-                for(let i = 0; i < dom_elements.length; i++){
-                    data_to_push = {};  //dic label name ->
-                    data_to_push[field_label] = dom_elements[i];
-                    collected_data.push(data_to_push);
-                }
+                helper(referenceElement, cur_query, 0);
             }
             else{  //Take model off collection
                 cur.value = "0";
                 mySet.delete("filter_weight");
                 delete cur_query.css["font-weight"];
-                cur_query.highlightSelectedElements(tooltip_color);
-                // cur_query.removeSelectedElements();
-                let new_collect = [];
-                let target_font = jQuery(referenceElement).css("font-weight");
-                for (let j=0; j < collected_data.length; j++) {
-                    let kval = Object.values(collected_data[j])[0];
-                    if(jQuery(kval).css("font-weight") !== target_font){
-                        new_collect.push(collected_data[j]);
-                    }
-                }
-                collected_data = new_collect;
+                helper(referenceElement, cur_query, 1);
             }
         });
 
@@ -600,24 +443,27 @@ function greeting(name) {
     }
     name.prop('title', hover_message);
 }
-
-$('*').hover(
-    function(e){
-        css_title = $(this).prop('title');
-        css_store = $(this).css('border');
-        $(this).css('border', '1px dotted black');
-        greeting($(this));
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    },function(e){
-        $(this).prop('title', css_title);
-        $(this).css('border', css_store);
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }
-);
+// $('*').hover(
+//     function(e){
+//         $(".uniqueClassForSelectedNode").prop('title', css_title);
+//         $(".uniqueClassForSelectedNode").css('border', css_store);
+//         $(".uniqueClassForSelectedNode").removeClass('uniqueClassForSelectedNode');
+//         css_title = $(this).prop('title');
+//         css_store = $(this).css('border');
+//         $(this).addClass('uniqueClassForSelectedNode').css('border', '1px dotted black');
+//         greeting($(this));
+//         e.preventDefault();
+//         e.stopPropagation();
+//         return false;
+//     },function(e){
+//         $(".uniqueClassForSelectedNode").prop('title', css_title);
+//         $(".uniqueClassForSelectedNode").css('border', css_store);
+//         $(".uniqueClassForSelectedNode").removeClass('uniqueClassForSelectedNode');
+//         e.preventDefault();
+//         e.stopPropagation();
+//         return false;
+//     }
+// );
 
 function selectionHandler(event) {
     event.preventDefault();
@@ -751,15 +597,6 @@ function getVipsIndexFromBoxId(strIdx) {
     return false;
 }
 
-
-/*
- TODO
- * Deselect if clicked outside any of the boxes
- * Add to vipsExtended
- * Create vipsClusters wrapper for different clustering algorithms
- * Create a new project with clean source files
- */
-
 function assignLabel() {
     for (let i = 0; i < selectedBlockIndices.length; i++) {
         let idx = selectedBlockIndices[i];
@@ -841,6 +678,7 @@ function rgb2hex(rgb){
         ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
 
+let appendbox = [];
  appendLabel2Widget = function(labelName, labelColor) {
     labels_list.push(labelName);
     let labelId = labelColor.substring(4, labelColor.length - 1).replace(',','-').replace(',','-');
@@ -849,31 +687,19 @@ function rgb2hex(rgb){
         '<svg class="widget-label-circle-svg" height="10" width="10"> ' +
         '<circle cx="5" cy="5" r="4" stroke= '+ labelColor +' stroke-width="1.5" fill="white" />' +
         ' </svg>'+ labelName +'</li>');
-    // ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
-    //     let circle = $(e.target).find('svg').find('circle');
-    //     let circle_fill_color = circle.css("fill") == "rgb(255, 255, 255)" ? labelColor : "rgb(255, 255, 255)";
-    //     circle.css({"fill": circle_fill_color});
-    //     // toggle fields
-    //     for (let i = 0; i < collected_data.length; i++) {
-    //         let field_label = ntc.name(rgb2hex(labelColor))[1];
-    //         if (field_label in collected_data[i]) {
-    //             if (circle_fill_color == "rgb(255, 255, 255)") {
-    //                 collected_data[i][field_label].style.outline = "none";
-    //             } else {
-    //
-    //                 collected_data[i][field_label].style.outline = '2px solid ' + circle_fill_color;
-    //             }
-    //         }
-    //     }
-    // });
+
     ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').find('ul').find('li#'+labelId).click(function(e) {
         // $(e.target).hide();
+
         let current = e;
         let label_name = current.target.innerText;
-        function changeFunction(e){
-            console.log("not working");
-        }
         // console.log(ContentFrame.findElementInContentFrame('#delete_label_id', '#webdataview-floating-widget').length);
+        for(i = 0; i < appendbox.length; i++){
+            $('#'+appendbox[i]).remove();
+        }
+        appendbox = [];
+        appendbox.push(labelId);
+
         let widget_delete_label = new ContentFrame({
             'id': labelId,
             'class':'delete_label_class',
@@ -918,6 +744,7 @@ function rgb2hex(rgb){
                     new_collect.push(collected_data[i]);
                 }
             }
+            $('#'+labelId).remove();
             collected_data = new_collect;
             chrome.storage.local.get("value", function(items) {
                 if (!chrome.runtime.error) {

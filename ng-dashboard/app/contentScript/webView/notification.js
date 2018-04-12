@@ -82,7 +82,7 @@ $(document).ready(function() {
                                 notification_flag = false;
                                 answer_html = $.parseHTML('<p id="question" style="color: #f92672"><b>Got it! No further notification!</b></p>');
                                 ContentFrame.findElementInContentFrame('#question', '#webview-note').replaceWith(answer_html);
-                                setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
+                                    setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
                             // let target = ContentFrame.findElementInContentFrame('#webview-note', '#webdataview-floating-noti');
                             // $('#webview-note').css('visibility','hidden');
                         });

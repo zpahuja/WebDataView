@@ -193,7 +193,7 @@ $(document).ready(function() {
                                         let question_html;
                                         question_html = $.parseHTML('<p id="question"><b>There is NO connection to server!</b></p>');
                                         noti_question.replaceWith(question_html);
-
+                                        setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
                                     }
                                     else if (msg.question === "new message") {
                                         let data = msg.data;
