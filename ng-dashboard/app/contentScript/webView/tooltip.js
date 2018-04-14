@@ -73,8 +73,8 @@ class TestTooltip {
             '<label for="subscribeNews">Filter by Font-weight</label>' +
             // '<br><input type="checkbox" id="filter_child" name="subscribe" value="0">' +
             // '<label for="subscribeNews">Remove Parent Element</label>' +
-            // '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
-            // '<label for="subscribeNews">Align Left</label>' +
+            '<br><input type="checkbox" id="filter_left" name="subscribe" value="0">'+
+            '<label for="subscribeNews">Align Left</label>' +
             // '<br><input type="checkbox" id="filter_height" name="subscribe" value="0">'+
             // '<label for="subscribeNews">Filter by Height</label>' +
             // '<br><input type="checkbox" id="filter_width" name="subscribe" value="0">'+
@@ -207,6 +207,28 @@ class TestTooltip {
                 collected_data = new_collect;
             }
         }
+
+        // ContentFrame.findElementInContentFrame('#filter_left', '#webview-tooltip').click(function(e) {
+        //     if(jQuery(referenceElement).offset().left === '' || jQuery(referenceElement).offset().left === undefined ){
+        //         alert("This element has no left offset!");
+        //         ContentFrame.findElementInContentFrame('#filter_left', '#webview-tooltip').attr("disabled","true");
+        //         return;
+        //     }
+        //     let cur = e.target;
+        //     if(cur.value === "0"){  //Add model to collection
+        //         cur.value = "1";
+        //         mySet.add("filter_left");
+        //         let target_weight = jQuery(referenceElement).css("font-weight");
+        //         cur_query.css = {"font-weight": target_weight};
+        //         helper(referenceElement, cur_query, 0);
+        //     }
+        //     else{  //Take model off collection
+        //         cur.value = "0";
+        //         mySet.delete("filter_left");
+        //         delete cur_query.css["font-weight"];
+        //         helper(referenceElement, cur_query, 1);
+        //     }
+        // });
 
         ContentFrame.findElementInContentFrame('#filter_class', '#webview-tooltip').click(function(e) {
             if (referenceElement.className === '' || referenceElement.className === undefined) {
