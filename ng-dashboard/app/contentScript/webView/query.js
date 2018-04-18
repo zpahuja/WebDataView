@@ -38,6 +38,7 @@ let cfq = new ContentFrame({
 });
 let show_me_flag = false;
 let cfq_iframe = cfq.body;
+let query_dom_element = null;
 // let port = chrome.runtime.connect({name: "knockknock"});
 
 // let note_html = $.parseHTML('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">' +
@@ -196,74 +197,118 @@ $(document).ready(function() {
                                         setTimeout(function(){$('#webview-note').css('visibility','hidden');}, 2200);
                                     }
                                     else if (msg.question === "new message") {
-                                        let data = msg.data;
-                                        $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
-                                        $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
-                                        $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
-                                        $xpath = data.msg;
-                                        $xpath = JSON.parse($xpath);
-                                        let temp;
-                                        let fake = {};
-                                        fake["prices"] = "sx-price-whole";
-                                        fake["titles"] = "a-size-medium s-inline s-access-title a-text-normal";
-                                        // fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
-                                        let array = Object.values(fake);
-                                        let dummy;
-                                        let labels;
-                                        let labels_dic = {};
-                                        let tool_color;
-                                        for(i=0; i < array.length; i++) {
-                                            //----------Adding the label and color to widget---------
-                                            if (array[i] in class_to_color_idx){
-                                                tool_color = "rgb" + COLORS[class_to_color_idx[array[i]]];
-                                                labels = ntc.name(rgb2hex(tool_color))[1];
-                                                labels_dic[array[i]] = labels;
-                                                console.log("This label already exists in dictionary!");
-                                            }
-                                            else{
-                                                class_to_color_idx[array[i]] = used_col_idx;
-                                                tool_color = "rgb" + COLORS[used_col_idx];
-                                                used_col_idx = used_col_idx + 1;
-                                                labels = ntc.name(rgb2hex(tool_color))[1];
-                                                labels_dic[array[i]] = labels;
-                                                appendLabel2Widget(labels, tool_color);
-                                            }
-                                        }
+                                            let data = msg.data;
+                                            $chat = ContentFrame.findElementInContentFrame('#chat','#webview-query');
+                                            $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
+                                            $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
 
-                                        ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height','50px');
-                                        // let array = Object.values($xpath.fields);
-                                        for(i = 0; i < $xpath.boxes.length; i++){
-                                            temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                                            if(temp !== null){
-                                                for(j = 0; j < array.length; j++){
-                                                    let selection = temp.getElementsByClassName(array[j]);
-                                                    if(selection.length !== 0)
-                                                    {
-                                                        target.push([array[j], selection[0]]);
-                                                        let data_to_push = {};  //dic label name ->
-                                                        data_to_push[labels_dic[array[j]]] = selection[0];
-                                                        collected_data.push(data_to_push);
-                                                        // dummy = new TestTooltip(selection[0], COLORS[class_to_color_idx[array[j]]]);
+                                            let dom_id = Object.values(JSON.parse(data.msg))[0];
+                                            let target = []; let count = 0; let cur_class; let labels; let labels_dic = {};
+                                            let elems = document.body.getElementsByTagName("*");
+                                            for (i = 0; i < elems.length; i++ ){
+                                                if (elems[i].tagName != 'H2' && elems[i].tagName != 'IMG' && elems[i].tagName != 'H1' && elems[i].tagName != 'H3' && elems[i].tagName != 'H4')
+                                                {
+                                                    count ++;
+                                                    continue;
+                                                }
+                                                if(dom_id.indexOf(count) > -1) {
+                                                    target.push(elems[i]);
+                                                    cur_class = elems[i].className;
+                                                    if (cur_class in class_to_color_idx){
+                                                        tool_color = "rgb" + COLORS[class_to_color_idx[cur_class]];
+                                                        labels = ntc.name(rgb2hex(tool_color))[1];
+                                                        labels_dic[cur_class] = labels;
                                                     }
+                                                    else{
+                                                        class_to_color_idx[cur_class] = used_col_idx;
+                                                        tool_color = "rgb" + COLORS[used_col_idx];
+                                                        used_col_idx = used_col_idx + 1;
+                                                        labels = ntc.name(rgb2hex(tool_color))[1];
+                                                        labels_dic[cur_class] = labels;
+                                                        appendLabel2Widget(labels, tool_color);
+                                                    }
+                                                    let data_to_push = {};  //dic label name ->
+                                                    data_to_push[labels_dic[cur_class]] = elems[i];
+                                                    collected_data.push(data_to_push);
                                                 }
+                                                count++;
                                             }
-                                        }
-                                        let current_field;
-                                        if(target.length !== 0){
-                                            $visib.css('visibility','visible');
-                                            $visib.click(function(e){
-                                                e.preventDefault();
-                                                for(i=0; i < target.length; i++){
-                                                    current_field = target[i][0];
-                                                    target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
-                                                    // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
-                                                }
-                                                console.log(collected_data);
-                                            });
-                                        }
 
-                                        // console.log(temp.getElementsByClassName($xpath.fields.price));
-                                        // .style.backgroundColor = "yellow";
+
+                                            ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height','50px');
+
+                                            if(target.length !== 0){
+                                                $visib.css('visibility','visible');
+                                                $visib.click(function(e){
+                                                    e.preventDefault();
+                                                    for(i=0; i < target.length; i++){
+                                                        console.log(target[i]);
+                                                        console.log(COLORS[class_to_color_idx[target[i].className]]);
+                                                        target[i].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[target[i].className]]);
+                                                    }
+                                                    console.log(collected_data);
+                                                });
+                                            }
+
+                                            // $xpath = data.msg;
+                                            // $xpath = JSON.parse($xpath);
+                                            // let temp;
+                                            // let fake = {};
+                                            // fake["prices"] = "sx-price-whole";
+                                            // fake["titles"] = "a-size-medium s-inline s-access-title a-text-normal";
+                                            // // fake["titles"] = "a-size-medium.s-inline.s-access-title.a-text-normal";
+                                            // let array = Object.values(fake);
+                                            // let labels;
+                                            // let labels_dic = {};
+                                            // let tool_color;
+                                            // for(i=0; i < array.length; i++) {
+                                            //     //----------Adding the label and color to widget---------
+                                            //     if (array[i] in class_to_color_idx){
+                                            //         tool_color = "rgb" + COLORS[class_to_color_idx[array[i]]];
+                                            //         labels = ntc.name(rgb2hex(tool_color))[1];
+                                            //         labels_dic[array[i]] = labels;
+                                            //         console.log("This label already exists in dictionary!");
+                                            //     }
+                                            //     else{
+                                            //         class_to_color_idx[array[i]] = used_col_idx;
+                                            //         tool_color = "rgb" + COLORS[used_col_idx];
+                                            //         used_col_idx = used_col_idx + 1;
+                                            //         labels = ntc.name(rgb2hex(tool_color))[1];
+                                            //         labels_dic[array[i]] = labels;
+                                            //         appendLabel2Widget(labels, tool_color);
+                                            //     }
+                                            // }
+                                            // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height','50px');
+                                            //
+                                            // for(i = 0; i < $xpath.boxes.length; i++){
+                                            //     temp = document.evaluate($xpath.boxes[i], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                            //     if(temp !== null){
+                                            //         for(j = 0; j < array.length; j++){
+                                            //             let selection = temp.getElementsByClassName(array[j]);
+                                            //             if(selection.length !== 0)
+                                            //             {
+                                            //                 target.push([array[j], selection[0]]);
+                                            //                 let data_to_push = {};  //dic label name ->
+                                            //                 data_to_push[labels_dic[array[j]]] = selection[0];
+                                            //                 collected_data.push(data_to_push);
+                                            //                 // dummy = new TestTooltip(selection[0], COLORS[class_to_color_idx[array[j]]]);
+                                            //             }
+                                            //         }
+                                            //     }
+                                            // }
+                                            // let current_field;
+                                            // if(target.length !== 0){
+                                            //     $visib.css('visibility','visible');
+                                            //     $visib.click(function(e){
+                                            //         e.preventDefault();
+                                            //         for(i=0; i < target.length; i++){
+                                            //             current_field = target[i][0];
+                                            //             target[i][1].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[current_field]]);
+                                            //             // target[i][1].style.outline = '2px solid ' + COLORS[class_to_color_idx[current_field]];
+                                            //         }
+                                            //         console.log(collected_data);
+                                            //     });
+                                            // }
                                     }
                                 });
 
@@ -324,9 +369,10 @@ $(document).ready(function() {
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else {
+                                        query_dom_element = modifyDOM();
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
                                         $messageName = ContentFrame.findElementInContentFrame('#messageName', '#webview-query').val();
-                                        port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc, name: $messageName, domain_name: location.href});
+                                        port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc, name: $messageName, domain_name: location.href, query_dom_element: query_dom_element});
                                         // socket.emit('send message by desc', {
                                         //     username: $username,
                                         //     message: $messageDesc,

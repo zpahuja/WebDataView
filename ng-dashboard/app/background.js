@@ -120,11 +120,13 @@ function tabController(tabId, tabAction, callback) {
                             chrome.tabs.executeScript(null, {file: "lib/popper/tooltip.js"}, function () {
                                 chrome.tabs.executeScript(null, {file: "app/contentScript/webView/tooltip.js"}, function () {
                                     chrome.tabs.executeScript(null, {file: "app/contentScript/webView/webViewController.js"}, function () {
-                                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
-                                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
-                                                if (chrome.runtime.lastError) {
-                                                    console.error(chrome.runtime.lastError.message);
-                                                }
+                                        chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query_group.js"}, function () {
+                                            chrome.tabs.executeScript(null, {file: "app/contentScript/webView/query.js"}, function () {
+                                                chrome.tabs.executeScript(null, {file: "app/contentScript/webView/notification.js"}, function () {
+                                                    if (chrome.runtime.lastError) {
+                                                        console.error(chrome.runtime.lastError.message);
+                                                    }
+                                                });
                                             });
                                         });
                                     });
@@ -160,7 +162,6 @@ function tabController(tabId, tabAction, callback) {
 chrome.runtime.onConnect.addListener(function(port) {
     // socket = io.connect('http://127.0.0.1:5353/');
     socket = io.connect('http://kite.cs.illinois.edu:5355/');
-
     // socket.emit('new user', {username: "Herbert", domain_name: "www.amazon.com"});
     port.onMessage.addListener(function(msg) {
         if (msg.answer == "new user"){
@@ -173,8 +174,7 @@ chrome.runtime.onConnect.addListener(function(port) {
         }
         else if (msg.answer == "send message by desc"){
             console.log("send message by desc reached!!!");
-            socket.emit('send message by desc', {username: msg.username, message: msg.message, name:msg.name, domain_name: msg.domain_name});
-            // port.postMessage({question: "I don't get it."});
+            socket.emit('send message by desc', {username: msg.username, message: msg.message, name:msg.name, domain_name: msg.domain_name, query_dom_element: msg.query_dom_element});
         }
         else if (msg.answer == "leave"){
             console.log("leave reached!!!");
