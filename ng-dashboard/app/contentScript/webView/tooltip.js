@@ -518,27 +518,61 @@ function greeting(name) {
     }
     name.prop('title', hover_message);
 }
-// $('*').hover(
-//     function(e){
-//         $(".uniqueClassForSelectedNode").prop('title', css_title);
-//         $(".uniqueClassForSelectedNode").css('border', css_store);
-//         $(".uniqueClassForSelectedNode").removeClass('uniqueClassForSelectedNode');
-//         css_title = $(this).prop('title');
-//         css_store = $(this).css('border');
-//         $(this).addClass('uniqueClassForSelectedNode').css('border', '1px dotted black');
-//         greeting($(this));
-//         e.preventDefault();
-//         e.stopPropagation();
-//         return false;
-//     },function(e){
-//         $(".uniqueClassForSelectedNode").prop('title', css_title);
-//         $(".uniqueClassForSelectedNode").css('border', css_store);
-//         $(".uniqueClassForSelectedNode").removeClass('uniqueClassForSelectedNode');
-//         e.preventDefault();
-//         e.stopPropagation();
-//         return false;
-//     }
-// );
+
+function doWhenEnterDOM(node, count) {
+    if (node.data('wdv_original')===undefined) {
+        // if ($.now() % 5 == 0) { // use it to reduce cost
+        //     removeAllSelections(); //pretty expensive
+        // }
+        removeAllSelections(); //pretty expensive, use the method above to reduce cost
+        node.data('wdv_original',{title:node.prop('title'),border:node.css('border')});
+        node.css('border', '1px dotted black');
+        greeting(node);
+    }
+    // else if (count < 10) {
+    //     setTimeout(doWhenEnterDOM(node,count+1),250);
+    // }
+}
+
+function doWhenExitDOM(node, count) {
+    if (node.data('wdv_original')!==undefined) {
+        node.prop('title', node.data('wdv_original')['title']);
+        node.css('border', node.data('wdv_original')['border']);
+        node.removeData('wdv_original');
+    }
+    // else if (count < 10) {
+    //     setTimeout(doWhenExitDOM(node,count+1),250);
+    // }
+}
+
+function removeAllSelections() {
+    var elements = $('*').filter(function(){return $(this).data('wdv_original') !== undefined;});
+    for (i = 0; i < elements.length; i++) {
+        doWhenExitDOM($(elements[i]),0)
+    }
+}
+
+$('*').hover(
+    function(e){
+        // The condition is to prevent the case when moving the mouse too fast
+        // that it re-enters the element before finishing the previous entering
+        doWhenEnterDOM($(this),0);
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    },function(e){
+        // console.log($(this).css('border'));
+        // console.log($(this).data('wdv_original'));
+        // css_title = $(this).data('wdv_original_title');
+        // css_store = $(this).data('wdv_original_css');
+        // The condition is to prevent the case when moving the mouse too fast
+        // that it goes out of the element before finishing the previous going out
+        doWhenExitDOM($(this),0);
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+);
 
 function selectionHandler(event) {
     event.preventDefault();
