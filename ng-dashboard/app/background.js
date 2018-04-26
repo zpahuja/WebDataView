@@ -179,7 +179,11 @@ chrome.runtime.onConnect.addListener(function(port) {
         else if (msg.answer == "leave"){
             console.log("leave reached!!!");
             console.log(msg.capa);
-            socket.emit('leave', {domain_name: msg.domain_name, capa: msg.capa});
+            socket.emit('leave', {domain_name: msg.domain_name, capacity: msg.capa});
+        }
+        else if (msg.answer == "exit"){
+            console.log("exit reached!!!");
+            socket.emit('exit', {domain_name: msg.domain_name});
         }
         else if (msg.answer == "pre check"){
             console.log("Pre check point!!!");   // Send domain to server and return stored result!

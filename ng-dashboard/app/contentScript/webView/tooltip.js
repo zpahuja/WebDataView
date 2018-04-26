@@ -49,13 +49,13 @@ class TestTooltip {
             'appendTo': '#webview-popper-container',
             'css': ['lib/font-awesome/css/font-awesome.css', 'lib/bootstrap/css/bootstrap.3.3.7.min.css'],
             'js': ['app/contentScript/webView/tooltipHandler.js'],
-            'inlineCss':  {"width": "195px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
+            'inlineCss':  {"width": "140px", "height": "40px", "z-index": 2147483640, "border": "none", "border-radius": 6, "overflow": "visible"}
     });
-        let tooltip_html = $.parseHTML('<div class="webdataview" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
+        let tooltip_html = $.parseHTML('<div class="webdataview" id="webdataview_id" style="background-color: ' + color + '; width: 100%; height: auto; overflow: visible; z-index: 2147483647 !important; ">' +
             // '<i class="fa fa-tag fa-fw-lg" id="web-view-assign-label" style="margin-left: 15px"></i> ' +
-            '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar"></i>' +
-            '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"></i>' +
-            '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"></i>' +
+            '<i class="fa fa-object-group fa-fw-lg" id="web-view-select-similar" style="color: black;"></i>' +
+            '<i class="fa fa-trash-o fa-fw-lg" id="web-view-remove"  style="color: black;"></i>' +
+            '<i class="fa fa-angle-double-down fa-fw-lg" id="cap_toggle"  style="color: black; font-weight: 100;"></i>' +
             '<br><div id="cap_target" style="display: none;">' +
             '<input type="checkbox" id="filter_class" name="subscribe" value="0">'+
             '<label for="subscr ibeNews">Filter by ClassName</label>' +
@@ -85,12 +85,16 @@ class TestTooltip {
 
         window.onbeforeunload = function(e) {
             e.preventDefault();
-            chrome.storage.sync.get("value", function(items) {
-                if (!chrome.runtime.error) {
-                    let array = items["value"];
-                    port.postMessage({answer: "leave", domain_name: location.hostname, capa: JSON.parse(array)});
-                }
-            });
+            // if($username !== undefined) {
+            //     port.postMessage({answer: "leave", username: $username, domain_name: location.hostname});
+            // }
+            port.postMessage({answer: "exit", domain_name: location.href});
+            // chrome.storage.sync.get("value", function(items) {
+            //     if (!chrome.runtime.error) {
+            //         let array = items["value"];
+            //         port.postMessage({answer: "leave", domain_name: location.href, capa: array});
+            //     }
+            // });
         };
 
         port.onMessage.addListener(function(msg) {
@@ -168,14 +172,20 @@ class TestTooltip {
 
         ContentFrame.findElementInContentFrame('#cap_toggle', '#webview-tooltip').click(function(e) {
             e.preventDefault();
+            let arrow_target = ContentFrame.findElementInContentFrame('#webdataview_id', '#webview-tooltip').find('#cap_toggle');
+            arrow_target.toggleClass("fa fa-angle-double-up fa-fw-lg fa fa-angle-double-down fa-fw-lg");
+
             let stretch = "110px";
+            let width_stretch = "195px";
             let x = ContentFrame.findElementInContentFrame('#cap_target', '#webview-tooltip')[0];
             if (x.style.display === "none") {
                 x.style.display = "block";
                 $("#webview-tooltip")[0].style.height = stretch;
+                $("#webview-tooltip")[0].style.width = width_stretch;
             } else {
                 x.style.display = "none";
-                $("#webview-tooltip")[0].style.heigh = "40px";
+                $("#webview-tooltip")[0].style.height = "40px";
+                $("#webview-tooltip")[0].style.width = "140px";
 
             }
         });
@@ -959,8 +969,8 @@ let appendbox = [];
                         }
                     }
                     chrome.storage.local.set({'value': new_array});
-                    let new_noti = new WebDataExtractionNotation(JSON.parse(new_array[0])[0]);
-                    console.log(new_noti.matchquery());
+                    // let new_noti = new WebDataExtractionNotation(JSON.parse(new_array[0])[0]);
+                    // console.log(new_noti.matchquery());
                 }
             });
         });

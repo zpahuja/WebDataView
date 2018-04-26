@@ -1,4 +1,7 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+</style>
 <div class="" id="index_panel" style="visibility: visible">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -16,49 +19,69 @@
 				<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name:</h5>
 			</div>
 		</div>
-		<div class="col-md-8">
-            <div class="well sidebar-nav">
-                <ul class="nav" id="chat" style="max-height: 80px; overflow-y:auto; list-style: none;">
-                    <li><strong>Query Response:</strong></li>
-                </ul>
+		<div class="col-md-8" >
+            <!--<div class="well sidebar-nav">-->
+                <!--<ul class="nav" id="chat" style="max-height: 80px; overflow-y:auto; list-style: none;">-->
+                    <!--<li><strong>Query Response:</strong></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+            <div id="initial_show" style="display: none;">
+                <p id="initial_p"></p>
             </div>
-			<form id = "userForm">
-				<div class="form-group">
-                    <div>
-                        <label>Enter Name: </label>
-                        <input style="width: 200px; overflow: hidden;  display: inline-block;" class="form-control" id="username" />
-                        <input style="background-color: #0bbd27 !important; display: inline-block;  float: right" id="login" type="submit" class="btn btn-success" value="Login" />
+            <div id="result_show_none" style="display: none;">
+                <p id="alt1" style="display: block;"><b>There is no model, please write your own.</b></p>
+                <button id="alt2" style="display: none;"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <form id = "userForm">
+                    <div class="form-group">
+                        <div>
+                            <label>Enter Name: </label>
+                            <input style="width: 200px; overflow: hidden;  display: inline-block;" class="form-control" id="username" />
+                            <input style="background-color: #0bbd27 !important; display: inline-block;  float: right" id="login" type="submit" class="btn btn-success" value="Login" />
+                        </div>
                     </div>
-				</div>
-			</form>
-			<form id ="messageForm">
-				<div class="form-group">
-					<label>Enter Query by Name:</label>
-                    <!--<p style="display: inline-block; right: 0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>-->
-                    <input style="background-color: #2c0eff !important; display: inline-block; float: right" type="submit" class="btn btn-primary" value="Send Query" />
-					<textarea  style="height: 30px;" class="form-control" id="message"></textarea>
+                </form>
+                <!--<form id ="messageForm">-->
+                    <!--<div class="form-group">-->
+                        <!--<label>Enter Query by Name:</label>-->
+                        <!--&lt;!&ndash;<p style="display: inline-block; right: 0;">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</p>&ndash;&gt;-->
+                        <!--<input style="background-color: #2c0eff !important; display: inline-block; float: right" type="submit" class="btn btn-primary" value="Send Query" />-->
+                        <!--<textarea  style="height: 30px;" class="form-control" id="message"></textarea>-->
+                    <!--</div>-->
+                <!--</form>-->
+                <form id ="messageFormDesc" style="margin-bottom: 0px;">
+                    <div class="form-group">
+
+
+                        <textarea style="height: 30px; width: 260px; display: inline-block; float: left; bottom: 2px;" id="messageName" placeholder="Query Name"></textarea>
+                        <input style="background-color: #FF6037 !important; float: right;" type="submit" class="btn btn-warning" value="Send Query" />
+                        <textarea style="height: 175px;" class="form-control" id="messageDesc" placeholder="Query Description"></textarea>
+                        <br>
+                        <!--<input style="background-color: #FF6037 !important; left:140px; align-content: center; position:absolute;" type="submit" class="btn btn-warning" value="Send Query" />-->
+                    </div>
+                </form>
+                <button class="btn btn-danger btn-lg" id="visib_button" style="left:90px; background-color: #f92672 !important; visibility: hidden; align-content: center; position:absolute; ">
+                    Visualize Query Result
+                </button>
+            </div>
+            <div id="result_show_some" style="display: none;">
+                <p><b>There are existing models with the current url:</b></p>
+                <div style="float: left;">
+                    <p style="color: red; float: left;"><b>Visual Selection Model</b></p> &nbsp;&nbsp;&nbsp;
+                    <br>
+                    <select id="visual_area" style="float: left;">
+                        <option value="" disabled selected>Select your option</option>
+                    </select> <br>
                 </div>
-			</form>
-			<form id ="messageFormDesc">
-				<div class="form-group">
-                    <label>Enter Query by Description:</label>
+                <div style="float: left;">
+                    <p style="color: #125bde;"><b>Query Model</b></p>
+                    <select id="query_area" style="float: left;">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="write_own" id="write_own" style="color: #125bde;">Write Your Own Query</option>
+                    </select>
+                </div>
 
-                    <input style="background-color: #ffa500 !important; display: inline-block; float: right" type="submit" class="btn btn-warning" value="Send Description" />
-                    <label style="display: inline-block;">Enter Description Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea style="height: 28px; display: inline-block; float: right; bottom: 5px;" id="messageName"></textarea></label>
+            </div>
 
-                    <textarea style="height: 110px;" class="form-control" id="messageDesc"></textarea>
-				</div>
-			</form>
-			<!--<form id ="domainForm">-->
-				<!--<div class="form-group">-->
-					<!--<label>Change Domain:</label>-->
-					<!--<textarea class="form-control" id="newdomain"></textarea>-->
-					<!--<br />-->
-					<!--<input type="submit" class="btn btn-warning" value="Change Domain Name" />-->
-				<!--</div>-->
-			<!--</form>-->
-            <button class="btn btn-danger btn-lg" id="visib_button" style="left:90px; background-color: #f92672 !important; visibility: hidden; align-content: center; position:absolute; ">Visualize Query Result</button>
-			<div id="domain-feedback"></div>
 		</div>
 	</div>
 
