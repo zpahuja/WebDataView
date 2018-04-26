@@ -1,35 +1,60 @@
-/**
- * Created by Herbert on 4/17/2018.
- */
-
 function modifyDOM() {
-    let elems = document.body.getElementsByTagName("*");
-
-    let res = [];
-
-    count = 0;
-    for (i = 0; i < elems.length;i ++ )
-    {
-        let jsonData = {};
-        if (elems[i].tagName != 'H2' && elems[i].tagName != 'IMG' && elems[i].tagName != 'H1' && elems[i].tagName != 'H3' && elems[i].tagName != 'H4')
-        {
-            count ++;
-            continue;
-        }
-        jsonData['num'] = count;
-        count ++;
-        jsonData['tag'] = elems[i].tagName;
-        jsonData['bottom'] = elems[i].getBoundingClientRect().bottom;
-        jsonData['height'] = elems[i].getBoundingClientRect().height;
-        jsonData['width'] = elems[i].getBoundingClientRect().width;
-        jsonData['x'] = elems[i].getBoundingClientRect().x;
-        jsonData['y'] = elems[i].getBoundingClientRect().y;
-        jsonData['left'] = elems[i].getBoundingClientRect().left;
-        jsonData['right'] = elems[i].getBoundingClientRect().right;
-        jsonData['text'] = elems[i].textContent;
-        res.push(jsonData);
-
+    /*
+     * return an Object domObj
+     * idMapDomSerial: mapping ids to serialized DOM elements
+     * idMapDomObj: mapping ids to DOM elements
+     * domSerialMapId: map hashed serialized DOM elements to ids
+     */
+    var elems = document.body.getElementsByTagName("*");
+    var idMapDomSerial = {};
+    var idMapDomObj = {};
+    var domSerialMapId = {};
+    for(var id=0; id < elems.length; id++) {
+        domSerial = {};
+        domSerial['id'] = id;
+        domSerial['tag'] = elems[id].tagName;
+        domSerial["class"] = elems[id].className;
+        domSerial['bottom'] = elems[id].getBoundingClientRect().bottom;
+        domSerial['left'] = elems[id].getBoundingClientRect().left;
+        domSerial['top'] = elems[id].getBoundingClientRect().top;
+        domSerial['right'] = elems[id].getBoundingClientRect().right;
+        domSerial['height'] = elems[id].getBoundingClientRect().height;
+        domSerial['width'] = elems[id].getBoundingClientRect().width;
+        domSerial['x'] = elems[id].getBoundingClientRect().x;
+        domSerial['y'] = elems[id].getBoundingClientRect().y;
+        domSerial['parent'] = -1;
+        // if(elems[id].tagName == 'P' ||
+        //     elems[id].tagName == 'H1' ||
+        //     elems[id].tagName == 'H2' ||
+        //     elems[id].tagName == 'H3' ||
+        //     elems[id].tagName == 'H4' ||
+        //     elems[id].tagName == 'H5' ||
+        //     elems[id].tagName == 'H6')
+        domSerial['text'] = elems[id].textContent;
+        // if(elems[id].tagName == "SPAN")
+        //   console.log(elems[id].textContent);
+        idMapDomSerial[id] = domSerial;
+        idMapDomObj[id] = elems[id];
+        var domSerialHash = [domSerial['bottom'], domSerial['left'], domSerial['top'], domSerial['right']];
+        domSerialMapId[domSerialHash] = id;
     }
 
-    return res;
+    for(var id=0; id<elems.length; id++) {
+        var parent = elems[id].parentElement;
+        var parentHash = [];
+        parentHash = parentHash.concat(parent.getBoundingClientRect().bottom);
+        parentHash = parentHash.concat(parent.getBoundingClientRect().left);
+        parentHash = parentHash.concat(parent.getBoundingClientRect().top);
+        parentHash = parentHash.concat(parent.getBoundingClientRect().right);
+        parentId = domSerialMapId[parentHash];
+        if(parentId >= 0)
+            idMapDomSerial[id]['parent'] = parentId;
+    }
+
+    var domObj = {};
+    domObj['idMapDomSerial'] = idMapDomSerial;
+    domObj['idMapDomObj'] = idMapDomObj;
+    domObj['domSerialMapId'] = domSerialMapId;
+
+    return domObj;
 }

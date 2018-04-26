@@ -249,10 +249,11 @@ $(document).ready(function() {
                                             $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
                                             $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
                                             let data_msg = JSON.parse(data.msg);
-                                            
+                                            console.log(data_msg);
+                                            let target = [];
                                             for(let cur_key in data_msg){
                                                 let dom_id = data_msg[cur_key];
-                                                let target = []; let count = 0; let cur_class; let labels; let labels_dic = {};
+                                                let count = 0; let cur_class; let labels; let labels_dic = {};
                                                 let elems = document.body.getElementsByTagName("*");
                                                 for (i = 0; i < elems.length; i++ ){
                                                     if (elems[i].tagName != 'H2' && elems[i].tagName != 'IMG' && elems[i].tagName != 'H1' && elems[i].tagName != 'H3' && elems[i].tagName != 'H4')
@@ -413,7 +414,15 @@ $(document).ready(function() {
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else {
-                                        query_dom_element = modifyDOM();
+
+
+                                        var modified_dom = modifyDOM();
+                                        var query_dom_element = [];
+                                        for (var key in Object.keys(modified_dom['idMapDomSerial'])) {
+                                            query_dom_element.push(modified_dom['idMapDomSerial'][key]);
+                                        }
+
+                                        // query_dom_element = modifyDOM();
                                         $messageDesc = ContentFrame.findElementInContentFrame('#messageDesc', '#webview-query').val();
                                         $messageName = ContentFrame.findElementInContentFrame('#messageName', '#webview-query').val();
                                         port.postMessage({answer: "send message by desc", username: $username, message: $messageDesc, name: $messageName, domain_name: location.href, query_dom_element: query_dom_element});
