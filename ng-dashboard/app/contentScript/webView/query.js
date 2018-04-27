@@ -99,10 +99,11 @@ $(document).ready(function() {
                                 let $users;
                                 let $username;
                                 let $feedback = $('#domain-feedback');
-                                let $xpath;
                                 let login = false;
-                                let target = [];
                                 let $visib = ContentFrame.findElementInContentFrame('#visib_button','#webview-query');
+                                let $visual_option = 0;
+                                let old_web_noti = null;
+                                let old_label = [];
 
                                 let current_domain = location.hostname;
                                 let domain_html = '<h5 id="currentdomain" style="font-weight: 700">Your Current Domain Name: <br><p style="color: blue; font-weight: 300;">&#9755 &nbsp;'+current_domain+'</p></h5>';
@@ -157,10 +158,6 @@ $(document).ready(function() {
                                                 query_array.push(stored_query[i]);
                                             }
                                         }
-                                        function dynamicEvent_query() {
-                                            let index_pos = parseInt((this.id).slice(-1));
-                                            new_model = query_array[index_pos].query_name;
-                                        }
 
                                         ContentFrame.findElementInContentFrame('#query_area','#webview-query').change(function(e){
                                             $('#webview-query').css('height','420px');
@@ -178,33 +175,50 @@ $(document).ready(function() {
                                             ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').val(query_array[current_index-2].query_text);
                                         });
 
-                                        if(visual_array.length !== 0){
-                                            $('#webview-query').css('height','250px');
-                                            ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
-                                            for(i = 0; i < visual_array.length; i++) {
-                                                let option = document.createElement('option');
-                                                option.id = ''+i;
-                                                option.innerHTML = '<option style="color: red;">' + visual_array[i].model_name + '</option>';
-                                                ContentFrame.findElementInContentFrame('#visual_area', '#webview-query').append(option);
-                                                option.onclick = dynamicEvent_visual;
+                                        ContentFrame.findElementInContentFrame('#visual_area','#webview-query').change(function(e){
+                                            let current_index = e.target.selectedIndex;
+                                            if($visual_option !== current_index && $visual_option !== 0){
+                                                collected_data = [];
+                                                chrome.storage.local.get("value", function(items) {
+                                                    if (!chrome.runtime.error) {
+                                                        chrome.storage.local.set({'value': {}});
+                                                    }
+                                                });
+                                                old_web_noti.disappendLabel2Widget();
+                                                old_web_noti.extract();
+                                                for(p = 0; p < old_label.length; p++){
+                                                    old_web_noti.notations[old_label[p]].disapplySelectedElements();
+                                                }
                                             }
-                                        }
-                                        if(query_array.length !== 0) {
-                                            $('#webview-query').css('height','250px');
-                                            ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
-                                            for(i = 0; i < query_array.length; i++) {
-                                                let option = document.createElement('option');
-                                                option.id = '' + i;
-                                                option.innerHTML = '<option style="color: #125bde;">' + query_array[i].query_name + '</option>';
-                                                ContentFrame.findElementInContentFrame('#query_area', '#webview-query').append(option);
-                                                // option.onclick = dynamicEvent_query;
+                                            $visual_option = current_index;
+
+                                            let new_model  = visual_array[current_index-1].model_text;
+                                            console.log(new_model);
+
+                                            chrome.storage.local.get("value", function(items) {
+                                                if (!chrome.runtime.error) {
+                                                    chrome.storage.local.set({'value': new_model});
+                                                }
+                                            });
+                                            for(let i = 0; i < new_model.length; i++){
+                                                cur_query = new_model[i].query;
+                                                cur_label = new_model[i].label;
+                                                old_label.push(cur_label);
+                                                let new_web_noti = new WebDataExtractionNotation(new_model[i]);
+                                                old_web_noti = new_web_noti;
+                                                new_web_noti.extract();
+                                                let dom_list = new_web_noti.matchquery()[cur_label];
+                                                // new_web_noti.changeLabelName();
+                                                let tooltip_color = new_web_noti.label2color[cur_label];
+                                                new_web_noti.notations[cur_label].applySelectedElements(tooltip_color);
+                                                for(let j = 0; j < dom_list.length; j++){
+                                                    data_to_push = {};  //dic label name ->
+                                                    data_to_push[cur_label] = dom_list[j];
+                                                    collected_data.push(data_to_push);
+                                                }
                                             }
-                                        }
-                                        if(stored_query.length === 0){
-                                            $('#webview-query').css('height','420px');
-                                            ContentFrame.findElementInContentFrame('#initial_show','#webview-query').css('display','none');
-                                            ContentFrame.findElementInContentFrame('#result_show_none','#webview-query').css('display','block');
-                                        }
+                                            console.log(collected_data);
+                                        });
                                         function dynamicEvent_visual() {
                                             let index_pos = parseInt((this.id).slice(-1));
                                             new_model = stored_query[index_pos].model_text;
@@ -234,7 +248,33 @@ $(document).ready(function() {
 
                                         }
 
-
+                                        if(visual_array.length !== 0){
+                                            $('#webview-query').css('height','250px');
+                                            ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
+                                            for(i = 0; i < visual_array.length; i++) {
+                                                let option = document.createElement('option');
+                                                option.id = ''+i;
+                                                option.innerHTML = '<option style="color: red;">' + visual_array[i].model_name + '</option>';
+                                                ContentFrame.findElementInContentFrame('#visual_area', '#webview-query').append(option);
+                                                // option.onclick = dynamicEvent_visual;
+                                            }
+                                        }
+                                        if(query_array.length !== 0) {
+                                            $('#webview-query').css('height','250px');
+                                            ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
+                                            for(i = 0; i < query_array.length; i++) {
+                                                let option = document.createElement('option');
+                                                option.id = '' + i;
+                                                option.innerHTML = '<option style="color: #125bde;">' + query_array[i].query_name + '</option>';
+                                                ContentFrame.findElementInContentFrame('#query_area', '#webview-query').append(option);
+                                                // option.onclick = dynamicEvent_query;
+                                            }
+                                        }
+                                        if(stored_query.length === 0){
+                                            $('#webview-query').css('height','420px');
+                                            ContentFrame.findElementInContentFrame('#initial_show','#webview-query').css('display','none');
+                                            ContentFrame.findElementInContentFrame('#result_show_none','#webview-query').css('display','block');
+                                        }
                                     }
                                     else if(msg.question === "no_connection"){
                                         let noti_question = ContentFrame.findElementInContentFrame('#initial_p','#webview-query');
@@ -249,34 +289,30 @@ $(document).ready(function() {
                                             $chat.append('<li><strong>'+data.users+'</strong>: '+data.msg+'</li>');
                                             $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
                                             let data_msg = JSON.parse(data.msg);
-                                            console.log(data_msg);
+                                            // console.log(data_msg);
                                             let target = [];
                                             for(let cur_key in data_msg){
                                                 let dom_id = data_msg[cur_key];
-                                                let count = 0; let cur_class; let labels; let labels_dic = {};
+                                                let count = 0; let cur_class;
                                                 let elems = document.body.getElementsByTagName("*");
-                                                for (i = 0; i < elems.length; i++ ){
-                                                    if (elems[i].tagName != 'H2' && elems[i].tagName != 'IMG' && elems[i].tagName != 'H1' && elems[i].tagName != 'H3' && elems[i].tagName != 'H4')
-                                                    {
-                                                        count ++;
-                                                        continue;
-                                                    }
-                                                    if(dom_id.indexOf(count) > -1) {
-                                                        target.push(elems[i]);
-                                                        cur_class = elems[i].className;
-                                                        if (!(cur_class in class_to_color_idx)) {
-                                                            class_to_color_idx[cur_class] = used_col_idx;
-                                                            tool_color = "rgb" + COLORS[used_col_idx];
-                                                            used_col_idx = used_col_idx + 1;
-                                                            labels_dic[cur_class] = cur_key;
-                                                            appendLabel2Widget(cur_key, tool_color);
+                                                tool_color = "rgb" + COLORS[used_col_idx];
+                                                used_col_idx = used_col_idx + 1;
+                                                appendLabel2Widget(cur_key, tool_color);
 
-                                                        }
+                                                for (i = 0; i < elems.length; i++ ){
+                                                    // if (elems[i].tagName != 'H2' && elems[i].tagName != 'IMG' && elems[i].tagName != 'H1' && elems[i].tagName != 'H3' && elems[i].tagName != 'H4')
+                                                    // {
+                                                    //     count ++;
+                                                    //     continue;
+                                                    // }
+                                                    count++;
+                                                    if(dom_id.indexOf(count) > -1) {
+                                                        target.push([elems[i], tool_color]);
                                                         let data_to_push = {};  //dic label name ->
-                                                        data_to_push[labels_dic[cur_class]] = elems[i];
+                                                        data_to_push[cur_key] = elems[i];
                                                         collected_data.push(data_to_push);
                                                     }
-                                                    count++;
+
                                                 }
                                             }
 
@@ -287,11 +323,10 @@ $(document).ready(function() {
                                                 $visib.click(function(e){
                                                     e.preventDefault();
                                                     for(i=0; i < target.length; i++){
-                                                        console.log(target[i]);
-                                                        console.log(COLORS[class_to_color_idx[target[i].className]]);
-                                                        target[i].style.outline = '2px solid ' + rgb2hex("rgb" + COLORS[class_to_color_idx[target[i].className]]);
+                                                        console.log(target[i][0], target[i][1]);
+                                                        target[i][0].style.outline = '2px solid ' + rgb2hex(target[i][1]);
                                                     }
-                                                    console.log(collected_data);
+                                                    // console.log(collected_data);
                                                 });
                                             }
                                             // $xpath = data.msg;

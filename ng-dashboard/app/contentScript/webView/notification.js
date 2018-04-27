@@ -26,7 +26,8 @@ let cfn = new ContentFrame({
     'id':'webview-note',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "275px", "height": "175px", "position": "fixed", "left": "10px", "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    // 'inlineCss': {"width": "275px", "height": "175px", "position": "fixed", "left": "10px", "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
+    'inlineCss': {"display": "none", "width": "275px", "height": "175px", "position": "fixed", "left": "10px", "top":0, "z-index": 2147483647, "border-radius": 6, "background-color": "red"}
 }, function(){
     console.log("cf created successfully!");
 });

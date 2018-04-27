@@ -120,6 +120,16 @@ class Query {
         }
     }
 
+    disapplySelectedElements() {
+        let matches = this.execute();
+        for (var i = 0; i < matches.length; i++) {
+            let element = matches[i];
+            if (typeof element != 'undefined') {
+                element.style.outline = 'none';
+            }
+        }
+    }
+
     removeSelectedElements() {
         let matches = this.execute();
         for (var i = 0; i < matches.length; i++) {
