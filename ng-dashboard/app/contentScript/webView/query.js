@@ -102,7 +102,7 @@ $(document).ready(function() {
                                 let login = false;
                                 let $visib = ContentFrame.findElementInContentFrame('#visib_button','#webview-query');
                                 let $visual_option = 0;
-                                let old_web_noti = null;
+                                let old_web_noti = [];
                                 let old_label = [];
 
                                 let current_domain = location.hostname;
@@ -110,7 +110,6 @@ $(document).ready(function() {
                                 ContentFrame.findElementInContentFrame('#currentdomain','#webview-query').replaceWith(domain_html);
 
                                 ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').hover(function(e){
-                                    console.log($visib.is(":visible"));
                                     if($visib.is(":visible")){
                                         $('#webview-query').css('height','645px');
                                         $('#webview-query').css('width','575px');
@@ -169,6 +168,8 @@ $(document).ready(function() {
 
                                             let current_index = e.target.selectedIndex;
                                             if(current_index === 1){
+                                                ContentFrame.findElementInContentFrame('#messageName','#webview-query').val('');
+                                                ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').val('');
                                                 return;
                                             }
                                             ContentFrame.findElementInContentFrame('#messageName','#webview-query').val(query_array[current_index-2].query_name);
@@ -184,16 +185,16 @@ $(document).ready(function() {
                                                         chrome.storage.local.set({'value': {}});
                                                     }
                                                 });
-                                                old_web_noti.disappendLabel2Widget();
-                                                old_web_noti.extract();
-                                                for(p = 0; p < old_label.length; p++){
-                                                    old_web_noti.notations[old_label[p]].disapplySelectedElements();
+
+                                                for(p = 0; p < old_web_noti.length; p++){
+                                                    old_web_noti[p].disappendLabel2Widget();
+                                                    old_web_noti[p].notations[old_label[p]].disapplySelectedElements();
                                                 }
                                             }
                                             $visual_option = current_index;
 
                                             let new_model  = visual_array[current_index-1].model_text;
-                                            console.log(new_model);
+                                            // console.log(new_model);
 
                                             chrome.storage.local.get("value", function(items) {
                                                 if (!chrome.runtime.error) {
@@ -205,7 +206,7 @@ $(document).ready(function() {
                                                 cur_label = new_model[i].label;
                                                 old_label.push(cur_label);
                                                 let new_web_noti = new WebDataExtractionNotation(new_model[i]);
-                                                old_web_noti = new_web_noti;
+                                                old_web_noti.push(new_web_noti);
                                                 new_web_noti.extract();
                                                 let dom_list = new_web_noti.matchquery()[cur_label];
                                                 // new_web_noti.changeLabelName();
@@ -217,7 +218,7 @@ $(document).ready(function() {
                                                     collected_data.push(data_to_push);
                                                 }
                                             }
-                                            console.log(collected_data);
+                                            // console.log(collected_data);
                                         });
                                         function dynamicEvent_visual() {
                                             let index_pos = parseInt((this.id).slice(-1));
@@ -323,7 +324,7 @@ $(document).ready(function() {
                                                 $visib.click(function(e){
                                                     e.preventDefault();
                                                     for(i=0; i < target.length; i++){
-                                                        console.log(target[i][0], target[i][1]);
+                                                        // console.log(target[i][0], target[i][1]);
                                                         target[i][0].style.outline = '2px solid ' + rgb2hex(target[i][1]);
                                                     }
                                                     // console.log(collected_data);

@@ -134,6 +134,7 @@ $(document).ready(function(){
                         select_apply.click(function(e){
                             e.preventDefault();
                             mySet.clear();
+                            click_flag = false;
                             console.log("Select_Apply");
                             cur_query.applySelectedElements(tooltip_color);
                             let n = {'label':field_label};

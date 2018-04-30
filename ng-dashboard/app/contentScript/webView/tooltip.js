@@ -31,6 +31,7 @@ let mySet = new Set();
 let tooltip_color =  null;
 let cur_query = new Query({});
 let cur_web_noti = null;
+let click_flag = false;
 let port = chrome.runtime.connect({name: "knockknock"});
 // port.postMessage({answer: "pre check", domain_name: location.href});
 setTimeout(function(){port.postMessage({answer: "pre check", domain_name: location.href});}, 1000);
@@ -144,7 +145,6 @@ class TestTooltip {
                             collected_data.push(data_to_push);
                         }
                     }
-                    console.log(collected_data);
                     // let new_desp_html = $.parseHTML(' <textarea style="height: 90px;" class="form-control" id="messageDesc" >'+ stored_query[index_pos].query_text +'</textarea>');
                     // ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').replaceWith(new_desp_html);
 
@@ -500,7 +500,7 @@ let class_to_color_idx = {};
 
 let TOOLTIP_IDS_ARRAY = ["web-view-select-similar", "web-view-remove"];
 let prev;
-document.addEventListener("click", selectionHandler);
+document.addEventListener("click", selectionHandler, true);
 
 let css_title = null;
 let css_store = null;
@@ -584,11 +584,12 @@ $('*').hover(
     }
 );
 
-function selectionHandler(event) {
+    function selectionHandler(event) {
     event.preventDefault();
+    event.stopPropagation();
     mySet.clear();
     if (TOOLTIP_IDS_ARRAY.indexOf(event.target.id ) != -1) {
-        console.log(event.target.id);
+        // console.log(event.target.id);
         tooltipHandler(event.target.id);
         return;
     }
@@ -621,15 +622,30 @@ function selectionHandler(event) {
      */
     $('#webview-popper-container').remove();
 
-    let tooltip_color = "rgb" + COLORS[used_col_idx];
+
+    let tooltip_color;
     if (event.target.className in class_to_color_idx) {
         tooltip_color = "rgb" + COLORS[class_to_color_idx[event.target.className]];
     }
+    // else {
+    //     tooltip_color = "rgb" + COLORS[used_col_idx];
+    //     class_to_color_idx[event.target.className] = used_col_idx;
+    //     used_col_idx = used_col_idx + 1;
+    //     appendLabel2Widget(ntc.name(rgb2hex(tooltip_color))[1], tooltip_color);
+    // }
     else {
-        class_to_color_idx[event.target.className] = used_col_idx;
-        used_col_idx = used_col_idx + 1;
-        appendLabel2Widget(ntc.name(rgb2hex(tooltip_color))[1], tooltip_color);
+        if(!click_flag){ //first time click
+            click_flag = true;
+            class_to_color_idx[event.target.className] = used_col_idx;
+            tooltip_color = "rgb" + COLORS[used_col_idx];
+            used_col_idx = used_col_idx + 1;
+            appendLabel2Widget(ntc.name(rgb2hex(tooltip_color))[1], tooltip_color);
+        }
+        else{
+            tooltip_color = "rgb" + COLORS[used_col_idx-1];
+        }
     }
+
     let tip = new TestTooltip(event.target, tooltip_color);
 
     if (!tooltip_node || event.target.className != tooltip_node.className) {
@@ -888,7 +904,7 @@ let appendbox = [];
         let records_action = ContentFrame.findElementInContentFrame('#label_records', '#'+labelId);
         records_action.click(function(e) {
             e.preventDefault();
-
+            label_name = current.target.innerText;
             records_html = $.parseHTML('<input type="text" name="searchTxt" id="searchTxt" maxlength="10" value="records" />');
             noti_records = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
             noti_records.replaceWith(records_html);
@@ -934,6 +950,7 @@ let appendbox = [];
         let change_action = ContentFrame.findElementInContentFrame('#label_change','#'+labelId);
         change_action.click(function(e) {
             e.preventDefault();
+            label_name = current.target.innerText;
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
             input_label = input_label.get(0).value;
             let old = current.target.innerHTML;
