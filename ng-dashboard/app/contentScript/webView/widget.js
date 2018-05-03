@@ -6,6 +6,11 @@ let web_data_view_widget_container = document.createElement('div');
 web_data_view_widget_container.className = 'webdataview';
 web_data_view_widget_container.id = 'webdataview-widget-container';
 document.body.appendChild(web_data_view_widget_container);
+// $('#webdataview-floating-widget').css('top', '0%');
+// $('#webdataview-floating-widget').css('left', '75%');
+// $('#webdataview-floating-widget').css('width', '25%');
+// $('#webdataview-floating-widget').css('margin', '0px');
+// $('#webdataview-floating-widget').css('border', '0px');
 
 // add div containing iframe
 let web_data_view_widget = document.createElement('div');
@@ -135,24 +140,32 @@ $(document).ready(function(){
                             e.preventDefault();
                             mySet.clear();
                             click_flag = false;
-                            console.log("Select_Apply");
-                            cur_query.applySelectedElements(tooltip_color);
-                            let n = {'label':field_label};
-                            n['query'] = JSON.parse(cur_query.toJSON());
-                            cur_web_noti = new WebDataExtractionNotation(n);
-                            chrome.storage.local.get("value", function(items) {
-                                if (!chrome.runtime.error) {
-                                    let array = items["value"];
-                                    // console.log(typeof(cur_web_noti.toJSON()[0])['query']);
-                                    let output = cur_web_noti.toJSON()[0];
-                                    output['query'] = JSON.parse((cur_web_noti.toJSON()[0])['query']);
-                                    array[array.length] = output;
-                                    // array[array.length] = cur_web_noti.toJSON()[0];
-                                    chrome.storage.local.set({'value': array});
+                            if(Object.keys(cur_query).length === 1){
+                                for(d = 0; d < apply_array.length; d++) {
+                                    apply_array[d].style.outline = '2px solid ' + cccccc;
                                 }
-                            });
-                            tooltip_color = null;
+                            }
+                            else{
+                                cur_query.applySelectedElements(tooltip_color);
+                                let n = {'label':field_label};
+                                n['query'] = JSON.parse(cur_query.toJSON());
+                                cur_web_noti = new WebDataExtractionNotation(n);
+                                chrome.storage.local.get("value", function(items) {
+                                    if (!chrome.runtime.error) {
+                                        let array = items["value"];
+                                        // console.log(typeof(cur_web_noti.toJSON()[0])['query']);
+                                        let output = cur_web_noti.toJSON()[0];
+                                        output['query'] = JSON.parse((cur_web_noti.toJSON()[0])['query']);
+                                        array[array.length] = output;
+                                        // array[array.length] = cur_web_noti.toJSON()[0];
+                                        chrome.storage.local.set({'value': array});
+                                    }
+                                });
+                            }
+                            apply_array = [];
                             cur_query = new Query({});
+                            cccccc = null;
+                            tooltip_color = null;
                         });
 
                         grid_view.click(function(e){

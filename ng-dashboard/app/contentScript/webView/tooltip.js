@@ -29,8 +29,10 @@ let parent_collected = [];
 let cap_counter = 0;
 let mySet = new Set();
 let tooltip_color =  null;
+let cccccc =  null;
 let cur_query = new Query({});
 let cur_web_noti = null;
+let apply_array = [];
 let click_flag = false;
 let port = chrome.runtime.connect({name: "knockknock"});
 // port.postMessage({answer: "pre check", domain_name: location.href});
@@ -584,10 +586,12 @@ $('*').hover(
     }
 );
 
-    function selectionHandler(event) {
+function selectionHandler(event) {
     event.preventDefault();
     event.stopPropagation();
     mySet.clear();
+    let event_target = event.target;
+    apply_array.push(event_target);
     if (TOOLTIP_IDS_ARRAY.indexOf(event.target.id ) != -1) {
         // console.log(event.target.id);
         tooltipHandler(event.target.id);
@@ -622,7 +626,6 @@ $('*').hover(
      */
     $('#webview-popper-container').remove();
 
-
     let tooltip_color;
     if (event.target.className in class_to_color_idx) {
         tooltip_color = "rgb" + COLORS[class_to_color_idx[event.target.className]];
@@ -645,8 +648,8 @@ $('*').hover(
             tooltip_color = "rgb" + COLORS[used_col_idx-1];
         }
     }
+    cccccc = tooltip_color;
 
-    let tip = new TestTooltip(event.target, tooltip_color);
 
     if (!tooltip_node || event.target.className != tooltip_node.className) {
         for (let i = 0; i < selected_nodes.length; i++) {
@@ -657,10 +660,10 @@ $('*').hover(
     selected_nodes.push(event.target);
     tooltip_node = event.target;
     event.target.style.outline = '3px dotted ' + tooltip_color;
+    // tooltip_node.style.position = 'absolute';
     // event.target.style.zIndex = "3000";
     // event.target.style.position = "relative";
     let field_label = ntc.name(rgb2hex(tooltip_color))[1];
-    let event_target = event.target;
     let data_to_push = {};
     data_to_push[field_label] = event_target;
     collected_data.push(data_to_push);
@@ -851,7 +854,7 @@ let appendbox = [];
             '<div>'+
             '<button style="display: inline-block" type="button" class="btn btn-warning" id="label_delete">Delete</button>'+
             '<button style="display: inline-block" type="button" class="btn btn-info" id="label_change">Change</button><br>' +
-            '<button style="display: inline-block" type="button" class="btn btn-danger" id="label_close">Close</i></button>' +
+            '<button style="display: inline-block" type="button" class="btn btn-danger" id="label_close">Closed</i></button>' +
             '<button style="display: inline-block" type="button" class="btn btn-success" id="label_records">Records</i></button>' +
             '</div>'+
             '</div>');
@@ -864,6 +867,12 @@ let appendbox = [];
         //     ' </svg>'+ 'not working' +'</li>');
         ContentFrame.findElementInContentFrame('#label_delete', '#'+labelId).click(function(e) {
             $(current.target).hide();
+            for(d = 0; d < apply_array.length; d++) {
+                console.log(apply_array[d]);
+                apply_array[d].style.outline = null;
+            }
+            apply_array = [];
+            $('#webview-popper-container').remove();
             ContentFrame.findElementInContentFrame('#' + e.target.id, '#'+labelId).hide();
             for(i = 0; i < labels_list.length; i++){
                 if(labels_list[i] === label_name){
@@ -904,7 +913,7 @@ let appendbox = [];
         let records_action = ContentFrame.findElementInContentFrame('#label_records', '#'+labelId);
         records_action.click(function(e) {
             e.preventDefault();
-            label_name = current.target.innerText;
+
             records_html = $.parseHTML('<input type="text" name="searchTxt" id="searchTxt" maxlength="10" value="records" />');
             noti_records = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
             noti_records.replaceWith(records_html);
@@ -950,7 +959,6 @@ let appendbox = [];
         let change_action = ContentFrame.findElementInContentFrame('#label_change','#'+labelId);
         change_action.click(function(e) {
             e.preventDefault();
-            label_name = current.target.innerText;
             let input_label = ContentFrame.findElementInContentFrame('#searchTxt', '#'+labelId);
             input_label = input_label.get(0).value;
             let old = current.target.innerHTML;

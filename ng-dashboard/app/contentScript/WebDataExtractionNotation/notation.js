@@ -237,7 +237,6 @@ class WebDataExtractionNotation {
     // };
     disappendLabel2Widget(){
         let widget_new_html = $.parseHTML('<div class="widget-labels widget-float-left" id="widget-labels"><ul class="widget-labels-ul"></ul></div>');
-
         ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').replaceWith(widget_new_html);
     }
     appendLabel2Widget(labelName, labelColor) {
