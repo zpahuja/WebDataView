@@ -66,11 +66,15 @@
   ],
 
   "commands": {
-    "_execute_browser_action": {
+    "close_panels": {
       "suggested_key": {
-        "default": "Ctrl+E",
-        "mac": "Command+E"
-      }
+        "default": "Command+Shift+Z",
+        "windows": "Ctrl+Shift+Z",
+        "mac": "Command+Shift+Z",
+        "chromeos": "Ctrl+Shift+Z",
+        "linux": "Ctrl+Shift+Z"
+      },
+      "description": "Close All Panels"
     }
   }
 }

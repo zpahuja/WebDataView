@@ -159,6 +159,17 @@ function tabController(tabId, tabAction, callback) {
  * message listener and handler handle hot key
      */
 
+
+
+chrome.commands.onCommand.addListener(function(command){
+    if(command === "close_panels"){
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {greeting: "toggled"}, function(response) {
+            });
+        });
+    }
+});
+
 chrome.runtime.onConnect.addListener(function(port) {
     // socket = io.connect('http://127.0.0.1:5353/');
     socket = io.connect('http://kite.cs.illinois.edu:5355/');

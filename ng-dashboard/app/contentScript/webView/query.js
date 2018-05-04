@@ -31,13 +31,14 @@ let cfq = new ContentFrame({
     'id':'webview-query',
     // 'appendTo': '#webdataview-floating-widget',
     'css': ['lib/font-awesome/css/font-awesome.css'],
-    'inlineCss': {"width": "375px", "height": "420px", "position": "fixed", "right": "10px", "top": "5px", "z-index": 2147483647, "border-radius": 6, "background": "transparent", "display": "display"}
+    'inlineCss': {"width": "25%", "height": "150px", "position": "fixed", "right": "0px", "top": "60px", "z-index": 2147483640, "border-style": "none", "border-radius": 0, "background": "transparent", "display": "display"}
 }, function(){
     // alert('callback called immediately after ContentFrame created');
     console.log("cf created successfully!");
 });
 let show_me_flag = false;
 let cfq_iframe = cfq.body;
+let target_query = [];
 let query_dom_element = null;
 // let port = chrome.runtime.connect({name: "knockknock"});
 
@@ -68,7 +69,7 @@ $(document).ready(function() {
         }
     }).resizable({
         handles: 'e,w',
-        minWidth: 250,
+        minWidth: 150,
         stop: function() {
             $(this).css("left", parseFloat($(this).css("left")) / ($(window).width() / 100)+"%");
             $(this).css("width", parseFloat($(this).css("width")) / ($(window).width() / 100)+"%");
@@ -111,26 +112,40 @@ $(document).ready(function() {
 
                                 ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').hover(function(e){
                                     if($visib.is(":visible")){
-                                        $('#webview-query').css('height','645px');
-                                        $('#webview-query').css('width','575px');
+                                        $('#webview-query').css('height','600px');
+                                        $('#webview-query').css('width','550px');
                                         ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height', '355px');
                                     }
 
                                 },function(){
                                     if($visib.is(":visible")){
-                                        $('#webview-query').css('height','440');
-                                        $('#webview-query').css('width','375px');
+                                        $('#webview-query').css('height','330');
+                                        $('#webview-query').css('width','25%');
                                         ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height', '140px');
                                     }
                                 });
 
                                 ContentFrame.findElementInContentFrame('#alt2','#webview-query').click(function(e) {
-                                    $('#webview-query').css('height','250px');
+                                    $('#webview-query').css('height','150px');
                                     ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
                                     ContentFrame.findElementInContentFrame('#initial_show','#webview-query').css('display','none');
                                     ContentFrame.findElementInContentFrame('#result_show_none','#webview-query').css('display','none');
                                     ContentFrame.findElementInContentFrame('#alt1','#webview-query').css('display','none');
                                     ContentFrame.findElementInContentFrame('#alt2','#webview-query').css('display','none');
+                                    if(target_query.length !== 0) {
+                                        console.log(target_query.length);
+                                        for(s = 0; s < target_query.length; s++) {
+                                            target_query[s][0].style.outline = null;
+                                        }
+                                        target_query = [];
+                                        collected_data = [];
+                                        used_col_idx = 0;
+                                        let label_html = $.parseHTML('<div class="widget-labels widget-float-left" id="widget-labels">' +
+                                            '<ul class="widget-labels-ul"></ul>' +
+                                            '</div>');
+                                        ContentFrame.findElementInContentFrame('.widget-labels', '#webdataview-widget-iframe').replaceWith(label_html);
+                                    }
+
                                 });
 
                                 port.onMessage.addListener(function(msg) {
@@ -159,7 +174,7 @@ $(document).ready(function() {
                                         }
 
                                         ContentFrame.findElementInContentFrame('#query_area','#webview-query').change(function(e){
-                                            $('#webview-query').css('height','420px');
+                                            $('#webview-query').css('height','330px');
                                             ContentFrame.findElementInContentFrame('#initial_show','#webview-query').css('display','none');
                                             ContentFrame.findElementInContentFrame('#result_show_none','#webview-query').css('display','block');
                                             ContentFrame.findElementInContentFrame('#alt1','#webview-query').css('display','none');
@@ -250,7 +265,7 @@ $(document).ready(function() {
                                         }
 
                                         if(visual_array.length !== 0){
-                                            $('#webview-query').css('height','250px');
+                                            $('#webview-query').css('height','150px');
                                             ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
                                             for(i = 0; i < visual_array.length; i++) {
                                                 let option = document.createElement('option');
@@ -261,7 +276,7 @@ $(document).ready(function() {
                                             }
                                         }
                                         if(query_array.length !== 0) {
-                                            $('#webview-query').css('height','250px');
+                                            $('#webview-query').css('height','150px');
                                             ContentFrame.findElementInContentFrame('#result_show_some','#webview-query').css('display','block');
                                             for(i = 0; i < query_array.length; i++) {
                                                 let option = document.createElement('option');
@@ -272,7 +287,7 @@ $(document).ready(function() {
                                             }
                                         }
                                         if(stored_query.length === 0){
-                                            $('#webview-query').css('height','420px');
+                                            $('#webview-query').css('height','150px');
                                             ContentFrame.findElementInContentFrame('#initial_show','#webview-query').css('display','none');
                                             ContentFrame.findElementInContentFrame('#result_show_none','#webview-query').css('display','block');
                                         }
@@ -291,7 +306,6 @@ $(document).ready(function() {
                                             $chat.animate({scrollTop: $chat.prop("scrollHeight")}, 1000);
                                             let data_msg = JSON.parse(data.msg);
                                             // console.log(data_msg);
-                                            let target = [];
                                             for(let cur_key in data_msg){
                                                 let dom_id = data_msg[cur_key];
                                                 let count = 0; let cur_class;
@@ -308,7 +322,7 @@ $(document).ready(function() {
                                                     // }
                                                     count++;
                                                     if(dom_id.indexOf(count) > -1) {
-                                                        target.push([elems[i], tool_color]);
+                                                        target_query.push([elems[i], tool_color]);
                                                         let data_to_push = {};  //dic label name ->
                                                         data_to_push[cur_key] = elems[i];
                                                         collected_data.push(data_to_push);
@@ -319,13 +333,13 @@ $(document).ready(function() {
 
                                             ContentFrame.findElementInContentFrame('#messageDesc','#webview-query').css('height','50px');
 
-                                            if(target.length !== 0){
+                                            if(target_query.length !== 0){
                                                 $visib.css('visibility','visible');
                                                 $visib.click(function(e){
                                                     e.preventDefault();
-                                                    for(i=0; i < target.length; i++){
-                                                        // console.log(target[i][0], target[i][1]);
-                                                        target[i][0].style.outline = '2px solid ' + rgb2hex(target[i][1]);
+                                                    for(i=0; i < target_query.length; i++){
+                                                        // console.log(target_query[i][0], target[i][1]);
+                                                        target_query[i][0].style.outline = '2px solid ' + rgb2hex(target_query[i][1]);
                                                     }
                                                     // console.log(collected_data);
                                                 });
@@ -411,14 +425,14 @@ $(document).ready(function() {
                                     $username = ContentFrame.findElementInContentFrame('#username','#webview-query').val();
                                     let login_html;
                                     if($username === ''){
-                                        login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #ff0000" class="form-control" id="username" value="Please Enter a Valid Name"/>');
+                                        login_html = $.parseHTML('<input style="width: 150px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #ff0000" class="form-control" id="username" value="Please Enter a Valid Name"/>');
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else if(login === false){
                                         // socket.emit('new user', {username: $username, domain_name: location.hostname});
                                         port.postMessage({answer: "new user", username: $username, domain_name: location.href});
                                         // ContentFrame.findElementInContentFrame('#username','#webview-query').val('');
-                                        login_html = $.parseHTML('<input style="width: 200px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
+                                        login_html = $.parseHTML('<input style="width: 150px; font-weight: 600; overflow: hidden;  display: inline-block; background-color: #0bbd27" class="form-control" id="username" value="Logged In as: '+$username+'"/>');
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                         login = true;
                                     }
@@ -427,7 +441,7 @@ $(document).ready(function() {
                                 ContentFrame.findElementInContentFrame('#messageForm','#webview-query').submit(function(e){
                                     e.preventDefault();
                                     if($username === undefined){
-                                        let login_html = $.parseHTML('<input style="width: 200px; overflow: hidden;  display: inline-block; background-color: #f92672" class="form-control" id="username" value="Please enter name first!"/>');
+                                        let login_html = $.parseHTML('<input style="width: 150px; overflow: hidden;  display: inline-block; background-color: #f92672" class="form-control" id="username" value="Please enter name first!"/>');
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else {
@@ -446,7 +460,7 @@ $(document).ready(function() {
                                 ContentFrame.findElementInContentFrame('#messageFormDesc','#webview-query').submit(function(e){
                                     e.preventDefault();
                                     if($username === undefined){
-                                        let login_html = $.parseHTML('<input style="width: 200px; overflow: hidden;  display: inline-block; background-color: #ff338b" class="form-control" id="username" value="Please enter name first!"/>');
+                                        let login_html = $.parseHTML('<input style="width: 150px; overflow: hidden;  display: inline-block; background-color: #ff338b" class="form-control" id="username" value="Please enter name first!"/>');
                                         ContentFrame.findElementInContentFrame('#username','#webview-query').replaceWith(login_html);
                                     }
                                     else {

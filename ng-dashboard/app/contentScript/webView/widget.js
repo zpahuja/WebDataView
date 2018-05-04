@@ -6,16 +6,19 @@ let web_data_view_widget_container = document.createElement('div');
 web_data_view_widget_container.className = 'webdataview';
 web_data_view_widget_container.id = 'webdataview-widget-container';
 document.body.appendChild(web_data_view_widget_container);
-// $('#webdataview-floating-widget').css('top', '0%');
-// $('#webdataview-floating-widget').css('left', '75%');
-// $('#webdataview-floating-widget').css('width', '25%');
-// $('#webdataview-floating-widget').css('margin', '0px');
-// $('#webdataview-floating-widget').css('border', '0px');
 
 // add div containing iframe
 let web_data_view_widget = document.createElement('div');
 web_data_view_widget.id = 'webdataview-floating-widget';
 document.getElementById('webdataview-widget-container').appendChild(web_data_view_widget);
+$('#webdataview-floating-widget').css('top', '0px');
+$('#webdataview-floating-widget').css('left', '75%');
+$('#webdataview-floating-widget').css('width', '25%');
+$('#webdataview-floating-widget').css('margin', '0px');
+$('#webdataview-floating-widget').css('border', '0px');
+$('#webdataview-floating-widget').css('border-radius', '0');
+$('#webdataview-floating-widget').css('box-shadow', 'none');
+$('#webdataview-floating-widget').css('display', 'display');
 
 // add floating widget iframe
 let widget_iframe_cf = new ContentFrame({
